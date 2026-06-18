@@ -8,7 +8,7 @@ public class MechData
     [SerializeField] public int agilityStat;
     [SerializeField] public int strengthStat;
     [SerializeField] public int systemsStat;
-    [SerializeField] public float reliabilityStat;
+    [SerializeField] public int reliabilityStat;
     // Converts all stats to floats, multiple by value, then floor to int to get cost of mech 
     public int cost { get { return Mathf.FloorToInt(((float)agilityStat + (float)strengthStat + (float)systemsStat) * reliabilityStat); } }
 
