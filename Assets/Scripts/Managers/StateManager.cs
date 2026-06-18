@@ -60,9 +60,10 @@ public class StateManager : MonoBehaviour
                     SceneManager.LoadScene(2);
                 }
                 else
-                { SceneManager.LoadScene(5); 
+                {
+                    SceneManager.LoadScene(5);
                 }
-            break;
+                break;
         }
     }
 }
