@@ -15,7 +15,7 @@ public class MechGenerator : MonoBehaviour
         int strength = Random.Range(0, 10);
         int reliability = Random.Range(0, 10);
         float value = Random.Range(0.8f, 1.2f);
-        MechData data = new MechData("mech", agility, strength, reliability, value);
+        MechData data = new MechData("mech", "ace", agility, strength, reliability, value);
         return data;
     }
 }

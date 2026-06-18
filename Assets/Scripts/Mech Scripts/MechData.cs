@@ -3,6 +3,7 @@ using UnityEngine;
 public class MechData
 {
     public string mechName;
+    public string pilotName;
     public int agilityStat;
     public int strengthStat;
     public int reliabilityStat;
@@ -11,9 +12,10 @@ public class MechData
     public float value = 10;
 
     // Constructor
-    public MechData(string newName, int newAgility, int newStrength, int newReliability, float newValue)
+    public MechData(string newName, string newPilot, int newAgility, int newStrength, int newReliability, float newValue)
     {
         this.mechName = newName;
+        this.pilotName = newPilot;
         this.agilityStat = newAgility;
         this.strengthStat = newStrength;
         this.reliabilityStat = newReliability;
