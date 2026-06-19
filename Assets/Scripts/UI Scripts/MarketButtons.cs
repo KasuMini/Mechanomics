@@ -3,7 +3,7 @@ using UnityEngine;
 public class MarketButtons : MonoBehaviour
 {
     public MechMarket market;
-    public int buttonNumber;
+    public int buttonID;
 
     void Start()
     {
