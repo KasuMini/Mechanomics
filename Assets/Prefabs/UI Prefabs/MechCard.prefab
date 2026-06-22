@@ -282,6 +282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2735964805836173800}
+  - component: {fileID: 3067565348529939421}
   m_Layer: 5
   m_Name: MechCard
   m_TagString: Untagged
@@ -313,6 +314,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3067565348529939421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2788437498755635734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 589ff19ea189aa64c9cc355679c42e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarketDisplay
+  mechMarket: {fileID: 0}
+  cardID: 0
+  mechData:
+    mechName: 
+    pilotName: 
+    agilityStat: 0
+    strengthStat: 0
+    systemsStat: 0
+    reliabilityStat: 0
+    size: 0
+  mechName: 
+  pilotName: 
+  mechAgi: 0
+  mechStr: 0
+  mechSys: 0
+  mechRel: 0
+  mechSize: 0
+  model: {fileID: 4429432217392750969}
+  pilot: {fileID: 7327801568320893098}
+  stats: {fileID: 6773811662089200608}
 --- !u!1 &5215771057574373203
 GameObject:
   m_ObjectHideFlags: 0

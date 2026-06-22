@@ -9,7 +9,7 @@ public class MechMarket : MonoBehaviour
 
     public int totalMechs;
 
-    void Start()
+    private void Awake()
     {
         totalMechs = 0;
         availableMechs = new MechData[6];
@@ -19,6 +19,11 @@ public class MechMarket : MonoBehaviour
         availableMechs[3] = generator.GenerateNewData();
         availableMechs[4] = generator.GenerateNewData();
         availableMechs[5] = generator.GenerateNewData();
+    }
+
+    void Start()
+    {
+
     }
 
 

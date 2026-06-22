@@ -14,56 +14,43 @@ public class StateManager : MonoBehaviour
     public int currentScene;
     public GameplayState currentState;
 
+    public float timer;
+    public int hour;
+
+
     void Start()
     {
-        currentScene = SceneManager.GetActiveScene().buildIndex;
-        if (currentScene == 0)
-        {
-            UpdateScene();
-            // this is a fix to make sure currentScene is properly updated when moving to title
-            currentScene++;
-        }
+        UpdateScene();
     }
 
     void Update()
     {
-        
+        if (currentState == GameplayState.EventStage)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                timer = 60f;
+                hour++;
+                if (hour > 12)
+                {
+                    hour = 1;
+                }
+                
+            }
+        }
     }
     
     public void UpdateScene()
     {
-        switch (currentScene)
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (sceneIndex <= 3)
         {
-            case 0:
-                currentScene++;
-                SceneManager.LoadScene(currentScene);
-            break;
-
-            case 1:
-                currentScene++;
-                SceneManager.LoadScene(currentScene);
-            break;
-
-            case 2:
-                currentScene++;
-                SceneManager.LoadScene(currentScene);
-            break;
-
-            case 3:
-                currentScene++;
-                SceneManager.LoadScene(currentScene);
-            break;
-
-            case 4:
-                if (currentState != GameplayState.EndState)
-                {
-                    SceneManager.LoadScene(2);
-                }
-                else
-                {
-                    SceneManager.LoadScene(5);
-                }
-                break;
+            SceneManager.LoadScene(sceneIndex + 1);
+        }
+        else if (sceneIndex == 4)
+        {
+            SceneManager.LoadScene(currentState != GameplayState.EndState ? 2 : 5);
         }
     }
 }

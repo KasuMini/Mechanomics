@@ -6,9 +6,15 @@ public class MechStorage : MonoBehaviour
     public MechData[] storedMechs;
 
     public int totalMechs;
-    void Start()
+
+    void Awake()
     {
         storedMechs = new MechData[totalMechs];
+    }
+
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
