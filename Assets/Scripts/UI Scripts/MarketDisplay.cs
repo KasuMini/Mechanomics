@@ -10,6 +10,7 @@ public class MarketDisplay : MonoBehaviour
     public TextMeshProUGUI model;
     public TextMeshProUGUI pilot;
     public TextMeshProUGUI stats;
+ 
 
     #endregion
 

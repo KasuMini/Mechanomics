@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: RunState
   m_EditorClassIdentifier: Assembly-CSharp::Mechanomics.RunState
   startingCash: 10000
+  <OwnedMechs>k__BackingField: []

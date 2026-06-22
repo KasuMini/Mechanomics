@@ -252,50 +252,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193011253}
   m_CullTransparentMesh: 1
---- !u!1 &200323006
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 200323008}
-  - component: {fileID: 200323007}
-  m_Layer: 0
-  m_Name: MechGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &200323007
+--- !u!114 &200323007 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3636751776444648477, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+  m_PrefabInstance: {fileID: 819013593688869553}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200323006}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2588d4f7315d18c4081119129ae6dabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MechGenerator
---- !u!4 &200323008
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200323006}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.55125, y: 0.22634, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &259767085
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,6 +544,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2735964805836173800, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
   m_PrefabInstance: {fileID: 332647791}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &374434609 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3843843584465581314, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+  m_PrefabInstance: {fileID: 7857356079072892316}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11ae49fd52a47f14eb9d8d6660bf9610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarketButtons
 --- !u!1 &617415730
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,54 +931,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753244002}
   m_CullTransparentMesh: 1
---- !u!1 &824365207
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 824365209}
-  - component: {fileID: 824365208}
-  m_Layer: 0
-  m_Name: MechMarket
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &824365208
+--- !u!114 &824365208 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6700168359274547263, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+  m_PrefabInstance: {fileID: 5337855071828939951}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 824365207}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70144253ef14ee54c90bdd701b498060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MechMarket
-  cashManager: {fileID: 0}
-  generator: {fileID: 200323007}
-  availableMechs: []
-  totalMechs: 0
---- !u!4 &824365209
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 824365207}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.55125, y: 0.22634, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &855424216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2275,6 +2216,124 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2735964805836173800, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
   m_PrefabInstance: {fileID: 2137016180}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &819013593688869553
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.55125
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.22634
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268409761737100532, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192902400252054678, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: m_Name
+      value: MechGenerator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+--- !u!1001 &5337855071828939951
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3108888541105250606, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_Name
+      value: MechMarket
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.55125
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.22634
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074458382161590669, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700168359274547263, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
+      propertyPath: generator
+      value: 
+      objectReference: {fileID: 200323007}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
 --- !u!1001 &7857356079072892316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2283,6 +2342,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 732951061}
     m_Modifications:
+    - target: {fileID: 207055128693833948, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038577502914723527, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038577502914723527, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038577502914723527, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038577502914723527, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 374434609}
+    - target: {fileID: 1038577502914723527, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038577502914723527, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Purchase
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038577502914723527, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MarketButtons, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038577502914723527, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2735964805836173800, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2367,6 +2462,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechCard 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2788437498755635734, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3067565348529939421, guid: d18c34a0b730fb24e96f1d104eac0155, type: 3}
       propertyPath: mechMarket
       value: 
@@ -2392,5 +2491,5 @@ SceneRoots:
   - {fileID: 1708340673}
   - {fileID: 1262777865}
   - {fileID: 1778791539}
-  - {fileID: 824365209}
-  - {fileID: 200323008}
+  - {fileID: 5337855071828939951}
+  - {fileID: 819013593688869553}

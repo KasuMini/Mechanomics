@@ -10,7 +10,7 @@ namespace Mechanomics
         [SerializeField] private int startingCash = 10000;
 
         public int Cash { get; private set; }
-        public List<MechData> OwnedMechs { get; private set; } = new List<MechData>();
+        [field:SerializeField] public List<MechData> OwnedMechs { get; private set; } = new List<MechData>();
 
         public event Action<int> CashChanged;
         public event Action OwnedMechsChanged;
