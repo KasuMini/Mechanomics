@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using UnityEngine;
-using Mechanomics;
 
 public class EventResolverTests
 {
