@@ -1,9 +1,6 @@
-namespace Mechanomics
+public enum MechStat
 {
-    public enum MechStat
-    {
-        Agility,
-        Strength,
-        Systems,
-    }
+    Agility,
+    Strength,
+    Systems,
 }

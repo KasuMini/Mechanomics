@@ -1,16 +1,20 @@
 using UnityEngine;
 
-[System.Serializable]
-public class MechData
+[CreateAssetMenu(fileName = "MechData", menuName = "Mechanomics/MechData", order = 0)]
+public class MechData : ScriptableObject
 {
-    [SerializeField] public string mechName;
-    [SerializeField] public string pilotName;
-    [SerializeField] public int agilityStat;
-    [SerializeField] public int strengthStat;
-    [SerializeField] public int systemsStat;
-    [SerializeField] public int reliabilityStat;
-    [SerializeField] public int size = 1;
-    // Converts all stats to floats, multiple by value, then floor to int to get cost of mech 
+    [Header("Identity")]
+    public string mechName;
+    public string pilotName;
+
+    [Header("Stat")]
+    [Range(0, 10)]public int agilityStat;
+    [Range(0, 10)]public int strengthStat;
+    [Range(0, 4)]public int systemsStat;
+    [Range(0, 10)]public int reliabilityStat;
+    [Range(1, 3)] public int size = 1;
+
+    // Converts all stats to floats, multiple by value, then floor to int to get cost of mech
     public int cost { get { return Mathf.FloorToInt(((float)agilityStat + (float)strengthStat + (float)systemsStat) * reliabilityStat); } }
 
     // Constructor
