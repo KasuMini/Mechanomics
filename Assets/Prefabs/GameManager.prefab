@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1326135143689258083}
   - component: {fileID: 8079340813129331166}
   - component: {fileID: 8318888546426651647}
+  - component: {fileID: 4119890178584279621}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -59,3 +60,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateManager
   currentScene: 0
   currentState: 0
+  timer: 0
+  hour: 0
+--- !u!114 &4119890178584279621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8472068728620679059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f98f34eeb9b7f4a84de846656d6d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  stateManager: {fileID: 8318888546426651647}
+  runState: {fileID: 11400000, guid: 7d6e62ab32bca8c41836366c3f42dfce, type: 2}

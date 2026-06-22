@@ -1,3 +1,4 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,8 +7,9 @@ public class StateManager : MonoBehaviour
 
     public enum GameplayState
     {
-        Preparation,
-        EventStage,
+        InDialogue,
+        CityActive,
+        ShiftOver,
         EndState,
     }
 
@@ -25,7 +27,7 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-        if (currentState == GameplayState.EventStage)
+        if (currentState == GameplayState.CityActive)
         {
             timer -= Time.deltaTime;
             if (timer <= 0)
@@ -36,7 +38,6 @@ public class StateManager : MonoBehaviour
                 {
                     hour = 1;
                 }
-                
             }
         }
     }

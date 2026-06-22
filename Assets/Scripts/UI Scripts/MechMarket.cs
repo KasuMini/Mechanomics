@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class MechMarket : MonoBehaviour
 {
-    public CashManager cashManager;
     public MechGenerator generator;
     public MechData[] availableMechs;
-
-
 
     private void Awake()
     {
