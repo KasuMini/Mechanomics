@@ -3,15 +3,11 @@ using UnityEngine;
 
 public class MechMarket : MonoBehaviour
 {
-    public CashManager cashManager;
     public MechGenerator generator;
     public MechData[] availableMechs;
 
-    public int totalMechs;
-
     private void Awake()
     {
-        totalMechs = 0;
         availableMechs = new MechData[6];
         availableMechs[0] = generator.GenerateNewData();
         availableMechs[1] = generator.GenerateNewData();
@@ -26,10 +22,4 @@ public class MechMarket : MonoBehaviour
 
     }
 
-
-    public void PurchaseMech(MechData purchasedMech)
-    {
-        totalMechs++;
-
-    }
 }

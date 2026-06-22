@@ -121,7 +121,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2230770896750053276}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3843843584465581314}
+        m_TargetAssemblyTypeName: MarketButtons, Assembly-CSharp
+        m_MethodName: Purchase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3843843584465581314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,8 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ae49fd52a47f14eb9d8d6660bf9610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarketButtons
-  market: {fileID: 0}
+  market: {fileID: 6700168359274547263, guid: 9f237ba290dbe3d48abe47991e21a798, type: 3}
   buttonID: 0
+  runState: {fileID: 11400000, guid: 7d6e62ab32bca8c41836366c3f42dfce, type: 2}
+  card: {fileID: 2788437498755635734}
 --- !u!1 &724879069605326055
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,13 +350,6 @@ MonoBehaviour:
     systemsStat: 0
     reliabilityStat: 0
     size: 0
-  mechName: 
-  pilotName: 
-  mechAgi: 0
-  mechStr: 0
-  mechSys: 0
-  mechRel: 0
-  mechSize: 0
   model: {fileID: 4429432217392750969}
   pilot: {fileID: 7327801568320893098}
   stats: {fileID: 6773811662089200608}
