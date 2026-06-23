@@ -1,22 +1,17 @@
 using NUnit.Framework;
-using UnityEngine;
 
 public class EventResolverTests
 {
-    private static EventData MakeJob(
-        int difficulty,
-        int cashReward = 500,
-        int cashPenalty = 100,
-        MechStat stat = MechStat.Strength)
+    private static SkillEvent MakeJob(int difficulty, int cashReward = 500, int cashPenalty = 100)
     {
-        var job = ScriptableObject.CreateInstance<EventData>();
-        job.difficulty = difficulty;
-        job.diceSides = 10;
-        job.testedStat = stat;
-        job.cashReward = cashReward;
-        job.cashPenalty = cashPenalty;
-        job.quotaReward = 1;
-        return job;
+        return new SkillEvent
+        {
+            difficulty = difficulty,
+            diceSides = 10,
+            cashReward = cashReward,
+            cashPenalty = cashPenalty,
+            quotaReward = 1,
+        };
     }
 
     [Test]
