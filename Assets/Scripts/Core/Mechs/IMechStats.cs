@@ -3,4 +3,5 @@ public interface IMechStats
 {
     int GetStat(MechStat stat);
     int Reliability { get; }
+    int Size { get; }
 }

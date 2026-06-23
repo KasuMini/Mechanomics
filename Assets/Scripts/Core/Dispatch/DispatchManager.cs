@@ -9,23 +9,23 @@ public class DispatchManager : MonoBehaviour
 
     public IReadOnlyList<EventData> TodaysEvents => todaysEvents;
 
-    public event Action<EventData, MechData, EventOutcome> EventResolved;
+    public event Action<EventData, IReadOnlyList<MechData>, EventOutcome> EventResolved;
 
     private readonly System.Random rng = new System.Random();
 
-    public EventOutcome Dispatch(EventData job, MechData mech)
+    public EventOutcome Dispatch(EventData job, IReadOnlyList<MechData> mechs)
     {
         if (job == null) throw new ArgumentNullException(nameof(job));
-        if (mech == null) throw new ArgumentNullException(nameof(mech));
+        if (mechs == null) throw new ArgumentNullException(nameof(mechs));
 
-        EventOutcome outcome = job.Resolve(mech, rng);
+        EventOutcome outcome = job.Resolve(mechs, rng);
 
         if (runState != null)
         {
             runState.AddCash(outcome.CashDelta);
         }
 
-        EventResolved?.Invoke(job, mech, outcome);
+        EventResolved?.Invoke(job, mechs, outcome);
         return outcome;
     }
 }

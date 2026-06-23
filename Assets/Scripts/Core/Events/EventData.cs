@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Event", menuName = "Mechanomics/Event", order = 0)]
@@ -15,5 +16,5 @@ public class EventData : ScriptableObject
 
     public string Summary => behaviour != null ? behaviour.Summary : "(no behaviour)";
 
-    public EventOutcome Resolve(IMechStats mech, System.Random rng) => behaviour.Resolve(mech, rng);
+    public EventOutcome Resolve(IReadOnlyList<IMechStats> mechs, System.Random rng) => behaviour.Resolve(mechs, rng);
 }

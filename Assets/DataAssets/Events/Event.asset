@@ -16,19 +16,21 @@ MonoBehaviour:
   description: A routine salvage job on the city outskirts.
   suggestedSize: 1
   behaviour:
-    rid: 3025467288813043792
+    rid: 3025467288813043794
   references:
     version: 2
     RefIds:
-    - rid: 3025467288813043792
+    - rid: 3025467288813043794
       type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
       data:
         testedStat: 1
-        difficulty: 10
-        diceSides: 10
+        dc: 8
+        successesRequired: 2
+        diceSides: 6
         cashReward: 500
+        partialReward: 150
         quotaReward: 1
-        successText: Hauled it back in one piece.
         cashPenalty: 100
-        disableMechOnFailure: 0
+        successText: Hauled it back in one piece.
+        partialText: Got some of it.
         failureText: Came back empty-handed.

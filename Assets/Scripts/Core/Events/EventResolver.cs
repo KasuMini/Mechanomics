@@ -1,34 +1,31 @@
 using UnityEngine;
 
-// Skill-check math. Used by SkillEvent and covered by EventResolverTests.
+// Pure dice-pool helpers. Used by the event behaviours and covered by EventResolverTests.
 public static class EventResolver
 {
+    public const int SUCCESS_MARGIN = 4;
+
     // 0 -> -2, 5 -> 0, 10 -> +2
     public static int ReliabilityModifier(int reliability)
     {
         return Mathf.RoundToInt((Mathf.Clamp(reliability, 0, 10) - 5) * 0.4f);
     }
 
-    public static EventOutcome Resolve(SkillEvent ev, int testedStatValue, int reliability, int roll)
+    public static int Roll(System.Random rng, int sides)
     {
-        int total = roll + testedStatValue + ReliabilityModifier(reliability);
-        bool success = total >= ev.difficulty;
-
-        return new EventOutcome
-        {
-            Success = success,
-            Roll = roll,
-            Total = total,
-            CashDelta = success ? ev.cashReward : -ev.cashPenalty,
-            QuotaDelta = success ? ev.quotaReward : 0,
-            MechDisabled = !success && ev.disableMechOnFailure,
-            ResultText = success ? ev.successText : ev.failureText,
-        };
+        return rng.Next(1, Mathf.Max(2, sides) + 1);
     }
 
-    public static EventOutcome Resolve(SkillEvent ev, int testedStatValue, int reliability, System.Random rng)
+    // One die's contribution: clears the DC for 1, plus 1 more per `margin` over it.
+    public static int DieSuccesses(int total, int dc, int margin)
     {
-        int sides = Mathf.Max(2, ev.diceSides);
-        return Resolve(ev, testedStatValue, reliability, rng.Next(1, sides + 1));
+        return total < dc ? 0 : 1 + (total - dc) / margin;
+    }
+
+    public static OutcomeDegree Degree(int successes, int required)
+    {
+        if (successes >= required) return OutcomeDegree.Success;
+        if (required >= 2 && successes >= (required + 1) / 2) return OutcomeDegree.Partial;
+        return OutcomeDegree.Fail;
     }
 }

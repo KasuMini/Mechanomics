@@ -1,30 +1,56 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-// A single-stat skill check, resolved by EventResolver.
+// A dice-pool skill check: each assigned mech rolls and the successes are summed vs successesRequired.
 [Serializable]
 public class SkillEvent : EventBehaviour
 {
     [Header("Challenge")]
     public MechStat testedStat = MechStat.Strength;
-    [Range(1, 25)] public int difficulty = 10;
-    [Min(2)] public int diceSides = 10;
+    [Min(1)] public int dc = 8;
+    [Min(1)] public int successesRequired = 1;
+    [Min(2)] public int diceSides = 6;
 
-    [Header("On success")]
+    [Header("Rewards")]
     public int cashReward = 500;
+    public int partialReward = 150;
     public int quotaReward = 1;
-    [TextArea(2, 5)] public string successText;
+    public int cashPenalty = 100;
 
-    [Header("On failure")]
-    public int cashPenalty = 0;
-    public bool disableMechOnFailure = false;
-    [TextArea(2, 5)] public string failureText;
+    [Header("Result text")]
+    [TextArea(2, 4)] public string successText;
+    [TextArea(2, 4)] public string partialText;
+    [TextArea(2, 4)] public string failureText;
 
-    public override string Summary => $"{testedStat} check (DC {difficulty})";
+    public override string Summary => $"{testedStat} ×{successesRequired} (DC {dc})";
 
-    public override EventOutcome Resolve(IMechStats mech, System.Random rng)
+    public override EventOutcome Resolve(IReadOnlyList<IMechStats> mechs, System.Random rng)
     {
-        int statValue = mech.GetStat(testedStat);
-        return EventResolver.Resolve(this, statValue, mech.Reliability, rng);
+        int successes = 0;
+        if (mechs != null)
+        {
+            foreach (IMechStats m in mechs)
+            {
+                int total = EventResolver.Roll(rng, diceSides)
+                          + m.GetStat(testedStat)
+                          + EventResolver.ReliabilityModifier(m.Reliability);
+                successes += EventResolver.DieSuccesses(total, dc, EventResolver.SUCCESS_MARGIN);
+            }
+        }
+
+        OutcomeDegree degree = EventResolver.Degree(successes, successesRequired);
+        var outcome = new EventOutcome { Degree = degree, Successes = successes, Required = successesRequired };
+
+        switch (degree)
+        {
+            case OutcomeDegree.Success:
+                outcome.CashDelta = cashReward; outcome.QuotaDelta = quotaReward; outcome.ResultText = successText; break;
+            case OutcomeDegree.Partial:
+                outcome.CashDelta = partialReward; outcome.ResultText = partialText; break;
+            default:
+                outcome.CashDelta = -cashPenalty; outcome.ResultText = failureText; break;
+        }
+        return outcome;
     }
 }

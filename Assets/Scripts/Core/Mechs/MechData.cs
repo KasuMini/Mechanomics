@@ -18,6 +18,7 @@ public class MechData : ScriptableObject, IMechStats
     public int cost { get { return Mathf.FloorToInt(((float)agilityStat + strengthStat + systemsStat) * reliabilityStat); } }
 
     public int Reliability => reliabilityStat;
+    public int Size => size;
 
     public int GetStat(MechStat stat)
     {

@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DispatchManager
   runState: {fileID: 11400000, guid: 7d6e62ab32bca8c41836366c3f42dfce, type: 2}
   todaysEvents:
+  - {fileID: 11400000, guid: 4d68b50434e6b9729a621e6bf09a695e, type: 2}
   - {fileID: 11400000, guid: eac790f27513a5c4ab04644ac7f7c7ae, type: 2}
 --- !u!4 &297788931
 Transform:

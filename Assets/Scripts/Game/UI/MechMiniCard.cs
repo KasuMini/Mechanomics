@@ -12,8 +12,13 @@ public class MechMiniCard : MonoBehaviour
     public MechData Mech { get; private set; }
     public event Action<MechMiniCard> Clicked;
 
+    Image bg;
+    Color normalColor;
+
     void Awake()
     {
+        bg = GetComponent<Image>();
+        if (bg != null) normalColor = bg.color;
         GetComponent<Button>().onClick.AddListener(() => Clicked?.Invoke(this));
     }
 
@@ -22,5 +27,10 @@ public class MechMiniCard : MonoBehaviour
         Mech = mech;
         model.text = mech.mechName;
         stats.text = $"AGI {mech.agilityStat}  STR {mech.strengthStat}  SYS {mech.systemsStat}  REL {mech.reliabilityStat}";
+    }
+
+    public void SetSelected(bool on)
+    {
+        if (bg != null) bg.color = on ? new Color(0.18f, 0.42f, 0.30f, 1f) : normalColor;
     }
 }

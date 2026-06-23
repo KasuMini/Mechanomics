@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Orchestrates a City day: show the event, let the player pick an owned mech, dispatch it, end the day.
-// Kept thin so it can grow to multiple events / multiple mechs / travel time later.
+// Orchestrates a City day: show the event, let the player pick a SET of owned mechs, dispatch them, end the day.
+// Self-contained per event so the future scheduler (multiple events / travel time) can drive it unchanged.
 public class DayController : MonoBehaviour
 {
     public DispatchManager dispatch;
@@ -10,33 +11,30 @@ public class DayController : MonoBehaviour
     public OwnedMechList ownedList;
     public Button dispatchButton;
 
-    MechData selected;
-
     void Start()
     {
         if (eventDisplay != null) eventDisplay.Show(CurrentEvent());
-        if (ownedList != null) ownedList.MechClicked += OnMechClicked;
+        if (ownedList != null) ownedList.SelectionChanged += OnSelectionChanged;
         if (dispatchButton != null) dispatchButton.onClick.AddListener(Dispatch);
-        SetButtonInteractable(false);
+        OnSelectionChanged();
     }
 
     void OnDestroy()
     {
-        if (ownedList != null) ownedList.MechClicked -= OnMechClicked;
+        if (ownedList != null) ownedList.SelectionChanged -= OnSelectionChanged;
     }
 
-    void OnMechClicked(MechData mech)
+    void OnSelectionChanged()
     {
-        selected = mech;
-        SetButtonInteractable(true);
+        SetButtonInteractable(ownedList != null && ownedList.Selected.Count > 0);
     }
 
     public void Dispatch()
     {
         EventData ev = CurrentEvent();
-        if (ev == null || selected == null || dispatch == null) return;
+        if (ev == null || dispatch == null || ownedList == null || ownedList.Selected.Count == 0) return;
 
-        dispatch.Dispatch(ev, selected);
+        dispatch.Dispatch(ev, new List<MechData>(ownedList.Selected));
         GameManager.Instance.stateManager.EndDay();
     }
 

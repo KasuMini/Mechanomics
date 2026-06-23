@@ -1,14 +1,18 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
+// Renders the owned mechs and acts as a multi-select picker (toggle on click).
 public class OwnedMechList : MonoBehaviour
 {
     public MechMiniCard cardPrefab;
     public Transform content;
 
-    public event Action<MechData> MechClicked;
+    public HashSet<MechData> Selected { get; } = new HashSet<MechData>();
+    public event Action SelectionChanged;
 
     RunState runState;
+    readonly List<MechMiniCard> cards = new List<MechMiniCard>();
 
     void Start()
     {
@@ -28,6 +32,8 @@ public class OwnedMechList : MonoBehaviour
 
         for (int i = content.childCount - 1; i >= 0; i--)
             Destroy(content.GetChild(i).gameObject);
+        cards.Clear();
+        Selected.Clear();
 
         if (runState == null || cardPrefab == null) return;
 
@@ -36,8 +42,23 @@ public class OwnedMechList : MonoBehaviour
             var card = Instantiate(cardPrefab, content);
             card.Bind(mech);
             card.Clicked += OnCardClicked;
+            cards.Add(card);
         }
+        SelectionChanged?.Invoke();
     }
 
-    void OnCardClicked(MechMiniCard card) => MechClicked?.Invoke(card.Mech);
+    public void ClearSelection()
+    {
+        foreach (var c in cards) c.SetSelected(false);
+        Selected.Clear();
+        SelectionChanged?.Invoke();
+    }
+
+    void OnCardClicked(MechMiniCard card)
+    {
+        MechData mech = card.Mech;
+        if (Selected.Contains(mech)) { Selected.Remove(mech); card.SetSelected(false); }
+        else { Selected.Add(mech); card.SetSelected(true); }
+        SelectionChanged?.Invoke();
+    }
 }

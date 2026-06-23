@@ -1,10 +1,16 @@
-public struct EventOutcome
+using System.Collections.Generic;
+
+public enum OutcomeDegree { Fail, Partial, Success }
+
+public class EventOutcome
 {
-    public bool Success;
-    public int Roll;
-    public int Total;
+    public OutcomeDegree Degree;
+    public int Successes;
+    public int Required;
     public int CashDelta;
     public int QuotaDelta;
-    public bool MechDisabled;
     public string ResultText;
+    public List<int> DisabledMechIndices = new List<int>();
+
+    public bool Success => Degree == OutcomeDegree.Success;
 }
