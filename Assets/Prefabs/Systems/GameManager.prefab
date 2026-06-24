@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8079340813129331166}
   - component: {fileID: 8318888546426651647}
   - component: {fileID: 4119890178584279621}
+  - component: {fileID: 6182223409889815226}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -76,3 +77,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   stateManager: {fileID: 8318888546426651647}
   runState: {fileID: 11400000, guid: 7d6e62ab32bca8c41836366c3f42dfce, type: 2}
+--- !u!114 &6182223409889815226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8472068728620679059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41b6cee5d40d134ca65f32631b9c9ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mechanomics.Core::LoadEventText
+  list1: {fileID: 4900000, guid: 470470406d79e2d409b090480b9e0caf, type: 3}
+  list2: {fileID: 4900000, guid: 2fe0f7664aa87c14b94059b23fde0383, type: 3}
+  keyword1:
+  - Cat
+  - Dog
+  - Mech
+  - Bomb
+  - Person
+  - Kaiju
+  - Monster
+  - Dude
+  - Cryptid
+  - Thief
+  keyword2:
+  - running
+  - exploding
+  - flying
+  - raging
+  - screaming
+  - speeding
+  - leaking
