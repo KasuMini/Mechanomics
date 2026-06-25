@@ -6,7 +6,7 @@ using UnityEngine;
 // difficulty stay ~equally winnable. Within an event the legs are spread high-to-low for variety.
 public class EventGenerator : MonoBehaviour
 {
-    public LoadEventText eventText;
+    public LoadText eventText;
 
     [Header("Difficulty")]
     [Min(1)] public int maxDifficulty = 10;
