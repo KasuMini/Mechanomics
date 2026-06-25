@@ -5,121 +5,105 @@ public class EventResolverTests
 {
     class StubMech : IMechStats
     {
-        public int stat;
+        public int agility, strength, systems;
         public int reliability = 5;
         public int size = 1;
-        public int GetStat(MechStat s) => stat;
+        public int GetStat(MechStat s) =>
+            s == MechStat.Agility ? agility : s == MechStat.Strength ? strength : systems;
         public int Reliability => reliability;
         public int Size => size;
     }
 
     static IReadOnlyList<IMechStats> Pool(params IMechStats[] m) => m;
+    static List<SkillRequirement> Reqs(params SkillRequirement[] r) => new List<SkillRequirement>(r);
+    static SkillRequirement Req(MechStat s, int amount) => new SkillRequirement(s, amount);
 
-    // --- pure helpers ---
+    // --- Coverage ---
 
     [Test]
-    public void ReliabilityModifier_MapsAroundMidpoint()
+    public void Coverage_IsRatioUpToOne()
     {
-        Assert.AreEqual(-2, EventResolver.ReliabilityModifier(0));
-        Assert.AreEqual(0, EventResolver.ReliabilityModifier(5));
-        Assert.AreEqual(2, EventResolver.ReliabilityModifier(10));
+        Assert.AreEqual(0.7f, EventResolver.Coverage(7, 10), 1e-4f);
+        Assert.AreEqual(1f, EventResolver.Coverage(12, 10), 1e-4f);   // excess ignored
+        Assert.AreEqual(0f, EventResolver.Coverage(0, 10), 1e-4f);
+    }
+
+    // --- SuccessChance ---
+
+    [Test]
+    public void SuccessChance_SingleRequirement_IsThatCoverage()
+    {
+        var mechs = Pool(new StubMech { agility = 7 });
+        Assert.AreEqual(0.7f, EventResolver.SuccessChance(Reqs(Req(MechStat.Agility, 10)), mechs), 1e-4f);
     }
 
     [Test]
-    public void DieSuccesses_AddsOnePerMarginOverDc()
+    public void SuccessChance_MultiplesEveryRequirement()
     {
-        Assert.AreEqual(0, EventResolver.DieSuccesses(7, 8, 4));
-        Assert.AreEqual(1, EventResolver.DieSuccesses(8, 8, 4));
-        Assert.AreEqual(1, EventResolver.DieSuccesses(11, 8, 4));
-        Assert.AreEqual(2, EventResolver.DieSuccesses(12, 8, 4));
-        Assert.AreEqual(3, EventResolver.DieSuccesses(16, 8, 4));
+        var mechs = Pool(new StubMech { agility = 7, strength = 6 });
+        // 7/10 * 6/8 = 0.7 * 0.75
+        float expected = 0.7f * 0.75f;
+        Assert.AreEqual(expected, EventResolver.SuccessChance(
+            Reqs(Req(MechStat.Agility, 10), Req(MechStat.Strength, 8)), mechs), 1e-4f);
     }
 
     [Test]
-    public void Degree_PartialOnlyAppliesWhenMultipleRequired()
+    public void SuccessChance_AnyZeroRequirement_TanksToZero()
     {
-        Assert.AreEqual(OutcomeDegree.Fail, EventResolver.Degree(0, 1));
-        Assert.AreEqual(OutcomeDegree.Success, EventResolver.Degree(1, 1));
-        Assert.AreEqual(OutcomeDegree.Fail, EventResolver.Degree(0, 2));
-        Assert.AreEqual(OutcomeDegree.Partial, EventResolver.Degree(1, 2));
-        Assert.AreEqual(OutcomeDegree.Success, EventResolver.Degree(2, 2));
-        Assert.AreEqual(OutcomeDegree.Fail, EventResolver.Degree(1, 3));   // ceil(3/2) = 2
-        Assert.AreEqual(OutcomeDegree.Partial, EventResolver.Degree(2, 3));
-        Assert.AreEqual(OutcomeDegree.Success, EventResolver.Degree(3, 3));
-    }
-
-    // --- SkillEvent (deterministic via extreme stats) ---
-
-    [Test]
-    public void SkillEvent_StrongMech_Succeeds_AndPaysReward()
-    {
-        var ev = new SkillEvent { dc = 8, successesRequired = 1, diceSides = 6, cashReward = 500 };
-        var outcome = ev.Resolve(Pool(new StubMech { stat = 100 }), new System.Random(1));
-        Assert.AreEqual(OutcomeDegree.Success, outcome.Degree);
-        Assert.AreEqual(500, outcome.CashDelta);
+        var mechs = Pool(new StubMech { agility = 10, strength = 0 });
+        Assert.AreEqual(0f, EventResolver.SuccessChance(
+            Reqs(Req(MechStat.Agility, 10), Req(MechStat.Strength, 5)), mechs), 1e-4f);
     }
 
     [Test]
-    public void SkillEvent_WeakMech_Fails_AndAppliesPenalty()
+    public void SuccessChance_NoRequirements_IsOne()
     {
-        var ev = new SkillEvent { dc = 8, successesRequired = 1, diceSides = 6, cashPenalty = 100 };
-        // max total = 6 + 0 + relMod(0 -> -2) = 4 < 8 -> 0 successes regardless of roll
-        var outcome = ev.Resolve(Pool(new StubMech { stat = 0, reliability = 0 }), new System.Random(1));
-        Assert.AreEqual(OutcomeDegree.Fail, outcome.Degree);
-        Assert.AreEqual(-100, outcome.CashDelta);
+        Assert.AreEqual(1f, EventResolver.SuccessChance(Reqs(), Pool()), 1e-4f);
     }
 
     [Test]
-    public void SkillEvent_TwoMechs_PoolSuccesses_ToClearHigherRequirement()
+    public void SuccessChance_ExtraGate_IsStrictlyHarder()
     {
-        var ev = new SkillEvent { dc = 8, successesRequired = 2, diceSides = 6 };
-        // each strong mech always yields >=1 success; two -> >=2 -> Success
-        var outcome = ev.Resolve(Pool(new StubMech { stat = 8 }, new StubMech { stat = 8 }), new System.Random(1));
-        Assert.AreEqual(OutcomeDegree.Success, outcome.Degree);
-        Assert.GreaterOrEqual(outcome.Successes, 2);
+        // Same team, same Agi gate; adding a second (unmet) gate must lower the chance.
+        var mechs = Pool(new StubMech { agility = 9, strength = 5 });
+        float oneGate = EventResolver.SuccessChance(Reqs(Req(MechStat.Agility, 9)), mechs);
+        float twoGates = EventResolver.SuccessChance(Reqs(Req(MechStat.Agility, 9), Req(MechStat.Strength, 8)), mechs);
+        Assert.Greater(oneGate, twoGates);
     }
 
     [Test]
-    public void SkillEvent_NoMechs_Fails()
+    public void SumStat_AddsAcrossSelectedMechs()
     {
-        var ev = new SkillEvent { successesRequired = 1 };
-        var outcome = ev.Resolve(Pool(), new System.Random(1));
-        Assert.AreEqual(OutcomeDegree.Fail, outcome.Degree);
+        var mechs = Pool(new StubMech { agility = 3 }, new StubMech { agility = 4 });
+        Assert.AreEqual(7, EventResolver.SumStat(mechs, MechStat.Agility));
     }
 
-    // --- CombatEvent ---
+    // --- SkillEvent.Resolve (chance 0/1 are deterministic for any seed) ---
 
     [Test]
-    public void CombatEvent_StrongMech_Wins_NoLosses()
+    public void SkillEvent_FullyCovered_AlwaysSucceeds_AndPays()
     {
-        var ev = new CombatEvent { dc = 8, diceSides = 6, enemyHp = 3, enemyPower = 2, enemyHitOn = 4, maxRounds = 4, cashReward = 800 };
-        // stat 100 -> first attack deals far more than 3 -> win before the enemy ever acts
-        var outcome = ev.Resolve(Pool(new StubMech { stat = 100, size = 1 }), new System.Random(1));
-        Assert.AreEqual(OutcomeDegree.Success, outcome.Degree);
-        Assert.AreEqual(800, outcome.CashDelta);
-        Assert.IsEmpty(outcome.DisabledMechIndices);
-    }
-
-    [Test]
-    public void CombatEvent_OverwhelmedMech_Loses_AndIsDisabled()
-    {
-        // mech never damages (total <= 4 < dc 8); enemy always hits (enemyHitOn 1)
-        var ev = new CombatEvent { dc = 8, diceSides = 6, enemyHp = 100, enemyPower = 1, enemyHitOn = 1, maxRounds = 1 };
-        var outcome = ev.Resolve(Pool(new StubMech { stat = 0, reliability = 0, size = 1 }), new System.Random(1));
-        Assert.AreEqual(OutcomeDegree.Fail, outcome.Degree);
-        CollectionAssert.Contains(outcome.DisabledMechIndices, 0);
+        var ev = new SkillEvent { cashReward = 500, quotaReward = 1 };
+        ev.requirements.Add(Req(MechStat.Agility, 5));
+        for (int seed = 0; seed < 20; seed++)
+        {
+            var outcome = ev.Resolve(Pool(new StubMech { agility = 5 }), new System.Random(seed));
+            Assert.AreEqual(OutcomeDegree.Success, outcome.Degree);
+            Assert.AreEqual(500, outcome.CashDelta);
+            Assert.AreEqual(1, outcome.QuotaDelta);
+        }
     }
 
     [Test]
-    public void CombatEvent_SizeIsHitPoints()
+    public void SkillEvent_ZeroCovered_AlwaysFails_AndPenalizes()
     {
-        // 1 wound/round (enemyHitOn 1, power 1), mech never wins; size-3 soaks 2, disabled on the 3rd
-        var twoRounds = new CombatEvent { dc = 8, diceSides = 6, enemyHp = 100, enemyPower = 1, enemyHitOn = 1, maxRounds = 2 };
-        var a = twoRounds.Resolve(Pool(new StubMech { stat = 0, reliability = 0, size = 3 }), new System.Random(1));
-        Assert.IsEmpty(a.DisabledMechIndices);   // 2 wounds < size 3
-
-        var threeRounds = new CombatEvent { dc = 8, diceSides = 6, enemyHp = 100, enemyPower = 1, enemyHitOn = 1, maxRounds = 3 };
-        var b = threeRounds.Resolve(Pool(new StubMech { stat = 0, reliability = 0, size = 3 }), new System.Random(1));
-        CollectionAssert.Contains(b.DisabledMechIndices, 0);  // 3 wounds == size 3
+        var ev = new SkillEvent { cashPenalty = 100 };
+        ev.requirements.Add(Req(MechStat.Strength, 5));
+        for (int seed = 0; seed < 20; seed++)
+        {
+            var outcome = ev.Resolve(Pool(new StubMech { strength = 0 }), new System.Random(seed));
+            Assert.AreEqual(OutcomeDegree.Fail, outcome.Degree);
+            Assert.AreEqual(-100, outcome.CashDelta);
+        }
     }
 }

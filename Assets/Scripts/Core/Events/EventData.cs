@@ -18,6 +18,8 @@ public class EventData : ScriptableObject
 
     public EventOutcome Resolve(IReadOnlyList<IMechStats> mechs, System.Random rng) => behaviour.Resolve(mechs, rng);
 
+    public string Preview(IReadOnlyList<IMechStats> selected) => behaviour != null ? behaviour.Preview(selected) : "(no behaviour)";
+
     public static EventData Create(string title, string description, int suggestedSize, EventBehaviour behaviour)
     {
         var data = CreateInstance<EventData>();

@@ -1,3 +1,6 @@
+// Combat is shelved while we build out the skill-event system. Restore by removing the block comment
+// (it depends on the old dice helpers/outcome fields, so it won't compile until those return).
+/*
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -103,3 +106,4 @@ public class CombatEvent : EventBehaviour
         return best;
     }
 }
+*/

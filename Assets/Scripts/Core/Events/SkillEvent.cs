@@ -1,56 +1,74 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
-// A dice-pool skill check: each assigned mech rolls and the successes are summed vs successesRequired.
+// A multi-skill check: each requirement's coverage (capped at 1, excess ignored) multiplies into a
+// success chance the dispatch rolls against.
 [Serializable]
 public class SkillEvent : EventBehaviour
 {
-    [Header("Challenge")]
-    public MechStat testedStat = MechStat.Strength;
-    [Min(1)] public int dc = 8;
-    [Min(1)] public int successesRequired = 1;
-    [Min(2)] public int diceSides = 6;
+    [Header("Requirements")]
+    public List<SkillRequirement> requirements = new List<SkillRequirement>();
 
     [Header("Rewards")]
     public int cashReward = 500;
-    public int partialReward = 150;
     public int quotaReward = 1;
     public int cashPenalty = 100;
 
     [Header("Result text")]
     [TextArea(2, 4)] public string successText;
-    [TextArea(2, 4)] public string partialText;
     [TextArea(2, 4)] public string failureText;
 
-    public override string Summary => $"{testedStat} ×{successesRequired} (DC {dc})";
+    public override string Summary
+    {
+        get
+        {
+            if (requirements == null || requirements.Count == 0) return "(no requirements)";
+            var parts = new string[requirements.Count];
+            for (int i = 0; i < requirements.Count; i++)
+                parts[i] = $"{requirements[i].stat} {requirements[i].amount}";
+            return string.Join(", ", parts);
+        }
+    }
 
     public override EventOutcome Resolve(IReadOnlyList<IMechStats> mechs, System.Random rng)
     {
-        int successes = 0;
-        if (mechs != null)
+        float chance = EventResolver.SuccessChance(requirements, mechs);
+        bool ok = rng.NextDouble() < chance;
+
+        // TODO(reliability): per-unreliable-mech malfunction -> Partial + malus goes here.
+        var outcome = new EventOutcome { Chance = chance };
+        if (ok)
         {
-            foreach (IMechStats m in mechs)
-            {
-                int total = EventResolver.Roll(rng, diceSides)
-                          + m.GetStat(testedStat)
-                          + EventResolver.ReliabilityModifier(m.Reliability);
-                successes += EventResolver.DieSuccesses(total, dc, EventResolver.SUCCESS_MARGIN);
-            }
+            outcome.Degree = OutcomeDegree.Success;
+            outcome.CashDelta = cashReward;
+            outcome.QuotaDelta = quotaReward;
+            outcome.ResultText = successText;
         }
-
-        OutcomeDegree degree = EventResolver.Degree(successes, successesRequired);
-        var outcome = new EventOutcome { Degree = degree, Successes = successes, Required = successesRequired };
-
-        switch (degree)
+        else
         {
-            case OutcomeDegree.Success:
-                outcome.CashDelta = cashReward; outcome.QuotaDelta = quotaReward; outcome.ResultText = successText; break;
-            case OutcomeDegree.Partial:
-                outcome.CashDelta = partialReward; outcome.ResultText = partialText; break;
-            default:
-                outcome.CashDelta = -cashPenalty; outcome.ResultText = failureText; break;
+            outcome.Degree = OutcomeDegree.Fail;
+            outcome.CashDelta = -cashPenalty;
+            outcome.ResultText = failureText;
         }
         return outcome;
+    }
+
+    public override string Preview(IReadOnlyList<IMechStats> selected)
+    {
+        var sb = new StringBuilder();
+        if (requirements != null)
+        {
+            for (int i = 0; i < requirements.Count; i++)
+            {
+                SkillRequirement r = requirements[i];
+                int sum = EventResolver.SumStat(selected, r.stat);
+                sb.AppendLine($"{r.stat} {sum}/{r.amount}");
+            }
+        }
+        float chance = EventResolver.SuccessChance(requirements, selected);
+        sb.Append($"Success: {chance:P0}");
+        return sb.ToString();
     }
 }

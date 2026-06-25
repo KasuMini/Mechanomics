@@ -17,9 +17,10 @@ public class DispatchManager : MonoBehaviour
     void Awake()
     {
         todaysEvents = new List<EventData>();
+        int difficulty = runState != null ? Mathf.Max(1, runState.Day) : 1;
         for (int i = 0; i < 9; i++)
         {
-            todaysEvents.Add(generator.GenerateNewEvent());
+            todaysEvents.Add(generator.GenerateNewEvent(difficulty));
         }
     }
 

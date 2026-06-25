@@ -13,7 +13,6 @@ public class DayController : MonoBehaviour
 
     void Start()
     {
-        if (eventDisplay != null) eventDisplay.Show(CurrentEvent());
         if (ownedList != null) ownedList.SelectionChanged += OnSelectionChanged;
         if (dispatchButton != null) dispatchButton.onClick.AddListener(Dispatch);
         OnSelectionChanged();
@@ -26,7 +25,16 @@ public class DayController : MonoBehaviour
 
     void OnSelectionChanged()
     {
+        if (eventDisplay != null) eventDisplay.UpdatePreview(CurrentEvent(), SelectedStats());
         SetButtonInteractable(ownedList != null && ownedList.Selected.Count > 0);
+    }
+
+    List<IMechStats> SelectedStats()
+    {
+        var list = new List<IMechStats>();
+        if (ownedList != null)
+            foreach (MechData m in ownedList.Selected) list.Add(m);
+        return list;
     }
 
     public void Dispatch()

@@ -1,31 +1,36 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-// Pure dice-pool helpers. Used by the event behaviours and covered by EventResolverTests.
+// Pure resolution helpers. Covered by EventResolverTests.
 public static class EventResolver
 {
-    public const int SUCCESS_MARGIN = 4;
+    public static int SumStat(IReadOnlyList<IMechStats> mechs, MechStat stat)
+    {
+        if (mechs == null) return 0;
+        int sum = 0;
+        foreach (IMechStats m in mechs) sum += m.GetStat(stat);
+        return sum;
+    }
 
-    // 0 -> -2, 5 -> 0, 10 -> +2
+    // min(sum, amount) / amount — excess over a requirement is ignored.
+    public static float Coverage(int sum, int amount)
+    {
+        return amount <= 0 ? 1f : Mathf.Clamp01((float)sum / amount);
+    }
+
+    // Product of every requirement's coverage; no requirements -> 1.
+    public static float SuccessChance(IReadOnlyList<SkillRequirement> reqs, IReadOnlyList<IMechStats> mechs)
+    {
+        if (reqs == null || reqs.Count == 0) return 1f;
+        float chance = 1f;
+        for (int i = 0; i < reqs.Count; i++)
+            chance *= Coverage(SumStat(mechs, reqs[i].stat), reqs[i].amount);
+        return chance;
+    }
+
+    // 0 -> -2, 5 -> 0, 10 -> +2. Kept for the future reliability stub.
     public static int ReliabilityModifier(int reliability)
     {
         return Mathf.RoundToInt((Mathf.Clamp(reliability, 0, 10) - 5) * 0.4f);
-    }
-
-    public static int Roll(System.Random rng, int sides)
-    {
-        return rng.Next(1, Mathf.Max(2, sides) + 1);
-    }
-
-    // One die's contribution: clears the DC for 1, plus 1 more per `margin` over it.
-    public static int DieSuccesses(int total, int dc, int margin)
-    {
-        return total < dc ? 0 : 1 + (total - dc) / margin;
-    }
-
-    public static OutcomeDegree Degree(int successes, int required)
-    {
-        if (successes >= required) return OutcomeDegree.Success;
-        if (required >= 2 && successes >= (required + 1) / 2) return OutcomeDegree.Partial;
-        return OutcomeDegree.Fail;
     }
 }
