@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EventGenerator : MonoBehaviour
 {
-    public LoadEventText eventText;
+    public LoadText eventText;
     public EventBehaviour behaviour;
 
     void Start()
