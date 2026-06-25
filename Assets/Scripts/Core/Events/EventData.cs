@@ -23,6 +23,7 @@ public class EventData : ScriptableObject
     public static EventData Create(string title, string description, int suggestedSize, EventBehaviour behaviour)
     {
         var data = CreateInstance<EventData>();
+        data.name = title;              // Object name -> what inspector reference fields show
         data.title = title;
         data.description = description;
         data.suggestedSize = suggestedSize;

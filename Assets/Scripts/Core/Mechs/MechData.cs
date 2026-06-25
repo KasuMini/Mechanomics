@@ -38,6 +38,7 @@ public class MechData : ScriptableObject, IMechStats
     public static MechData Create(string name, string pilot, int agility, int strength, int systems, int reliability, int size)
     {
         var data = CreateInstance<MechData>();
+        data.name = name;               // Object name -> what inspector reference fields show
         data.mechName = name;
         data.pilotName = pilot;
         data.agilityStat = agility;

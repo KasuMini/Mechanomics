@@ -13,7 +13,7 @@ public class EventGenerator : MonoBehaviour
     [Range(1, 3)] public int maxStats = 3;
 
     [Header("Tuning")]
-    public float poolPerMech = 4.5f;        // average stat one mech adds to a pool
+    public float poolPerMech = 5f;          // average stat one mech adds to a pool (stats roll 1-9)
     [Range(0.1f, 1f)] public float breadthDiscount = 0.7f;   // gamma: leg shrink per extra gate
     [Range(0f, 1.5f)] public float legVariety = 0.6f;        // log2 spread of legs around the target
 
