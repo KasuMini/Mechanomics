@@ -19,6 +19,7 @@ public class MarketButtons : MonoBehaviour
 
     public void Purchase()
     {
+        runState.TrySpend(market.availableMechs[buttonID].cost);
         runState.AddMech(market.availableMechs[buttonID]);
         card.SetActive(false);
         

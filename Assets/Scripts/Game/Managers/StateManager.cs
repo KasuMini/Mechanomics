@@ -15,8 +15,8 @@ public class StateManager : MonoBehaviour
     public int currentScene;
     public GameplayState currentState;
 
-    public float timer;
-    public int hour;
+    public float timer = 60f;
+    public int hour = 7;
 
 
     void Start()
@@ -26,7 +26,8 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-        if (currentState == GameplayState.CityActive)
+        //if (currentState == GameplayState.CityActive)
+        if (currentScene == 3)
         {
             timer -= Time.deltaTime;
             if (timer <= 0)

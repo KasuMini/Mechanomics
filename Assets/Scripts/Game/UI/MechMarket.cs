@@ -3,23 +3,17 @@ using UnityEngine;
 
 public class MechMarket : MonoBehaviour
 {
+    // This script generates mechs for the preparation market using the MechGenerator GenerateNewData Function and populates the array.
+
     public MechGenerator generator;
     public MechData[] availableMechs;
 
     private void Awake()
     {
         availableMechs = new MechData[6];
-        availableMechs[0] = generator.GenerateNewData();
-        availableMechs[1] = generator.GenerateNewData();
-        availableMechs[2] = generator.GenerateNewData();
-        availableMechs[3] = generator.GenerateNewData();
-        availableMechs[4] = generator.GenerateNewData();
-        availableMechs[5] = generator.GenerateNewData();
+        for (int i = 0; i < availableMechs.Length; i++)
+        {
+            availableMechs[i] = generator.GenerateNewData();
+        }
     }
-
-    void Start()
-    {
-
-    }
-
 }
