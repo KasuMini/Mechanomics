@@ -14,8 +14,8 @@ public class MechData : ScriptableObject, IMechStats
     [Range(0, 10)] public int reliabilityStat;
     [Range(1, 3)]  public int size = 1;
 
-    // (agility + strength + systems) * reliability, floored
-    public int cost { get { return Mathf.FloorToInt(((float)agilityStat + strengthStat + systemsStat) * reliabilityStat); } }
+    // (agility + strength + systems + reliability) * x, floored
+    public int cost { get { return Mathf.FloorToInt(agilityStat + strengthStat + systemsStat + reliabilityStat) * 5; } }
 
     public int Reliability => reliabilityStat;
     public int Size => size;

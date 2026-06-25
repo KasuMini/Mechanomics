@@ -5,13 +5,23 @@ using UnityEngine;
 public class DispatchManager : MonoBehaviour
 {
     [SerializeField] private RunState runState;
-    [SerializeField] private List<EventData> todaysEvents = new List<EventData>();
+    [SerializeField] private List<EventData> todaysEvents;
+    public EventGenerator generator;
 
     public IReadOnlyList<EventData> TodaysEvents => todaysEvents;
 
     public event Action<EventData, IReadOnlyList<MechData>, EventOutcome> EventResolved;
 
     private readonly System.Random rng = new System.Random();
+
+    void Awake()
+    {
+        todaysEvents = new List<EventData>();
+        for (int i = 0; i < 9; i++)
+        {
+            todaysEvents.Add(generator.GenerateNewEvent());
+        }
+    }
 
     public EventOutcome Dispatch(EventData job, IReadOnlyList<MechData> mechs)
     {
