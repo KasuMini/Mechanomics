@@ -7,12 +7,15 @@ public class MechData : ScriptableObject, IMechStats
     public string mechName;
     public string pilotName;
 
+    public const int StatCapPrimary = 20;   // agility / strength / reliability ceiling
+    public const int StatCapSystems = 8;
+
     [Header("Stat")]
-    [Range(0, 10)] public int agilityStat;
-    [Range(0, 10)] public int strengthStat;
-    [Range(0, 4)]  public int systemsStat;
-    [Range(0, 10)] public int reliabilityStat;
-    [Range(1, 3)]  public int size = 1;
+    [Range(0, StatCapPrimary)] public int agilityStat;
+    [Range(0, StatCapPrimary)] public int strengthStat;
+    [Range(0, StatCapSystems)] public int systemsStat;
+    [Range(0, StatCapPrimary)] public int reliabilityStat;
+    [Range(1, 3)]              public int size = 1;
 
     [Header("Equipment")]
     public EquipmentData innateEquipment;
@@ -22,6 +25,11 @@ public class MechData : ScriptableObject, IMechStats
 
     public int Reliability => reliabilityStat;
     public int Size => size;
+
+    // Notch span on the bottom inventory bar: size1=2, size2=3, size3=4.
+    public const int TrackNotches = MechInventory.Capacity;
+    public static int SlotSpan(int size) => size + 1;
+    public int Span => SlotSpan(size);
 
     public int GetStat(MechStat stat)
     {
