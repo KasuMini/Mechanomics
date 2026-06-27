@@ -11,7 +11,7 @@ public class EventData : ScriptableObject
     [Header("Logistics")]
     [Range(1, 4)] public int suggestedSize = 1;
 
-    [SerializeReference, SubclassSelector]
+    [SerializeReference]
     public EventBehaviour behaviour;
 
     public string Summary => behaviour != null ? behaviour.Summary : "(no behaviour)";
