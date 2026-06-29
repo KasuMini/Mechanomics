@@ -8,7 +8,7 @@ public class PremadeEvents : MonoBehaviour
 {
     [SerializeField] private List<EventData> events = new List<EventData>();
 
-    List<EventData> pool;
+    [SerializeField] List<EventData> pool;
 
     // Draw up to n distinct random events into dest, removing them from the pool.
     public void DrawInto(List<EventData> dest, int n)

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 // Self-contained per event so the future scheduler (multiple events / travel time) can drive it unchanged.
 public class DayController : MonoBehaviour
 {
+    public StateManager stateManager;
     public DispatchManager dispatch;
     public EventDisplay eventDisplay;
     public OwnedMechList ownedList;
