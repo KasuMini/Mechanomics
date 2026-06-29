@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Crimson
   m_EditorClassIdentifier: Mechanomics.Core::MechPalette
   primary:
-    okL: 0.51928675
-    okC: 0.031412307
-    okH: 245.08179
-    contrast: 0.55
-    hueShift: 0
+    okL: 0.866
+    okC: 0.0168
+    okH: 198.5
+    contrast: 0.806
+    falloff: 0.089
+    hueShift: -40
   secondary:
-    okL: 0.391
-    okC: 0.4
-    okH: 116.8
-    contrast: 0.745
-    hueShift: 0
+    okL: 0.585
+    okC: 0.175
+    okH: 24.9
+    contrast: 0.767
+    falloff: 1.48
+    hueShift: -40
   glow:
-    okL: 0.83579546
-    okC: 0.16896915
-    okH: 91.76665
-    contrast: 0.55
-    hueShift: 20
+    okL: 1
+    okC: 0.3234
+    okH: 164
+    contrast: 1
+    falloff: -0.545
+    hueShift: -10.8

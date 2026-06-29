@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Frost
   m_EditorClassIdentifier: Mechanomics.Core::MechPalette
   primary:
-    okL: 0.5631414
-    okC: 0.11864856
+    okL: 0.648
+    okC: 0.061
     okH: 245.04648
-    contrast: 0.55
-    hueShift: 0
+    contrast: 0.825
+    falloff: 0.19
+    hueShift: 40
   secondary:
-    okL: 0.84723294
-    okC: 0.10113281
+    okL: 0.958
+    okC: 0.112
     okH: 225.42921
     contrast: 0.55
+    falloff: 0
     hueShift: 0
   glow:
-    okL: 0.9523838
-    okC: 0.004493667
-    okH: 214.32878
-    contrast: 0.55
-    hueShift: 20
+    okL: 0.866
+    okC: 0.4
+    okH: 237.8
+    contrast: 0.89
+    falloff: -0.68
+    hueShift: -40

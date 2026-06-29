@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Void
   m_EditorClassIdentifier: Mechanomics.Core::MechPalette
   primary:
-    okL: 0.29641348
+    okL: 0.418
     okC: 0.0143901175
     okH: 285.48895
     contrast: 0.55
+    falloff: 0
     hueShift: 0
   secondary:
-    okL: 0.5676018
-    okC: 0.20209424
-    okH: 283.0838
-    contrast: 0.55
+    okL: 0.371
+    okC: 0
+    okH: 177.7
+    contrast: 0.872
+    falloff: -0.41
     hueShift: 0
   glow:
-    okL: 0.7691557
-    okC: 0.13217007
-    okH: 191.6635
-    contrast: 0.55
-    hueShift: 20
+    okL: 0.859
+    okC: 0.213
+    okH: 289.5
+    contrast: 0.736
+    falloff: -0.08
+    hueShift: 19.9

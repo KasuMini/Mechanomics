@@ -16,7 +16,7 @@ MonoBehaviour:
     okL: 0.548931
     okC: 0.050418
     okH: 215.6528
-    contrast: 0.6
+    contrast: 0.789
     falloff: 0
     hueShift: 0
   secondary:

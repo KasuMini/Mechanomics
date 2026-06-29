@@ -13,23 +13,23 @@ MonoBehaviour:
   m_Name: Rust
   m_EditorClassIdentifier: Mechanomics.Core::MechPalette
   primary:
-    okL: 0.47078353
-    okC: 0.112142466
-    okH: 50.845234
-    contrast: 0.606
-    falloff: 0.17
-    hueShift: 0
-  secondary:
-    okL: 0.641
-    okC: 0.4
-    okH: 50.7
-    contrast: 0.715
-    falloff: 0.03
+    okL: 0.799
+    okC: 0.045
+    okH: 56.4
+    contrast: 0.812
+    falloff: 0.08
     hueShift: -40
+  secondary:
+    okL: 0.685
+    okC: 0.139
+    okH: 53.5
+    contrast: 0.715
+    falloff: -0.02
+    hueShift: -36
   glow:
-    okL: 0.70967764
-    okC: 0.018115727
+    okL: 0.82
+    okC: 0.374
     okH: 201.30907
-    contrast: 0.55
-    falloff: 0
-    hueShift: 20
+    contrast: 0.804
+    falloff: 0.17
+    hueShift: 39.6

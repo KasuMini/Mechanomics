@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: Hornet
   m_EditorClassIdentifier: Mechanomics.Core::MechPalette
   primary:
-    okL: 0.934264
-    okC: 0.1853
-    okH: 103.7892
-    contrast: 0.6
+    okL: 0.943
+    okC: 0.155
+    okH: 103.7
+    contrast: 0.811
     falloff: 0
     hueShift: 0
   secondary:
-    okL: 0.477507
-    okC: 0.059627
-    okH: 242.6855
-    contrast: 0.6
-    falloff: 0
-    hueShift: 0
+    okL: 0.345
+    okC: 0.004
+    okH: 265
+    contrast: 1
+    falloff: 0.009
+    hueShift: -40
   glow:
     okL: 0.81589
     okC: 0.122919

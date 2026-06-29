@@ -22,6 +22,20 @@ public class OkColorTests
     }
 
     [Test]
+    public void OutOfGamut_ReducesChroma_PreservesHue()
+    {
+        // High-chroma red-orange, far outside sRGB.
+        var c = OkColor.OklchToSrgb(0.712f, 0.4f, 44.9f);
+        Assert.That(c.r, Is.InRange(0f, 1f));
+        Assert.That(c.g, Is.InRange(0f, 1f));
+        Assert.That(c.b, Is.InRange(0f, 1f));
+
+        OkColor.SrgbToOklch(c, out _, out float ch, out float h);
+        Assert.That(h, Is.EqualTo(44.9f).Within(2f));   // hue unchanged
+        Assert.Less(ch, 0.4f);                           // chroma pulled into gamut
+    }
+
+    [Test]
     public void Lightness_Ordered_BlackToWhite()
     {
         OkColor.SrgbToOklch(Color.black, out float lo, out _, out _);
