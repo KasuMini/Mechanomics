@@ -6,8 +6,6 @@ public class DispatchManager : MonoBehaviour
 {
     [SerializeField] private List<EventData> todaysEvents;
     public EventGenerator generator;
-    public PremadeEvents premades;
-
 
     public IReadOnlyList<EventData> TodaysEvents => todaysEvents;
 
@@ -24,7 +22,7 @@ public class DispatchManager : MonoBehaviour
             todaysEvents.Add(generator.GenerateNewEvent(difficulty));
         }
 
-        if (premades != null) premades.DrawInto(todaysEvents, 2);
+        if (PremadeEvents.Instance != null) PremadeEvents.Instance.DrawInto(todaysEvents, 2);
     }
 
     public EventOutcome Dispatch(EventData job, IReadOnlyList<MechData> mechs)

@@ -1,14 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// A pool of hand-authored events. Draws (and removes) random events from a working copy
-// that refills from the serialized source the first time it's used - so the pool is
-// reinstated for each fresh instance (each new run / scene load).
+// A pool of hand-authored events. Its GameManager is DontDestroyOnLoad, so this instance
+// persists into City (where DispatchManager runs) - reach it via Instance rather than a
+// scene reference. The pool depletes as events are drawn; reset on a new run.
 public class PremadeEvents : MonoBehaviour
 {
-    [SerializeField] private List<EventData> events = new List<EventData>();
+    public static PremadeEvents Instance { get; private set; }
 
-    List<EventData> pool;
+    [SerializeField] private List<EventData> events = new List<EventData>();
+    private List<EventData> pool;
+
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
+    // Discard the working pool so the next draw reseeds a full set (call on a new run).
+    public void ResetPool() => pool = null;
 
     // Draw up to n distinct random events into dest, removing them from the pool.
     public void DrawInto(List<EventData> dest, int n)
