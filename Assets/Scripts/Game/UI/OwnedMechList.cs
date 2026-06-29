@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ using UnityEngine.UI;
 public class OwnedMechList : MonoBehaviour
 {
     public MechMiniCard cardPrefab;
+    public MechSpriteLibrary sprites;  // (size, variant) -> mech sprite
     public Transform content;          // existing wiring; its parent (Viewport) is the track
     public float cardInset = 6f;       // px shrink so neighbouring cards show a gap
     public Color notchColor = new Color(1f, 1f, 1f, 0.12f);
@@ -31,6 +33,9 @@ public class OwnedMechList : MonoBehaviour
         // The track is fixed-width and absolutely positioned — kill the old auto-layout/scroll.
         var scroll = GetComponent<ScrollRect>();
         if (scroll != null) scroll.enabled = false;
+        // The bar masked overflow for scrolling; we want sprites to pop out the top.
+        var mask = track != null ? track.GetComponent<RectMask2D>() : null;
+        if (mask != null) mask.enabled = false;
         DisableLayout(content);
         EnsureNotches();
     }
@@ -75,7 +80,7 @@ public class OwnedMechList : MonoBehaviour
         rt.anchorMin = rt.anchorMax = new Vector2(0f, 0.5f);
         rt.pivot = new Vector2(0f, 0.5f);
         card.AttachTrack(this);
-        card.Bind(mech);
+        card.Bind(mech, sprites != null ? sprites.Get(mech.size, mech.variant) : null);
         card.Clicked += OnCardClicked;
         cardByMech[mech] = card;
     }
@@ -148,6 +153,73 @@ public class OwnedMechList : MonoBehaviour
         if (Selected.Contains(mech)) { Selected.Remove(mech); card.SetSelected(false); }
         else { Selected.Add(mech); card.SetSelected(true); }
         SelectionChanged?.Invoke();
+    }
+
+    // --- Hover tooltip (built at runtime on the root canvas) ---
+
+    GameObject tooltip;
+    RectTransform tooltipRT;
+    TextMeshProUGUI tooltipText;
+    Canvas tooltipCanvas;
+    RectTransform canvasRT;
+
+    public void ShowTooltip(MechData mech, RectTransform cardRT)
+    {
+        if (mech == null || cardRT == null) return;
+        EnsureTooltip();
+        if (tooltip == null) return;
+        tooltipText.text = $"<b>{mech.mechName}</b>\n{MechMiniCard.ColoredStats(mech)}";
+        tooltip.SetActive(true);
+        tooltip.transform.SetAsLastSibling();
+
+        Camera cam = tooltipCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : tooltipCanvas.worldCamera;
+        var corners = new Vector3[4];
+        cardRT.GetWorldCorners(corners);                       // 1=top-left, 2=top-right
+        Vector2 screen = RectTransformUtility.WorldToScreenPoint(cam, (corners[1] + corners[2]) * 0.5f);
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, screen, cam, out var local))
+            tooltipRT.anchoredPosition = local + new Vector2(0f, 8f);
+    }
+
+    public void HideTooltip()
+    {
+        if (tooltip != null) tooltip.SetActive(false);
+    }
+
+    void EnsureTooltip()
+    {
+        if (tooltip != null) return;
+        var canvas = GetComponentInParent<Canvas>();
+        if (canvas == null) return;
+        tooltipCanvas = canvas.rootCanvas != null ? canvas.rootCanvas : canvas;
+        canvasRT = (RectTransform)tooltipCanvas.transform;
+
+        tooltip = new GameObject("MechTooltip", typeof(RectTransform), typeof(Image));
+        tooltipRT = (RectTransform)tooltip.transform;
+        tooltipRT.SetParent(canvasRT, false);
+        tooltipRT.anchorMin = tooltipRT.anchorMax = new Vector2(0.5f, 0.5f);
+        tooltipRT.pivot = new Vector2(0.5f, 0f);               // grows upward from the anchor point
+
+        var bg = tooltip.GetComponent<Image>();
+        bg.color = new Color(0.05f, 0.06f, 0.08f, 0.92f);
+        bg.raycastTarget = false;
+
+        var hlg = tooltip.AddComponent<HorizontalLayoutGroup>();
+        hlg.padding = new RectOffset(8, 8, 6, 6);
+        hlg.childControlWidth = hlg.childControlHeight = true;
+        hlg.childForceExpandWidth = hlg.childForceExpandHeight = false;
+        var fitter = tooltip.AddComponent<ContentSizeFitter>();
+        fitter.horizontalFit = fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        var textGO = new GameObject("Text", typeof(RectTransform));
+        textGO.transform.SetParent(tooltipRT, false);
+        tooltipText = textGO.AddComponent<TextMeshProUGUI>();
+        tooltipText.raycastTarget = false;
+        tooltipText.textWrappingMode = TextWrappingModes.NoWrap;
+        tooltipText.alignment = TextAlignmentOptions.Center;
+        if (cardPrefab != null && cardPrefab.model != null) tooltipText.font = cardPrefab.model.font;
+        tooltipText.fontSize = 16f;
+
+        tooltip.SetActive(false);
     }
 
     // --- Notch dividers (visual guide) ---

@@ -16,6 +16,7 @@ public class MechData : ScriptableObject, IMechStats
     [Range(0, StatCapSystems)] public int systemsStat;
     [Range(0, StatCapPrimary)] public int reliabilityStat;
     [Range(1, 3)]              public int size = 1;
+    public int variant;        // cosmetic sprite row
 
     [Header("Equipment")]
     public EquipmentData innateEquipment;
@@ -43,7 +44,7 @@ public class MechData : ScriptableObject, IMechStats
     }
 
 
-    public static MechData Create(string name, string pilot, int agility, int strength, int systems, int reliability, int size)
+    public static MechData Create(string name, string pilot, int agility, int strength, int systems, int reliability, int size, int variant = 0)
     {
         var data = CreateInstance<MechData>();
         data.name = name;               // Object name -> what inspector reference fields show
@@ -54,6 +55,7 @@ public class MechData : ScriptableObject, IMechStats
         data.systemsStat = systems;
         data.reliabilityStat = reliability;
         data.size = size;
+        data.variant = variant;
         return data;
     }
 }

@@ -5,10 +5,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MechMiniCard : MonoBehaviour,
-    IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+    IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler,
+    IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI model;
-    public TextMeshProUGUI stats;
+    public Image mechImage;
+
+    // Stat colours: AGI / STR / SYS / REL.
+    const string ColAgi = "#5AD1FF", ColStr = "#FF6B5A", ColSys = "#B58CFF", ColRel = "#FFD24A";
 
     public MechData Mech { get; private set; }
     public event Action<MechMiniCard> Clicked;
@@ -23,19 +27,22 @@ public class MechMiniCard : MonoBehaviour,
     {
         bg = GetComponent<Image>();
         if (bg != null) normalColor = bg.color;
-        // Click/drag are handled here; the old Button would fight us for pointer events.
-        var btn = GetComponent<Button>();
-        if (btn != null) btn.enabled = false;
     }
 
     public void AttachTrack(OwnedMechList list) => owner = list;
 
-    public void Bind(MechData mech)
+    // Stats as coloured "agi/str/sys/rel" — shared by the card label and the hover tooltip.
+    public static string ColoredStats(MechData m) =>
+        $"<color={ColAgi}>{m.agilityStat}</color>/<color={ColStr}>{m.strengthStat}</color>/" +
+        $"<color={ColSys}>{m.systemsStat}</color>/<color={ColRel}>{m.reliabilityStat}</color>";
+
+    // Sprite size/placement live on the prefab's MechSprite RectTransform — here we just fill it.
+    public void Bind(MechData mech, Sprite sprite)
     {
         Mech = mech;
-        model.text = mech.mechName;
-        stats.text = $"AGI {mech.agilityStat}  STR {mech.strengthStat}  " +
-                     $"SYS {mech.systemsStat}  REL {mech.reliabilityStat}  Sz{mech.size}";
+        model.text = $"{mech.mechName} {ColoredStats(mech)}";
+        mechImage.sprite = sprite;
+        mechImage.enabled = sprite != null;
     }
 
     public void SetSelected(bool on)
@@ -49,6 +56,7 @@ public class MechMiniCard : MonoBehaviour,
     {
         if (owner == null) return;
         didDrag = true;
+        owner.HideTooltip();
         transform.SetAsLastSibling();
         float leftX = owner.PointerToTrackX(e.position, e.pressEventCamera);
         DragGrabOffsetX = leftX - ((RectTransform)transform).anchoredPosition.x;
@@ -70,5 +78,15 @@ public class MechMiniCard : MonoBehaviour,
     {
         if (didDrag) { didDrag = false; return; }   // a drag ended here — not a real click
         Clicked?.Invoke(this);
+    }
+
+    public void OnPointerEnter(PointerEventData e)
+    {
+        if (owner != null) owner.ShowTooltip(Mech, (RectTransform)transform);
+    }
+
+    public void OnPointerExit(PointerEventData e)
+    {
+        if (owner != null) owner.HideTooltip();
     }
 }

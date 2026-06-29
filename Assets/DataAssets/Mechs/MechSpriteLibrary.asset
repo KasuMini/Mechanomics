@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1276f0cbeed3224d99a284b6709ed104, type: 3}
+  m_Name: MechSpriteLibrary
+  m_EditorClassIdentifier: Mechanomics.Core::MechSpriteLibrary
+  columns: 3
+  sprites:
+  - {fileID: -2354210221327901633, guid: 88d54e0e7336cf4088fea54db09a6f94, type: 3}
+  - {fileID: 8866924638654676900, guid: 88d54e0e7336cf4088fea54db09a6f94, type: 3}
+  - {fileID: -5604853184585604747, guid: 88d54e0e7336cf4088fea54db09a6f94, type: 3}
+  - {fileID: -4802765454765733805, guid: 88d54e0e7336cf4088fea54db09a6f94, type: 3}
+  - {fileID: -4656928222996925467, guid: 88d54e0e7336cf4088fea54db09a6f94, type: 3}
+  - {fileID: 6930272282405390934, guid: 88d54e0e7336cf4088fea54db09a6f94, type: 3}

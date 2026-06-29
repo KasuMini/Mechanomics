@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-// The bottom bar's 24 notches ARE the inventory: a mech occupying [start, start+span)
+// The bottom bar's 20 notches ARE the inventory: a mech occupying [start, start+span)
 // is stored as its own reference repeated across those cells. Contents, position, and
 // capacity are all read off this one array — there is no separate position map.
 public class MechInventory
 {
-    public const int Capacity = 24;
+    public const int Capacity = 20;
     readonly MechData[] slots = new MechData[Capacity];
 
     // First cell holding the mech, or -1 if absent.

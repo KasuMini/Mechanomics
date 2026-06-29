@@ -14,20 +14,20 @@ public class MechInventoryTests
     }
 
     [Test]
-    public void TryAdd_TwelveSize1_FillsExactly_ThirteenthFails()
+    public void TryAdd_TenSize1_FillsExactly_EleventhFails()
     {
         var inv = new MechInventory();
-        for (int i = 0; i < 12; i++) Assert.IsTrue(inv.TryAdd(Mech(1)));
-        Assert.AreEqual(24, inv.UsedSpan);
+        for (int i = 0; i < 10; i++) Assert.IsTrue(inv.TryAdd(Mech(1)));
+        Assert.AreEqual(20, inv.UsedSpan);
         Assert.IsFalse(inv.TryAdd(Mech(1)));
     }
 
     [Test]
-    public void TryAdd_SixSize3_FillsExactly_SeventhFails()
+    public void TryAdd_FiveSize3_FillsExactly_SixthFails()
     {
         var inv = new MechInventory();
-        for (int i = 0; i < 6; i++) Assert.IsTrue(inv.TryAdd(Mech(3)));
-        Assert.AreEqual(24, inv.UsedSpan);
+        for (int i = 0; i < 5; i++) Assert.IsTrue(inv.TryAdd(Mech(3)));
+        Assert.AreEqual(20, inv.UsedSpan);
         Assert.IsFalse(inv.TryAdd(Mech(3)));
     }
 
@@ -82,21 +82,15 @@ public class MechInventoryTests
     public void TryAdd_FragmentedArray_BlocksTooBigEvenWithEnoughFreeCells()
     {
         var inv = new MechInventory();
-        var a = Mech(1); var b = Mech(1);
-        inv.TryAdd(a);                 // 0-1
-        inv.TryAdd(b);                 // 2-3
-        inv.Remove(a);                 // free 0-1 (2 scattered cells, plus 4-23 free)
-        // Move b to the far end so the only gaps are 0-1 and 4..23 contiguous.
-        // Construct true fragmentation: fill so only single-cell gaps remain.
-        var inv2 = new MechInventory();
         var fillers = new List<MechData>();
-        for (int i = 0; i < 12; i++) { var m = Mech(1); fillers.Add(m); inv2.TryAdd(m); }
-        inv2.Remove(fillers[0]);       // free notches 0-1 only
-        inv2.Remove(fillers[5]);       // free notches 10-11 only
-        // 4 free cells total but no contiguous span of 3.
-        Assert.AreEqual(20, inv2.UsedSpan);
-        Assert.IsFalse(inv2.TryAdd(Mech(2)));   // needs 3 contiguous
-        Assert.IsTrue(inv2.TryAdd(Mech(1)));    // needs 2 contiguous -> fits in 0-1
+        for (int i = 0; i < 10; i++) { var m = Mech(1); fillers.Add(m); inv.TryAdd(m); }
+        Assert.AreEqual(20, inv.UsedSpan);      // full
+        inv.Remove(fillers[0]);                 // free notches 0-1 only
+        inv.Remove(fillers[5]);                 // free notches 10-11 only
+        // 4 free cells total, but only 2-wide gaps -> no contiguous span of 3.
+        Assert.AreEqual(16, inv.UsedSpan);
+        Assert.IsFalse(inv.TryAdd(Mech(2)));    // needs 3 contiguous
+        Assert.IsTrue(inv.TryAdd(Mech(1)));     // needs 2 contiguous -> fits in 0-1
     }
 
     [Test]
