@@ -4,7 +4,6 @@ public class MarketButtons : MonoBehaviour
 {
     public MechMarket market;
     public int buttonID;
-    public RunState runState;
     public GameObject card;
 
     void Start()
@@ -19,9 +18,10 @@ public class MarketButtons : MonoBehaviour
 
     public void Purchase()
     {
+        var runState = GameManager.Instance != null ? GameManager.Instance.runState : null;
         MechData mech = market.availableMechs[buttonID];
-        if (mech == null || !runState.CanAddMech(mech)) return;   // no room on the bar -> no spend
-        if (!runState.TrySpend(mech.cost)) return;                // can't afford -> no add
+        if (runState == null || mech == null || !runState.CanAddMech(mech)) return; // no room -> no spend
+        if (!runState.TrySpend(mech.cost)) return;                                   // can't afford -> no add
         runState.TryAddMech(mech);
         card.SetActive(false);
     }

@@ -31,18 +31,19 @@ public class MechMiniCard : MonoBehaviour,
 
     public void AttachTrack(OwnedMechList list) => owner = list;
 
-    // Stats as coloured "agi/str/sys/rel" — shared by the card label and the hover tooltip.
+    // Stats as coloured "agi/str/sys/rel" - shared by the card label and the hover tooltip.
     public static string ColoredStats(MechData m) =>
         $"<color={ColAgi}>{m.agilityStat}</color>/<color={ColStr}>{m.strengthStat}</color>/" +
         $"<color={ColSys}>{m.systemsStat}</color>/<color={ColRel}>{m.reliabilityStat}</color>";
 
-    // Sprite size/placement live on the prefab's MechSprite RectTransform — here we just fill it.
+    // Sprite size/placement live on the prefab's MechSprite RectTransform - here we just fill it.
     public void Bind(MechData mech, Sprite sprite)
     {
         Mech = mech;
         model.text = $"{mech.mechName} {ColoredStats(mech)}";
         mechImage.sprite = sprite;
         mechImage.enabled = sprite != null;
+        mechImage.material = mech.palette != null ? mech.palette.Material : null;
     }
 
     public void SetSelected(bool on)
@@ -76,7 +77,7 @@ public class MechMiniCard : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData e)
     {
-        if (didDrag) { didDrag = false; return; }   // a drag ended here — not a real click
+        if (didDrag) { didDrag = false; return; }   // a drag ended here - not a real click
         Clicked?.Invoke(this);
     }
 

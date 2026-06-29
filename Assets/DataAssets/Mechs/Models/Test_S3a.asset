@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0782f28e6fe095a44a5f7c0c96ef932b, type: 3}
+  m_Name: Test_S3a
+  m_EditorClassIdentifier: Mechanomics.Core::MechData
+  mechName: Test_S3a
+  pilotName: Pilot
+  agilityStat: 16
+  strengthStat: 15
+  systemsStat: 7
+  reliabilityStat: 8
+  size: 3
+  variant: 0
+  palette: {fileID: 0}
+  innateEquipment: {fileID: 0}

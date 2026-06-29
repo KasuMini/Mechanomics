@@ -30,7 +30,7 @@ public class OwnedMechList : MonoBehaviour
     {
         track = content != null ? content.parent as RectTransform : (RectTransform)transform;
 
-        // The track is fixed-width and absolutely positioned — kill the old auto-layout/scroll.
+        // The track is fixed-width and absolutely positioned - kill the old auto-layout/scroll.
         var scroll = GetComponent<ScrollRect>();
         if (scroll != null) scroll.enabled = false;
         // The bar masked overflow for scrolling; we want sprites to pop out the top.
@@ -65,13 +65,18 @@ public class OwnedMechList : MonoBehaviour
             if (!owned.Contains(kv.Key)) gone.Add(kv.Key);
         foreach (var mech in gone) RemoveCard(mech);
 
-        // Add cards for newly owned mechs.
+        // Add new cards; re-bind existing so live edits (palette, stats) show.
         foreach (var mech in owned)
-            if (!cardByMech.ContainsKey(mech)) AddCard(mech);
+        {
+            if (cardByMech.TryGetValue(mech, out var card)) card.Bind(mech, SpriteFor(mech));
+            else AddCard(mech);
+        }
 
         RelayoutAll();
         SelectionChanged?.Invoke();
     }
+
+    Sprite SpriteFor(MechData mech) => sprites != null ? sprites.Get(mech.size, mech.variant) : null;
 
     void AddCard(MechData mech)
     {
@@ -80,7 +85,7 @@ public class OwnedMechList : MonoBehaviour
         rt.anchorMin = rt.anchorMax = new Vector2(0f, 0.5f);
         rt.pivot = new Vector2(0f, 0.5f);
         card.AttachTrack(this);
-        card.Bind(mech, sprites != null ? sprites.Get(mech.size, mech.variant) : null);
+        card.Bind(mech, SpriteFor(mech));
         card.Clicked += OnCardClicked;
         cardByMech[mech] = card;
     }

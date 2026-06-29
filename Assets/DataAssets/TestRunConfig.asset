@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1625f82480f24eb0fa5a6e68b17a7ff4, type: 3}
+  m_Name: TestRunConfig
+  m_EditorClassIdentifier: Mechanomics.Core::RunConfig
+  startingCash: 10000
+  startingDay: 1
+  totalDays: 10
+  startingMechs:
+  - {fileID: 11400000, guid: 347c7f3d3f89cc7e3bd732148ed781cf, type: 2}
+  - {fileID: 11400000, guid: b85fc9fe9f8cb5f3ebc43604928677fd, type: 2}
+  - {fileID: 11400000, guid: 1ce798c14fd4853578b4419d0bf1c941, type: 2}
+  - {fileID: 11400000, guid: f44aba03c06b4853fb951c9d4eec0d78, type: 2}
+  - {fileID: 11400000, guid: fd4f99d8509c87b859ab1865a4374f0c, type: 2}
+  - {fileID: 11400000, guid: dbe065c898fbed4e191452d1f3d96190, type: 2}

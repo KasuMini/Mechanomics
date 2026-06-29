@@ -76,8 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f98f34eeb9b7f4a84de846656d6d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  config: {fileID: 11400000, guid: d95ee02f3c2250be9afb99b380812cfd, type: 2}
   stateManager: {fileID: 8318888546426651647}
-  runState: {fileID: 11400000, guid: 7d6e62ab32bca8c41836366c3f42dfce, type: 2}
 --- !u!114 &6182223409889815226
 MonoBehaviour:
   m_ObjectHideFlags: 0

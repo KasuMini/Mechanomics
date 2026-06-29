@@ -4,14 +4,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [SerializeField] private RunConfig config;
     public StateManager stateManager;
-    public RunState runState;
 
-    void Awake() => Instance = this;
+    // The live run for the session (held in RunState.Active, surviving scene loads).
+    public RunState runState => RunState.Active;
 
-    // Fresh run each session (the RunState SO persists across scene loads and play sessions).
-    void Start()
+    void Awake()
     {
-        if (runState != null) runState.ResetRun();
+        Instance = this;
+        // No active run yet -> start a new one from config; otherwise resume the run in progress.
+        if (RunState.Active == null) RunState.Active = new RunState(config);
     }
 }

@@ -84,3 +84,9 @@ public class EventDataDrawer : ExpandableScriptableObjectDrawer { }
 
 [CustomPropertyDrawer(typeof(EquipmentData))]
 public class EquipmentDataDrawer : ExpandableScriptableObjectDrawer { }
+
+[CustomPropertyDrawer(typeof(RunConfig))]
+public class RunConfigDrawer : ExpandableScriptableObjectDrawer { }
+
+[CustomPropertyDrawer(typeof(MechPalette))]
+public class MechPaletteDrawer : ExpandableScriptableObjectDrawer { }

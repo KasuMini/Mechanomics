@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f48c801474c6b6d91052577db33128, type: 3}
+  m_Name: Crimson
+  m_EditorClassIdentifier: Mechanomics.Core::MechPalette
+  primary:
+    okL: 0.51928675
+    okC: 0.031412307
+    okH: 245.08179
+    contrast: 0.55
+    hueShift: 0
+  secondary:
+    okL: 0.391
+    okC: 0.4
+    okH: 116.8
+    contrast: 0.745
+    hueShift: 0
+  glow:
+    okL: 0.83579546
+    okC: 0.16896915
+    okH: 91.76665
+    contrast: 0.55
+    hueShift: 20

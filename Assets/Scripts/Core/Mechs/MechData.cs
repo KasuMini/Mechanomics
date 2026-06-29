@@ -17,6 +17,7 @@ public class MechData : ScriptableObject, IMechStats
     [Range(0, StatCapPrimary)] public int reliabilityStat;
     [Range(1, 3)]              public int size = 1;
     public int variant;        // cosmetic sprite row
+    public MechPalette palette; // cosmetic colour swap
 
 
     // (agility + strength + systems + reliability) * x, floored

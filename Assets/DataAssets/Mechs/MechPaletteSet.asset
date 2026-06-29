@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85449e8cb4446b1c98896cc9545c0178, type: 3}
+  m_Name: MechPaletteSet
+  m_EditorClassIdentifier: Mechanomics.Core::MechPaletteSet
+  palettes:
+  - {fileID: 11400000, guid: 1c42db36e1722ab92807a6f59e888571, type: 2}
+  - {fileID: 11400000, guid: 08cc9ddf504c0253e90bceadcd136770, type: 2}
+  - {fileID: 11400000, guid: f67b506f15e77e2c9a7c7c2c6012cc44, type: 2}
+  - {fileID: 11400000, guid: 2fb4c80c2a07dd9048651c81548b0474, type: 2}
+  - {fileID: 11400000, guid: d0a07ce827cea982b8b4716ecd23ea67, type: 2}

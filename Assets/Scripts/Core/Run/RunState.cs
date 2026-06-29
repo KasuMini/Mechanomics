@@ -1,20 +1,22 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-[CreateAssetMenu(fileName = "RunState", menuName = "Mechanomics/Run State", order = 1)]
-public class RunState : ScriptableObject
+// The player's live state for the current run: cash, day, and the owned-mech inventory.
+// Built from a RunConfig. The active run lives in the static Active for the session
+// (survives scene loads, fresh each play) - see GameManager.
+public class RunState
 {
-    [SerializeField] private int startingCash = 10000;
-    [SerializeField] private int startingDay = 1;
-    [SerializeField] private int totalDays = 10;
+    // The current run, or null before one has started. GameManager owns its lifecycle.
+    public static RunState Active { get; set; }
+
+    readonly RunConfig config;
 
     public int Cash { get; private set; }
     public int Day { get; private set; }
-    public int TotalDays => totalDays;
-    public bool IsRunOver => Day > totalDays;
+    public int TotalDays => config != null ? config.totalDays : 0;
+    public bool IsRunOver => config != null && Day > config.totalDays;
 
-    // The 24-notch bar IS the inventory: contents and positions live in one array.
+    // The 20-notch bar IS the inventory: contents and positions live in one array.
     readonly MechInventory inventory = new MechInventory();
     public IEnumerable<MechData> OwnedMechs => inventory.Mechs;
 
@@ -22,14 +24,14 @@ public class RunState : ScriptableObject
     public event Action<int> DayChanged;
     public event Action OwnedMechsChanged;
 
-    // SO values survive Editor play sessions; call on a fresh run.
-    public void ResetRun()
+    public RunState(RunConfig config)
     {
-        Cash = startingCash;
-        Day = startingDay;
-        inventory.Clear();
-        CashChanged?.Invoke(Cash);
-        OwnedMechsChanged?.Invoke();
+        this.config = config;
+        Cash = config != null ? config.startingCash : 0;
+        Day = config != null ? config.startingDay : 1;
+        if (config != null && config.startingMechs != null)
+            foreach (var mech in config.startingMechs)
+                if (mech != null) inventory.TryAdd(mech);
     }
 
     public void AddCash(int delta)
@@ -47,7 +49,7 @@ public class RunState : ScriptableObject
         return true;
     }
 
-    // True if `mech` would fit somewhere on the 24-notch bar (a contiguous free span exists).
+    // True if `mech` would fit somewhere on the bar (a contiguous free span exists).
     public bool CanAddMech(MechData mech) => mech != null && inventory.FirstFit(mech.Span) >= 0;
 
     public bool TryAddMech(MechData mech)

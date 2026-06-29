@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MechGenerator
   spriteLibrary: {fileID: 11400000, guid: baf68df14726019528ac95bc2122c6db, type: 2}
+  paletteSet: {fileID: 11400000, guid: 253c9d1695212ca01a4cd850e6b86179, type: 2}

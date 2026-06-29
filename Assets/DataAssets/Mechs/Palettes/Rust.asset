@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f48c801474c6b6d91052577db33128, type: 3}
+  m_Name: Rust
+  m_EditorClassIdentifier: Mechanomics.Core::MechPalette
+  primary:
+    okL: 0.47078353
+    okC: 0.112142466
+    okH: 50.845234
+    contrast: 0.55
+    hueShift: 0
+  secondary:
+    okL: 0.69575846
+    okC: 0.1596415
+    okH: 55.54442
+    contrast: 0.55
+    hueShift: 0
+  glow:
+    okL: 0.70967764
+    okC: 0.018115727
+    okH: 201.30907
+    contrast: 0.55
+    hueShift: 20
