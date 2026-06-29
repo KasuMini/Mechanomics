@@ -121,7 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OwnedMechList
   cardPrefab: {fileID: 4389512160455212210, guid: c203f0415c6df7630a44f7e2b6571e81, type: 3}
+  sprites: {fileID: 11400000, guid: baf68df14726019528ac95bc2122c6db, type: 2}
   content: {fileID: 8504994074130327638}
+  cardInset: 6
+  notchColor: {r: 1, g: 1, b: 1, a: 0.12}
 --- !u!1 &6034477953624509458
 GameObject:
   m_ObjectHideFlags: 0
