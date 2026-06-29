@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
+  m_Name: WildfireEvent
+  m_EditorClassIdentifier: Mechanomics.Core::EventData
+  title: Wildfire!
+  description: Handler, a wildfire has been reported in the area, requesting mech-based
+    support!
+  suggestedSize: 1
+  behaviour:
+    rid: 3076055930109952078
+  references:
+    version: 2
+    RefIds:
+    - rid: 3076055930109952078
+      type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
+      data:
+        requirements:
+        - stat: 0
+          amount: 13
+        - stat: 1
+          amount: 5
+        - stat: 2
+          amount: 13
+        cashReward: 1500
+        quotaReward: 1
+        cashPenalty: 2000
+        successText: 
+        failureText: Not only did you fail to extinguish the fire, you made it even
+          worse! It was a mistake calling you!

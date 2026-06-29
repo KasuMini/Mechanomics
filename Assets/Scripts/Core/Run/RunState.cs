@@ -13,7 +13,10 @@ public class RunState : ScriptableObject
     public int Day { get; private set; }
     public int TotalDays => totalDays;
     public bool IsRunOver => Day > totalDays;
-    [field:SerializeField] public List<MechData> OwnedMechs { get; private set; } = new List<MechData>();
+
+    // The 24-notch bar IS the inventory: contents and positions live in one array.
+    readonly MechInventory inventory = new MechInventory();
+    public IEnumerable<MechData> OwnedMechs => inventory.Mechs;
 
     public event Action<int> CashChanged;
     public event Action<int> DayChanged;
@@ -24,14 +27,9 @@ public class RunState : ScriptableObject
     {
         Cash = startingCash;
         Day = startingDay;
-        OwnedMechs.Clear();
+        inventory.Clear();
         CashChanged?.Invoke(Cash);
         OwnedMechsChanged?.Invoke();
-    }
-    
-    private void OnEnable()
-    {
-        OwnedMechs ??= new List<MechData>();
     }
 
     public void AddCash(int delta)
@@ -49,12 +47,32 @@ public class RunState : ScriptableObject
         return true;
     }
 
-    public void AddMech(MechData mech)
+    // True if `mech` would fit somewhere on the 24-notch bar (a contiguous free span exists).
+    public bool CanAddMech(MechData mech) => mech != null && inventory.FirstFit(mech.Span) >= 0;
+
+    public bool TryAddMech(MechData mech)
     {
-        if (mech == null) return;
-        OwnedMechs.Add(mech);
+        if (!inventory.TryAdd(mech)) return false;
         OwnedMechsChanged?.Invoke();
+        return true;
     }
+
+    // Drag-relocate: validated against the inventory (ignoring the mech's own cells).
+    public bool TryMoveMech(MechData mech, int newStart)
+    {
+        if (!inventory.TryMove(mech, newStart)) return false;
+        OwnedMechsChanged?.Invoke();
+        return true;
+    }
+
+    public bool RemoveMech(MechData mech)
+    {
+        if (!inventory.Remove(mech)) return false;
+        OwnedMechsChanged?.Invoke();
+        return true;
+    }
+
+    public int StartOf(MechData mech) => inventory.StartOf(mech);
 
     public void AdvanceDay()
     {

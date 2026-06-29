@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
+  m_Name: WarehouseEvent
+  m_EditorClassIdentifier: Mechanomics.Core::EventData
+  title: 'Client: Exhausted Foreman'
+  description: We need a little help at the warehouse today, half the crew caught
+    some bug going around and we're understaffed. Any chance you could send someone
+    to help?
+  suggestedSize: 1
+  behaviour:
+    rid: 3076055974353305679
+  references:
+    version: 2
+    RefIds:
+    - rid: 3076055974353305679
+      type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
+      data:
+        requirements:
+        - stat: 1
+          amount: 10
+        - stat: 0
+          amount: 14
+        cashReward: 1500
+        quotaReward: 1
+        cashPenalty: 1500
+        successText: 
+        failureText: 

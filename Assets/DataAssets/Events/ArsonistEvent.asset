@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
+  m_Name: ArsonistEvent
+  m_EditorClassIdentifier: Mechanomics.Core::EventData
+  title: 'Client: Recently Reformed Arsonist'
+  description: "Hey, uh, I think I went a little overboard and I\u2019m having some
+    regrets. I need some fires extinguished at your earliest convenience."
+  suggestedSize: 1
+  behaviour:
+    rid: 3076055930109952000
+  references:
+    version: 2
+    RefIds:
+    - rid: 3076055930109952000
+      type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
+      data:
+        requirements:
+        - stat: 0
+          amount: 8
+        - stat: 2
+          amount: 12
+        cashReward: 0
+        quotaReward: 1
+        cashPenalty: 100
+        successText: 
+        failureText: 

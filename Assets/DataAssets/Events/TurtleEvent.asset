@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
+  m_Name: TurtleEvent
+  m_EditorClassIdentifier: Mechanomics.Core::EventData
+  title: Turtles Hatching!
+  description: "Handler, a critically endangered species of sea turtle has begun
+    hatching nearby, and they need to make it off the beach if they\u2019re to survive.
+    Send a mech to take out any crabs and seagulls you come across. Protect these
+    turtles at all costs."
+  suggestedSize: 1
+  behaviour:
+    rid: 3076055974353305680
+  references:
+    version: 2
+    RefIds:
+    - rid: 3076055974353305680
+      type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
+      data:
+        requirements:
+        - stat: 0
+          amount: 15
+        - stat: 1
+          amount: 5
+        cashReward: 1500
+        quotaReward: 1
+        cashPenalty: 1500
+        successText: Mission successful. The turtles have made it off the beach and
+          are headed off to hopefully glorious lives in the ocean.
+        failureText: ' Congratulations! You are now responsible for the inevitable
+          extinction of a species! Hope you''re happy.'

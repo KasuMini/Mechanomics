@@ -274,6 +274,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4d68b50434e6b9729a621e6bf09a695e, type: 2}
   - {fileID: 11400000, guid: eac790f27513a5c4ab04644ac7f7c7ae, type: 2}
   generator: {fileID: 1159398785}
+  premades: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
 --- !u!4 &297788931
 Transform:
   m_ObjectHideFlags: 0

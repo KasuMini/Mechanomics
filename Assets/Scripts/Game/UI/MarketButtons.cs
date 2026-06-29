@@ -19,10 +19,11 @@ public class MarketButtons : MonoBehaviour
 
     public void Purchase()
     {
-        runState.TrySpend(market.availableMechs[buttonID].cost);
-        runState.AddMech(market.availableMechs[buttonID]);
+        MechData mech = market.availableMechs[buttonID];
+        if (mech == null || !runState.CanAddMech(mech)) return;   // no room on the bar -> no spend
+        if (!runState.TrySpend(mech.cost)) return;                // can't afford -> no add
+        runState.TryAddMech(mech);
         card.SetActive(false);
-        
     }
 
 }

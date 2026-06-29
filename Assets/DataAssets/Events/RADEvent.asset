@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
+  m_Name: RADEvent
+  m_EditorClassIdentifier: Mechanomics.Core::EventData
+  title: The Bakery
+  description: Please send us some mechs, the bakery is in danger from an attacking
+    alien robot!
+  suggestedSize: 1
+  behaviour:
+    rid: 3076055930109952077
+  references:
+    version: 2
+    RefIds:
+    - rid: 3076055930109952077
+      type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
+      data:
+        requirements:
+        - stat: 0
+          amount: 20
+        - stat: 1
+          amount: 15
+        - stat: 2
+          amount: 10
+        cashReward: 2500
+        quotaReward: 1
+        cashPenalty: 2000
+        successText: Despite everything, the bakery survived! Now Nanao won't need
+          to find a new job!
+        failureText: Oh no! The bakery! Thats where Nanao worked!

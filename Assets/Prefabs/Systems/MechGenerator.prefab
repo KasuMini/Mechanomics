@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2588d4f7315d18c4081119129ae6dabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MechGenerator
+  spriteLibrary: {fileID: 11400000, guid: baf68df14726019528ac95bc2122c6db, type: 2}
