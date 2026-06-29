@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21f48c801474c6b6d91052577db33128, type: 3}
-  m_Name: Rust
+  m_Name: Amethyst
   m_EditorClassIdentifier: Mechanomics.Core::MechPalette
   primary:
-    okL: 0.47078353
-    okC: 0.112142466
-    okH: 50.845234
-    contrast: 0.606
-    falloff: 0.17
+    okL: 0.608327
+    okC: 0.067088
+    okH: 303.592
+    contrast: 0.6
+    falloff: 0
     hueShift: 0
   secondary:
-    okL: 0.641
-    okC: 0.4
-    okH: 50.7
-    contrast: 0.715
-    falloff: 0.03
-    hueShift: -40
+    okL: 0.960128
+    okC: 0.072446
+    okH: 142.0073
+    contrast: 0.6
+    falloff: 0
+    hueShift: 0
   glow:
-    okL: 0.70967764
-    okC: 0.018115727
-    okH: 201.30907
+    okL: 0.855669
+    okC: 0.142009
+    okH: 80.9222
     contrast: 0.55
     falloff: 0
-    hueShift: 20
+    hueShift: 0
