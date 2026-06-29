@@ -2,8 +2,8 @@ using UnityEngine;
 
 // Expands a region's OKLCh base colour into a shade ramp, à la Lancer Tactics' toneramps.
 // The base IS the lit/top shade (t = 1); contrast darkens downward toward black (t = 0).
-// falloff curves how the darkening is distributed (0 = even); chroma eases off near black;
-// hueShift (degrees) swings only the shadows.
+// falloff curves how the darkening is distributed (0 = even). Chroma is held constant and
+// gamut-mapped per shade (reduced along the hue where it won't fit); hueShift swings shadows.
 public static class Toneramps
 {
     public static Color Evaluate(in RegionPalette rp, float t)
@@ -14,8 +14,9 @@ public static class Toneramps
 
         float shadowL = Mathf.Lerp(rp.okL, 0f, rp.contrast);     // contrast 1 -> black floor
         float L = Mathf.Lerp(shadowL, rp.okL, shade);            // base at t=1, darkens downward
-        float C = rp.okC * Mathf.SmoothStep(0f, Mathf.Max(rp.okL, 1e-4f), L); // fade chroma toward black
         float h = rp.okH + rp.hueShift * (1f - shade);           // base hue at t=1; shadows shift
-        return OkColor.OklchToSrgb(L, C, h);
+        // Keep chroma; the gamut mapper in OkColor reduces it along the hue only where a shade
+        // can't hold it (near black/white), so colours stay as vibrant as the gamut allows.
+        return OkColor.OklchToSrgb(L, rp.okC, h);
     }
 }

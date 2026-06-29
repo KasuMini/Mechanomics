@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: Olivine
   m_EditorClassIdentifier: Mechanomics.Core::MechPalette
   primary:
-    okL: 0.58877
-    okC: 0.079314
-    okH: 99.717
-    contrast: 0.6
+    okL: 0.543
+    okC: 0.072
+    okH: 103
+    contrast: 0.778
     falloff: 0
     hueShift: 0
   secondary:
     okL: 0.642841
     okC: 0.04016
     okH: 127.7026
-    contrast: 0.6
-    falloff: 0
-    hueShift: 0
+    contrast: 0.738
+    falloff: 0.26
+    hueShift: 8.7
   glow:
     okL: 0.725025
     okC: 0.097971

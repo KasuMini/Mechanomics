@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Toxic
   m_EditorClassIdentifier: Mechanomics.Core::MechPalette
   primary:
-    okL: 0.39702582
-    okC: 0.04437639
-    okH: 249.00012
-    contrast: 0.55
-    hueShift: 0
+    okL: 0.655
+    okC: 0.172
+    okH: 151.3
+    contrast: 0.783
+    falloff: -0.35
+    hueShift: 40
   secondary:
-    okL: 0.74586743
-    okC: 0.18124953
-    okH: 152.32661
-    contrast: 0.55
-    hueShift: 0
+    okL: 0.405
+    okC: 0.033
+    okH: 22.6
+    contrast: 0.749
+    falloff: 0.01
+    hueShift: 40
   glow:
-    okL: 0.57715553
-    okC: 0.15247664
-    okH: 315.31824
-    contrast: 0.55
-    hueShift: 20
+    okL: 0.93
+    okC: 0.244
+    okH: 96.8
+    contrast: 0.932
+    falloff: -0.68
+    hueShift: 15.1
