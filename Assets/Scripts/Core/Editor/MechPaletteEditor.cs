@@ -10,9 +10,15 @@ public class MechPaletteEditor : Editor
     static GUIStyle chipStyle;
     int region;
 
+    const int PreviewHeight = 120;
+    MechSpriteLibrary lib;
+    RenderTexture previewRt;
+
     public override void OnInspectorGUI()
     {
         var p = (MechPalette)target;
+
+        DrawMechPreview(p);
 
         region = DrawRegionChips(p, region);
         var rp = p.GetRegion(region);
@@ -38,6 +44,86 @@ public class MechPaletteEditor : Editor
         float falloff = EditorGUILayout.Slider("Contrast Falloff", rp.falloff, -0.9f, 3f);
         float hueShift = EditorGUILayout.Slider("Hue Shift", rp.hueShift, -40f, 40f);
         if (EditorGUI.EndChangeCheck()) { rp.contrast = contrast; rp.falloff = falloff; rp.hueShift = hueShift; Apply(p, region, rp); }
+    }
+
+    // Live preview: blit real mech sprites through the palette's own swap material, so the
+    // preview is pixel-identical to the game and recolours as the sliders move. Shows as many
+    // variants side by side as the inspector width allows.
+    void DrawMechPreview(MechPalette p)
+    {
+        var sprites = PreviewSprites();
+        var rect = GUILayoutUtility.GetRect(0, PreviewHeight, GUILayout.ExpandWidth(true));
+        EditorGUI.DrawRect(rect, Color.white);
+        if (sprites.Count == 0)
+        {
+            EditorGUI.HelpBox(rect, "No MechSpriteLibrary / sprite found to preview.", MessageType.Info);
+            return;
+        }
+
+        const float pad = 6f;
+
+        // Greedily fill the width, cycling through the distinct sprites and repeating if room remains.
+        var draw = new System.Collections.Generic.List<Sprite>();
+        float used = 0f;
+        for (int i = 0; i < 512; i++)
+        {
+            var s = sprites[i % sprites.Count];
+            float w = s.textureRect.width * IntScale(s, rect.height);
+            float add = draw.Count == 0 ? w : pad + w;
+            if (used + add > rect.width && draw.Count > 0) break;
+            draw.Add(s);
+            used += add;
+        }
+
+        float x = rect.x + (rect.width - used) * 0.5f;
+        foreach (var sprite in draw)
+        {
+            var tex = sprite.texture;
+            EnsureRt(tex);
+            Graphics.Blit(tex, previewRt, p.Material);
+            RenderTexture.active = null; // Blit leaves the RT bound; clear so Release() doesn't warn.
+
+            var sc = sprite.textureRect;
+            int scale = IntScale(sprite, rect.height);
+            float w = sc.width * scale, h = sc.height * scale;
+            var dest = new Rect(Mathf.Round(x), Mathf.Round(rect.y + (rect.height - h) * 0.5f), w, h);
+            var uv = new Rect(sc.x / tex.width, sc.y / tex.height, sc.width / tex.width, sc.height / tex.height);
+            GUI.DrawTextureWithTexCoords(dest, previewRt, uv);
+            x += w + pad;
+        }
+    }
+
+    // Integer pixel scale to fit the row height (avoids mixels).
+    static int IntScale(Sprite s, float rowHeight) => Mathf.Max(1, Mathf.FloorToInt(rowHeight / s.textureRect.height));
+
+    void EnsureRt(Texture tex)
+    {
+        if (previewRt != null && previewRt.width == tex.width && previewRt.height == tex.height) return;
+        if (previewRt != null) previewRt.Release();
+        previewRt = new RenderTexture(tex.width, tex.height, 0) { filterMode = FilterMode.Point, hideFlags = HideFlags.DontSave };
+    }
+
+    // Every distinct, non-null sprite in the library (all sizes and variants).
+    System.Collections.Generic.List<Sprite> PreviewSprites()
+    {
+        var list = new System.Collections.Generic.List<Sprite>();
+        if (lib == null)
+        {
+            var guids = AssetDatabase.FindAssets("t:MechSpriteLibrary");
+            if (guids.Length > 0)
+                lib = AssetDatabase.LoadAssetAtPath<MechSpriteLibrary>(AssetDatabase.GUIDToAssetPath(guids[0]));
+        }
+        if (lib == null || lib.sprites == null) return list;
+
+        foreach (var sp in lib.sprites)
+            if (sp != null && sp.texture != null && !list.Contains(sp)) list.Add(sp);
+        return list;
+    }
+
+    void OnDisable()
+    {
+        if (previewRt != null) { previewRt.Release(); previewRt = null; }
+        lib = null;
     }
 
     void Apply(MechPalette p, int i, RegionPalette rp)
