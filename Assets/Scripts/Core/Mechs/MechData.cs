@@ -18,7 +18,7 @@ public class MechData : ScriptableObject, IMechStats
     public EquipmentData innateEquipment;
 
     // (agility + strength + systems + reliability) * x, floored
-    public int cost { get { return Mathf.FloorToInt(agilityStat + strengthStat + systemsStat + reliabilityStat) * 5; } }
+    public int cost { get { return Mathf.FloorToInt(agilityStat + strengthStat + systemsStat + reliabilityStat) * 100; } }
 
     public int Reliability => reliabilityStat;
     public int Size => size;

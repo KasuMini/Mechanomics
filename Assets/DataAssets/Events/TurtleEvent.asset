@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
+  m_Name: TurtleEvent
+  m_EditorClassIdentifier: Mechanomics.Core::EventData
+  title: Turtles Hatching!
+  description: "Handler, an endangered species of sea turtle has begun hatching nearby,
+    and they need to make it off the beach if they\u2019re to survive. Send a mech
+    to take out any crabs and seagulls you come across. Protect these turtles at
+    all costs."
+  suggestedSize: 1
+  behaviour:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

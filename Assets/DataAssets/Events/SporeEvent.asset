@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
+  m_Name: SporeEvent
+  m_EditorClassIdentifier: Mechanomics.Core::EventData
+  title: The Mold is Back. Again.
+  description: My asshole roommate went trespassing in a quarantine spore zone and
+    tracked that shit in our apartment. Our landlord's gonna be pissed. Can you guys
+    send a robot to clear this out? Feel free to use drastic measures.
+  suggestedSize: 1
+  behaviour:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
