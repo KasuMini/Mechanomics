@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance { get; set; }
 
     [SerializeField] private RunConfig config;
     public StateManager stateManager;

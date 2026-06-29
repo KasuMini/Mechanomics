@@ -1,21 +1,25 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-enum GameplayState
-{
-    Tutorial,
-    CityActive,
-    ShiftOver,
-    EndState,
-}
 public class StateManager : MonoBehaviour
 {
+    public static StateManager Instance { get; set; }
+    public enum GameplayState
+    {
+        Tutorial,
+        CityActive,
+        ShiftOver,
+        EndState,
+    }
+
     public int currentScene;
-    private GameplayState currentState;
-    public float timer = 60f;
-    public int hour = 7;
+    public GameplayState currentState;
 
-
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
     void Start()
     {
         UpdateScene();
@@ -23,20 +27,7 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-        //if (currentState == GameplayState.CityActive)
-        if (currentScene == 3)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                timer = 60f;
-                hour++;
-                if (hour > 12)
-                {
-                    hour = 1;
-                }
-            }
-        }
+
     }
     
     public void UpdateScene()
@@ -65,4 +56,8 @@ public class StateManager : MonoBehaviour
         SceneManager.LoadScene(rs.IsRunOver ? "EndScreen" : "Preparation");
     }
 
+    public void UpdateSceneDelay()
+    {
+        Invoke(nameof(UpdateScene), 5f);
+    }
 }
