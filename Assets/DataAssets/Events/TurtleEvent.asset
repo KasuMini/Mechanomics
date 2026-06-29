@@ -13,15 +13,28 @@ MonoBehaviour:
   m_Name: TurtleEvent
   m_EditorClassIdentifier: Mechanomics.Core::EventData
   title: Turtles Hatching!
-  description: "Handler, an endangered species of sea turtle has begun hatching nearby,
-    and they need to make it off the beach if they\u2019re to survive. Send a mech
-    to take out any crabs and seagulls you come across. Protect these turtles at
-    all costs."
+  description: "Handler, a critically endangered species of sea turtle has begun
+    hatching nearby, and they need to make it off the beach if they\u2019re to survive.
+    Send a mech to take out any crabs and seagulls you come across. Protect these
+    turtles at all costs."
   suggestedSize: 1
   behaviour:
-    rid: -2
+    rid: 3076055974353305680
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 3076055974353305680
+      type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
+      data:
+        requirements:
+        - stat: 0
+          amount: 15
+        - stat: 1
+          amount: 5
+        cashReward: 1500
+        quotaReward: 1
+        cashPenalty: 1500
+        successText: Mission successful. The turtles have made it off the beach and
+          are headed off to hopefully glorious lives in the ocean.
+        failureText: ' Congratulations! You are now responsible for the inevitable
+          extinction of a species! Hope you''re happy.'

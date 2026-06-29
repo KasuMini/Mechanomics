@@ -27,9 +27,12 @@ MonoBehaviour:
     - rid: 3076055930109952079
       type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
       data:
-        requirements: []
-        cashReward: 500
+        requirements:
+        - stat: 3
+          amount: 3
+        cashReward: 1000
         quotaReward: 1
-        cashPenalty: 100
-        successText: 
+        cashPenalty: 1000
+        successText: The mech you sent has already converted plenty of non-believers!
+          Great work!
         failureText: 

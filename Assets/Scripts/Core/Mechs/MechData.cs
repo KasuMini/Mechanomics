@@ -18,8 +18,6 @@ public class MechData : ScriptableObject, IMechStats
     [Range(1, 3)]              public int size = 1;
     public int variant;        // cosmetic sprite row
 
-    [Header("Equipment")]
-    public EquipmentData innateEquipment;
 
     // (agility + strength + systems + reliability) * x, floored
     public int cost { get { return Mathf.FloorToInt(agilityStat + strengthStat + systemsStat + reliabilityStat) * 100; } }

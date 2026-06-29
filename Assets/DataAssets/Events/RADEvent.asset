@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RADEvent
   m_EditorClassIdentifier: Mechanomics.Core::EventData
   title: The Bakery
-  description: Please send us some mechs, the bakery has been destroyed! That's where
-    Nanao worked....
+  description: Please send us some mechs, the bakery is in danger from an attacking
+    alien robot!
   suggestedSize: 1
   behaviour:
     rid: 3076055930109952077
@@ -26,13 +26,14 @@ MonoBehaviour:
       data:
         requirements:
         - stat: 0
-          amount: 9
+          amount: 20
         - stat: 1
-          amount: 8
+          amount: 15
         - stat: 2
-          amount: 9
-        cashReward: 1500
+          amount: 10
+        cashReward: 2500
         quotaReward: 1
         cashPenalty: 2000
-        successText: 
-        failureText: 
+        successText: Despite everything, the bakery survived! Now Nanao won't need
+          to find a new job!
+        failureText: Oh no! The bakery! Thats where Nanao worked!

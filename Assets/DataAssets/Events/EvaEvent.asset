@@ -26,13 +26,13 @@ MonoBehaviour:
       data:
         requirements:
         - stat: 0
-          amount: 9
+          amount: 15
         - stat: 1
-          amount: 10
+          amount: 20
         - stat: 2
-          amount: 8
-        cashReward: 1500
+          amount: 12
+        cashReward: 3000
         quotaReward: 1
-        cashPenalty: 2000
-        successText: 
+        cashPenalty: 3500
+        successText: Angels successfully repelled.
         failureText: 

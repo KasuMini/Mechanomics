@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: ArsonistEvent
   m_EditorClassIdentifier: Mechanomics.Core::EventData
   title: 'Client: Recently Reformed Arsonist'
-  description: "Subject: Fires\n\nHey, uh, I think I went a little overboard and
-    I\u2019m having some regrets. I need some fires extinguished at your earliest
-    convenience."
+  description: "Hey, uh, I think I went a little overboard and I\u2019m having some
+    regrets. I need some fires extinguished at your earliest convenience."
   suggestedSize: 1
   behaviour:
     rid: 3076055930109952000
@@ -27,9 +26,9 @@ MonoBehaviour:
       data:
         requirements:
         - stat: 0
-          amount: 6
-        - stat: 2
           amount: 8
+        - stat: 2
+          amount: 12
         cashReward: 0
         quotaReward: 1
         cashPenalty: 100

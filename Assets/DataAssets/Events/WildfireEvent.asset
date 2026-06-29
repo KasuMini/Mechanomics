@@ -26,13 +26,14 @@ MonoBehaviour:
       data:
         requirements:
         - stat: 0
-          amount: 10
+          amount: 13
         - stat: 1
           amount: 5
         - stat: 2
-          amount: 10
+          amount: 13
         cashReward: 1500
         quotaReward: 1
         cashPenalty: 2000
         successText: 
-        failureText: 
+        failureText: Not only did you fail to extinguish the fire, you made it even
+          worse! It was a mistake calling you!

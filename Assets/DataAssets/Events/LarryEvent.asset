@@ -15,8 +15,8 @@ MonoBehaviour:
   title: Larry is Dead
   description: "*sob* Hello? My poor computer, Larry, *sob* horrifically exploded,
     so I\u2019m arranging a funeral service for it. It didn't have too many friends,
-    so I\u2019d really appreciate it if you could send some mechs over to cry at
-    the procession. Otherwise, Larry will be far too lonely, and I just couldn\u2019t
+    so I\u2019d really appreciate it if you could send someone over to cry at the
+    procession. Otherwise, Larry will be far too lonely, and I just couldn\u2019t
     bear that! Please help this grieving man honor his best friend."
   suggestedSize: 1
   behaviour:
@@ -27,9 +27,13 @@ MonoBehaviour:
     - rid: 3076055930109952080
       type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
       data:
-        requirements: []
-        cashReward: 500
+        requirements:
+        - stat: 2
+          amount: 20
+        cashReward: 1750
         quotaReward: 1
-        cashPenalty: 100
-        successText: 
-        failureText: 
+        cashPenalty: 1750
+        successText: Thank you so much! I'm certain Larry is looking at us from wherever
+          he may be smiling!
+        failureText: '*sob* You''ve ruined everything! Larry''s funeral is ruined
+          thanks to you! *sob*'

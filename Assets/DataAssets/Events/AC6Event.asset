@@ -17,9 +17,16 @@ MonoBehaviour:
     you send a few mechs to give us a show?
   suggestedSize: 1
   behaviour:
-    rid: -2
+    rid: 3076055974353305676
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 3076055974353305676
+      type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
+      data:
+        requirements: []
+        cashReward: 500
+        quotaReward: 1
+        cashPenalty: 100
+        successText: 
+        failureText: 

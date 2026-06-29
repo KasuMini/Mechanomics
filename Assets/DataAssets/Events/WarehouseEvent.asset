@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
-  m_Name: TerminatorEvent
+  m_Name: WarehouseEvent
   m_EditorClassIdentifier: Mechanomics.Core::EventData
-  title: Rampaging Governor
-  description: The former governor of California is rampaging across the city! Send
-    some kind of mech, someone's gotta stop him!
+  title: 'Client: Exhausted Foreman'
+  description: We need a little help at the warehouse today, half the crew caught
+    some bug going around and we're understaffed. Any chance you could send someone
+    to help?
   suggestedSize: 1
   behaviour:
-    rid: 3076055974353305678
+    rid: 3076055974353305679
   references:
     version: 2
     RefIds:
-    - rid: 3076055974353305678
+    - rid: 3076055974353305679
       type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
       data:
         requirements:
-        - stat: 0
-          amount: 15
         - stat: 1
-          amount: 18
-        cashReward: 500
+          amount: 10
+        - stat: 0
+          amount: 14
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 100
-        successText: Thank goodness you stopped him in time! Now we just need to
-          destroy the remains....
-        failureText: Whoever he was hunting is dead now, nice job.
+        cashPenalty: 1500
+        successText: 
+        failureText: 

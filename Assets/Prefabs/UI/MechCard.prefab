@@ -184,8 +184,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -89, y: 25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 6.2202, y: 25}
+  m_SizeDelta: {x: 390.44, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1127625441376367514
 CanvasRenderer:
@@ -342,14 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MarketDisplay
   mechMarket: {fileID: 0}
   cardID: 0
-  mechData:
-    mechName: 
-    pilotName: 
-    agilityStat: 0
-    strengthStat: 0
-    systemsStat: 0
-    reliabilityStat: 0
-    size: 0
+  mechData: {fileID: 0}
   model: {fileID: 4429432217392750969}
   pilot: {fileID: 7327801568320893098}
   stats: {fileID: 6773811662089200608}
@@ -524,8 +517,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -89, y: 81}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 6.2202, y: 81}
+  m_SizeDelta: {x: 390.4405, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1485959357471366768
 CanvasRenderer:
@@ -736,8 +729,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -89, y: -42}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 6.2202, y: -42}
+  m_SizeDelta: {x: 390.44, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7462320655725289389
 CanvasRenderer:

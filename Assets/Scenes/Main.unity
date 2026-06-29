@@ -318,6 +318,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: events.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: df2e379dfc83ec145854b7a69444f566, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ce050930a04b18b419d57de24c1492d1, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7ed3ca1a212b605408f1923a49bacd51, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 94e5605f2883fe649b802472a18cc245, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 13f427b013bb54e41acedf378cde4060, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[7]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b4d4bcf09e9e3734ab85152db2668982, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 253220b39c1d56346897872c88e38b50, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[9]'
+      value: 
+      objectReference: {fileID: 11400000, guid: be9d0a70c8ca2bd40b81ae4d9d3dd110, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[10]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 70c94b21061319941ae441e21ac14390, type: 2}
+    - target: {fileID: 1384110269564275855, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
+      propertyPath: 'events.Array.data[11]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 119a5fed28007b648aee51bb23bf4b62, type: 2}
     - target: {fileID: 8318888546426651647, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
       propertyPath: currentScene
       value: 0

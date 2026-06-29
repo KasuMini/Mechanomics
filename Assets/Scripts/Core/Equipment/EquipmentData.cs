@@ -1,15 +1,16 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EquipmentData", menuName = "Mechanomics/EquipmentData", order = 0)]
 public class EquipmentData : ScriptableObject
 {
-    
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
 
-    [Header("Identity")]
-    public string equipmentName;
-
-    [Header("Stat Change")]
-    public int statDelta;
-    public MechStat changedStat;
-
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

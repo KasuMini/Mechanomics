@@ -18,8 +18,8 @@ public class MarketDisplay : MonoBehaviour
     {
         mechData = mechMarket.availableMechs[cardID];
         model.text = mechData.mechName;
-        pilot.text = mechData.pilotName;
-        stats.text = "AGI: " + mechData.agilityStat + "<br>STR: " + mechData.strengthStat + "<br>SYS: " + mechData.systemsStat + "<br>REL: " + mechData.reliabilityStat + "<br>Size: " + mechData.size;
+        pilot.text = "Pilot: " + mechData.pilotName;
+        stats.text = "AGI: " + mechData.agilityStat + "<br>STR: " + mechData.strengthStat + "<br>SYS: " + mechData.systemsStat + "<br>Size: " + mechData.size + "<br>Cost: " + mechData.cost;
 
     }
 

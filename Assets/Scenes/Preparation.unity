@@ -2383,6 +2383,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 3636751776444648477, guid: 9c4523c87a4f3c34e8ef8e4dd6f6c485, type: 3}
+      propertyPath: lists
+      value: 
+      objectReference: {fileID: 6182223409889815226, guid: 7539066ce86b6d145b09ce326543560f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -18,9 +18,21 @@ MonoBehaviour:
     send a robot to clear this out? Feel free to use drastic measures.
   suggestedSize: 1
   behaviour:
-    rid: -2
+    rid: 3076055974353305677
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 3076055974353305677
+      type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
+      data:
+        requirements:
+        - stat: 0
+          amount: 15
+        - stat: 2
+          amount: 15
+        cashReward: 2500
+        quotaReward: 1
+        cashPenalty: 2500
+        successText: Wow! Its totally spotless! You guys rule!
+        failureText: Our Landlord saw the mess you left and now we're being evicted.
+          Thanks, dude.
