@@ -12,8 +12,8 @@ public class NewsManager : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
     public float textSpeed;
-
     private bool isTyping;
+
     void Start()
     {
         textComponent.text = string.Empty;
@@ -25,7 +25,7 @@ public class NewsManager : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (RunState.Active.eventOutcomes.Count >0 && !isTyping)
+            if (RunState.Active.eventOutcomes.Count > 0 && !isTyping)
             {
                 NextLine();
             }
@@ -38,7 +38,6 @@ public class NewsManager : MonoBehaviour
 
     public void StartDialogue()
     {
-
         StartCoroutine(TypeLine(RunState.Active.eventOutcomes.Dequeue()));
     }
 
