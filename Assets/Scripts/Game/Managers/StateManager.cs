@@ -1,12 +1,13 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StateManager : MonoBehaviour
 {
-
+    public static StateManager Instance { get; set; }
     public enum GameplayState
     {
-        InDialogue,
+        Tutorial,
         CityActive,
         ShiftOver,
         EndState,
@@ -15,10 +16,10 @@ public class StateManager : MonoBehaviour
     public int currentScene;
     public GameplayState currentState;
 
-    public float timer = 60f;
-    public int hour = 7;
-
-
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
     void Start()
     {
         UpdateScene();
@@ -26,20 +27,7 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-        //if (currentState == GameplayState.CityActive)
-        if (currentScene == 3)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                timer = 60f;
-                hour++;
-                if (hour > 12)
-                {
-                    hour = 1;
-                }
-            }
-        }
+
     }
     
     public void UpdateScene()
@@ -55,11 +43,21 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    public void EndTutorial()
+    {
+        currentState = GameplayState.CityActive;
+    }
+
     // Called at the end of a City day: advance the day, then go to Preparation (or EndScreen when the run is over).
     public void EndDay()
     {
         RunState rs = GameManager.Instance.runState;
         rs.AdvanceDay();
         SceneManager.LoadScene(rs.IsRunOver ? "EndScreen" : "Preparation");
+    }
+
+    public void UpdateSceneDelay()
+    {
+        Invoke(nameof(UpdateScene), 5f);
     }
 }

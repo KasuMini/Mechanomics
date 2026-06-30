@@ -35,4 +35,4 @@ MonoBehaviour:
         cashPenalty: 1000
         successText: The mech you sent has already converted plenty of non-believers!
           Great work!
-        failureText: 
+        failureText: FailTest

@@ -28,5 +28,5 @@ MonoBehaviour:
         cashReward: 500
         quotaReward: 1
         cashPenalty: 100
-        successText: 
-        failureText: 
+        successText: SuccessTest
+        failureText: FailTest

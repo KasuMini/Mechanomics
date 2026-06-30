@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Mechanomics.Core::RunConfig
   startingCash: 10000
   startingDay: 1
-  totalDays: 10
+  totalDays: 5
   startingMechs: []
