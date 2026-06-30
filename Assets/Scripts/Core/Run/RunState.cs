@@ -15,6 +15,7 @@ public class RunState
     public int Day { get; private set; }
     public int TotalDays => config != null ? config.totalDays : 0;
     public bool IsRunOver => config != null && Day > config.totalDays;
+    public Queue<string> eventOutcomes = new Queue<string>();
 
     // The 20-notch bar IS the inventory: contents and positions live in one array.
     readonly MechInventory inventory = new MechInventory();

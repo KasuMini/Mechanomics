@@ -10,22 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5fc81ee5cab17fc18b3c72cf94dabc5, type: 3}
-  m_Name: TestEvent
+  m_Name: DeliveryEvent
   m_EditorClassIdentifier: Mechanomics.Core::EventData
-  title: 
-  description: 
+  title: 'Client: Annoyed Customer'
+  description: 'My order is taking forever and the driver got in a car accident!
+    Can you pick it up and bring it to me ASAP??? '
   suggestedSize: 1
   behaviour:
-    rid: 3025467401593683968
+    rid: 3076055998191894603
   references:
     version: 2
     RefIds:
-    - rid: 3025467401593683968
+    - rid: 3076055998191894603
       type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
       data:
-        requirements: []
+        requirements:
+        - stat: 0
+          amount: 12
         cashReward: 500
         quotaReward: 1
-        cashPenalty: 97
-        successText: SuccessTest
-        failureText: FailTest
+        cashPenalty: 500
+        successText: Wow! I don't know how its still warm but its delicious! Thank
+          you!!
+        failureText: You totally squished all the food! And its cold! No tip and
+          zero rating for you!

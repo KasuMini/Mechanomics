@@ -34,6 +34,6 @@ MonoBehaviour:
         cashReward: 1500
         quotaReward: 1
         cashPenalty: 2000
-        successText: 
+        successText: SuccessTest
         failureText: Not only did you fail to extinguish the fire, you made it even
           worse! It was a mistake calling you!

@@ -15,8 +15,17 @@ public class TutorialScript : MonoBehaviour
 
     void Start()
     {
-        textComponent.text = string.Empty;
-        StartDialogue();
+        if (StateManager.Instance.currentState != StateManager.GameplayState.Tutorial)
+        {
+            gameObject.SetActive(false);
+            dispatchButton.SetActive(true);
+            eventPanel.SetActive(true);
+        }
+        else
+        {
+            textComponent.text = string.Empty;
+            StartDialogue();
+        }
     }
 
 

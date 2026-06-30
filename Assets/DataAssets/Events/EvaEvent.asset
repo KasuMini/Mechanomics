@@ -34,5 +34,5 @@ MonoBehaviour:
         cashReward: 3000
         quotaReward: 1
         cashPenalty: 3500
-        successText: Angels successfully repelled.
-        failureText: 
+        successText: Angels successfully repelled
+        failureText: FailTest

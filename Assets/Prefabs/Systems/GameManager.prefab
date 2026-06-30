@@ -62,8 +62,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateManager
   currentScene: 0
   currentState: 0
-  timer: 0
-  hour: 0
 --- !u!114 &4119890178584279621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,4 +183,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 253220b39c1d56346897872c88e38b50, type: 2}
   - {fileID: 11400000, guid: be9d0a70c8ca2bd40b81ae4d9d3dd110, type: 2}
   - {fileID: 11400000, guid: 70c94b21061319941ae441e21ac14390, type: 2}
-  availableEvents: []
+  - {fileID: 11400000, guid: 4ba91d6b053571648999edc44dc28e60, type: 2}
