@@ -36,5 +36,5 @@ MonoBehaviour:
         cashPenalty: 1500
         successText: Mission successful. The turtles have made it off the beach and
           are headed off to hopefully glorious lives in the ocean.
-        failureText: ' Congratulations! You are now responsible for the inevitable
-          extinction of a species! Hope you''re happy.'
+        failureText: Congratulations! You are now responsible for the inevitable
+          extinction of a species! Hope you're happy.

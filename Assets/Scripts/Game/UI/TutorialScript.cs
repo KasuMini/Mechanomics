@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class TutorialScript : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
+    public GameObject eventPanel;
+    public GameObject dispatchButton;
     public string[] lines;
     public float textSpeed;
 
@@ -40,6 +42,7 @@ public class TutorialScript : MonoBehaviour
         StartCoroutine(TypeLine());
     }
 
+    // Coroutine that types out the text based on textSpeed float
     IEnumerator TypeLine()
     {
         foreach (char c in lines[index].ToCharArray())
@@ -61,6 +64,8 @@ public class TutorialScript : MonoBehaviour
         {
             if (StateManager.Instance != null) StateManager.Instance.EndTutorial();
             gameObject.SetActive(false);
+            eventPanel.SetActive(true);
+            dispatchButton.SetActive(true);
         }
     }
 }
