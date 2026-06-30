@@ -61,8 +61,8 @@ Material:
     - _DstBlendAlpha: 10
     - _QueueOffset: 0
     - _RimAlpha: 1
-    - _RimPower: 0.71
-    - _RimStrength: 0.85
+    - _RimPower: 8
+    - _RimStrength: 0
     - _SampleGI: 0
     - _ShadeMin: 0
     - _SrcBlend: 5
@@ -72,9 +72,9 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.9, g: 0.24, b: 0.24, a: 0.9}
+    - _BaseColor: {r: 0.6132076, g: 0, b: 0, a: 0.9}
     - _Color: {r: 0.92, g: 0.26999995, b: 0.26999995, a: 0.6}
     - _LightDir: {r: 0.6, g: 0.35, b: -0.42, a: 0}
-    - _RimColor: {r: 0.5566038, g: 0.20741367, b: 0.20741367, a: 1}
+    - _RimColor: {r: 0.383, g: 0.04656078, b: 0.04656078, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

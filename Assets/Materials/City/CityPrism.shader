@@ -16,11 +16,10 @@ Shader "Mechanomics/CityPrism"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" "RenderPipeline"="UniversalPipeline" }
+        Tags { "RenderType"="Opaque" "Queue"="Geometry" "RenderPipeline"="UniversalPipeline" }
         Pass
         {
-            Blend SrcAlpha OneMinusSrcAlpha
-            ZWrite Off
+            ZWrite On
             Cull Back
 
             HLSLPROGRAM
@@ -65,8 +64,7 @@ Shader "Mechanomics/CityPrism"
 
                 float rim   = pow(1.0 - saturate(dot(N, V)), _RimPower) * _RimStrength;
                 float3 col  = base + _RimColor.rgb * rim;
-                float  a    = saturate(_BaseColor.a + rim * _RimAlpha);
-                return half4(col, a);
+                return half4(col, 1.0);   // opaque: depth-tested 3D, correct draw order
             }
             ENDHLSL
         }

@@ -16,7 +16,23 @@ public class BuildingPrism : MonoBehaviour
 
     public bool isHQ;
 
+    Material baseMaterial;   // remembered so an event highlight can be cleared
+    MeshRenderer rendererCache;
+
     CityMapView View => GetComponentInParent<CityMapView>();
+    MeshRenderer Renderer => rendererCache != null ? rendererCache : (rendererCache = GetComponent<MeshRenderer>());
+
+    // Swap to an active-event material (light the block up); ClearHighlight restores.
+    public void SetActiveHighlight(Material activeMat)
+    {
+        if (baseMaterial == null) baseMaterial = Renderer.sharedMaterial;
+        if (activeMat != null) Renderer.sharedMaterial = activeMat;
+    }
+
+    public void ClearHighlight()
+    {
+        if (baseMaterial != null) Renderer.sharedMaterial = baseMaterial;
+    }
 
     public Vector2 CentroidUv
     {

@@ -30,4 +30,16 @@ public class CityMapMathTests
         Assert.AreEqual(2f, p.x, 1e-4f);   // (0.75-0.5)*8
         Assert.AreEqual(-2f, p.y, 1e-4f);  // (0.25-0.5)*8
     }
+
+    [Test]
+    public void PointInPolygon_InsideAndOutside()
+    {
+        var quad = new System.Collections.Generic.List<Vector2>
+        {
+            new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1)
+        };
+        Assert.IsTrue(CityMapMath.PointInPolygon(new Vector2(0.5f, 0.5f), quad));
+        Assert.IsFalse(CityMapMath.PointInPolygon(new Vector2(1.5f, 0.5f), quad));
+        Assert.IsFalse(CityMapMath.PointInPolygon(new Vector2(-0.1f, 0.5f), quad));
+    }
 }
