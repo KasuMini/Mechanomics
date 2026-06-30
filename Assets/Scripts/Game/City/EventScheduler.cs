@@ -143,7 +143,7 @@ public class EventScheduler : MonoBehaviour
         var outline = SelectionOutlineFeature.Active;
         if (outline != null)
             outline.SetRenderers(hovered != null
-                ? new[] { hovered.GetComponent<Renderer>() }
+                ? new Renderer[] { hovered.Renderer }
                 : System.Array.Empty<Renderer>());
     }
 

@@ -16,36 +16,28 @@ public class BuildingPrism : MonoBehaviour
 
     public bool isHQ;
 
-    Material baseMaterial;    // the original block material
-    Material primary;         // current main material (base or active-event)
+    Material baseMaterial;    // the original block material, cached on first highlight
     MeshRenderer rendererCache;
 
     CityMapView View => GetComponentInParent<CityMapView>();
-    MeshRenderer Renderer => rendererCache != null ? rendererCache : (rendererCache = GetComponent<MeshRenderer>());
+    public MeshRenderer Renderer => rendererCache != null ? rendererCache : (rendererCache = GetComponent<MeshRenderer>());
 
-    void EnsurePrimary()
+    void EnsureBase()
     {
-        if (primary == null) { primary = Renderer.sharedMaterial; baseMaterial = primary; }
+        if (baseMaterial == null) baseMaterial = Renderer.sharedMaterial;
     }
 
     // Light the block up as an active event; ClearHighlight restores the base look.
     public void SetActiveHighlight(Material activeMat)
     {
-        EnsurePrimary();
-        primary = activeMat != null ? activeMat : baseMaterial;
-        ApplyMaterials();
+        EnsureBase();
+        Renderer.sharedMaterial = activeMat != null ? activeMat : baseMaterial;
     }
 
     public void ClearHighlight()
     {
-        EnsurePrimary();
-        primary = baseMaterial;
-        ApplyMaterials();
-    }
-
-    void ApplyMaterials()
-    {
-        Renderer.sharedMaterial = primary;
+        EnsureBase();
+        Renderer.sharedMaterial = baseMaterial;
     }
 
     public Vector2 CentroidUv
