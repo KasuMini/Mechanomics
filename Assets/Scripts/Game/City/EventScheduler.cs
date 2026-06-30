@@ -68,12 +68,18 @@ public class EventScheduler : MonoBehaviour
 
         pending = new Queue<EventData>(dispatch != null ? (IEnumerable<EventData>)dispatch.TodaysEvents : new EventData[0]);
         nextSpawn = clock != null ? clock.startHour : 7f;
-        if (clock != null) clock.Ticked += OnTick;
+        if (clock != null) { clock.Ticked += OnTick; clock.DayEnded += OnDayEnded; }
     }
 
     void OnDestroy()
     {
-        if (clock != null) clock.Ticked -= OnTick;
+        if (clock != null) { clock.Ticked -= OnTick; clock.DayEnded -= OnDayEnded; }
+    }
+
+    // The city day is over when the clock runs out: advance the day and leave the scene.
+    void OnDayEnded()
+    {
+        GameManager.Instance?.stateManager?.EndDay();
     }
 
     void OnTick(float now)

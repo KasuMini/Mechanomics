@@ -6,16 +6,6 @@ public class MarketButtons : MonoBehaviour
     public int buttonID;
     public GameObject card;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void Purchase()
     {
         var runState = GameManager.Instance != null ? GameManager.Instance.runState : null;

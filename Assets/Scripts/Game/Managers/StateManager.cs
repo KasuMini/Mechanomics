@@ -15,33 +15,11 @@ public class StateManager : MonoBehaviour
     public int currentScene;
     public GameplayState currentState;
 
-    public float timer = 60f;
-    public int hour = 7;
-
-
     void Start()
     {
         UpdateScene();
     }
 
-    void Update()
-    {
-        //if (currentState == GameplayState.CityActive)
-        if (currentScene == 3)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                timer = 60f;
-                hour++;
-                if (hour > 12)
-                {
-                    hour = 1;
-                }
-            }
-        }
-    }
-    
     public void UpdateScene()
     {
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
