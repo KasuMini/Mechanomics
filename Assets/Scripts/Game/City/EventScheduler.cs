@@ -76,10 +76,16 @@ public class EventScheduler : MonoBehaviour
         if (clock != null) { clock.Ticked -= OnTick; clock.DayEnded -= OnDayEnded; }
     }
 
-    // The city day is over when the clock runs out: advance the day and leave the scene.
+    // The city day is over when the clock runs out: bank the day, then hand off to the
+    // News recap, which rolls on to Preparation (or EndScreen once the run is finished).
     void OnDayEnded()
     {
-        StateManager.Instance?.EndDay();
+        StateManager sm = StateManager.Instance;
+        if (sm == null) return;
+        RunState.Active?.AdvanceDay();
+        bool runOver = RunState.Active != null && RunState.Active.IsRunOver;
+        sm.currentState = runOver ? StateManager.GameplayState.EndState : StateManager.GameplayState.ShiftOver;
+        sm.UpdateScene();   // City -> News -> Preparation / EndScreen
     }
 
     void OnTick(float now)

@@ -37,7 +37,8 @@ public class NewsManager : MonoBehaviour
 
     public void StartDialogue()
     {
-        StartCoroutine(TypeLine(RunState.Active.eventOutcomes.Dequeue()));
+        if (RunState.Active.eventOutcomes.TryDequeue(out string line))
+            StartCoroutine(TypeLine(line));
     }
 
     // Coroutine that types out the text based on textSpeed float
@@ -54,9 +55,9 @@ public class NewsManager : MonoBehaviour
     }
     public void NextLine()
     {
-        if (RunState.Active.eventOutcomes.Count > 0)
+        if (RunState.Active.eventOutcomes.TryDequeue(out string line))
         {
-            StartCoroutine(TypeLine(RunState.Active.eventOutcomes.Dequeue()));
+            StartCoroutine(TypeLine(line));
         }
     }
 }
