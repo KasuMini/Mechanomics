@@ -49,20 +49,12 @@ public class RunState
         return true;
     }
 
-    // True if `mech` would fit somewhere on the bar (a contiguous free span exists).
-    public bool CanAddMech(MechData mech) => mech != null && inventory.FirstFit(mech.Span) >= 0;
+    // True if `mech` still fits on the bar (its span plus the rest stays within capacity).
+    public bool CanAddMech(MechData mech) => inventory.CanAdd(mech);
 
     public bool TryAddMech(MechData mech)
     {
         if (!inventory.TryAdd(mech)) return false;
-        OwnedMechsChanged?.Invoke();
-        return true;
-    }
-
-    // Drag-relocate: validated against the inventory (ignoring the mech's own cells).
-    public bool TryMoveMech(MechData mech, int newStart)
-    {
-        if (!inventory.TryMove(mech, newStart)) return false;
         OwnedMechsChanged?.Invoke();
         return true;
     }
@@ -74,7 +66,12 @@ public class RunState
         return true;
     }
 
-    public int StartOf(MechData mech) => inventory.StartOf(mech);
+    // The mech's centre in notch units within the centred, gapless row (-1 if absent).
+    public float CenterOf(MechData mech) => inventory.CenterOf(mech);
+
+    // Live drag-reorder: move the mech to the order slot nearest the cursor (`desiredCenter`,
+    // notch units). No event - the bar's animator polls CenterOf each frame.
+    public void ReorderMech(MechData mech, float desiredCenter) => inventory.Reorder(mech, desiredCenter);
 
     public void AdvanceDay()
     {

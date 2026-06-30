@@ -4,30 +4,33 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// A mech in the bar: just the standing sprite (+ optional label) and a LerpToTarget that eases
+// it toward its slot. Dragging is forwarded to the OwnedMechList, which owns the reflow.
+[RequireComponent(typeof(LerpToTarget))]
 public class MechMiniCard : MonoBehaviour,
     IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler,
     IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI model;
     public Image mechImage;
+    public GameObject selBack;    // white rect, slightly taller, behind the sprite
+    public GameObject selFront;   // white rect, slightly shorter, in front - together they read as a cuboid
 
     // Stat colours: AGI / STR / SYS / REL.
     const string ColAgi = "#5AD1FF", ColStr = "#FF6B5A", ColSys = "#B58CFF", ColRel = "#FFD24A";
 
+    const float PixelScale = 2f;    // art px -> canvas units (640 ref / 320 design)
+    const float SelPad = 2f;        // selection box side margin (canvas px)
+    const float SelBoxHeight = 32f * PixelScale; // fixed box height (32 art px), consistent across mechs
+
     public MechData Mech { get; private set; }
+    public LerpToTarget Lerp { get; private set; }
     public event Action<MechMiniCard> Clicked;
-    public float DragGrabOffsetX { get; private set; }
 
     OwnedMechList owner;
-    Image bg;
-    Color normalColor;
     bool didDrag;
 
-    void Awake()
-    {
-        bg = GetComponent<Image>();
-        if (bg != null) normalColor = bg.color;
-    }
+    void Awake() => Lerp = GetComponent<LerpToTarget>();
 
     public void AttachTrack(OwnedMechList list) => owner = list;
 
@@ -36,19 +39,26 @@ public class MechMiniCard : MonoBehaviour,
         $"<color={ColAgi}>{m.agilityStat}</color>/<color={ColStr}>{m.strengthStat}</color>/" +
         $"<color={ColSys}>{m.systemsStat}</color>/<color={ColRel}>{m.reliabilityStat}</color>";
 
-    // Sprite size/placement live on the prefab's MechSprite RectTransform - here we just fill it.
     public void Bind(MechData mech, Sprite sprite)
     {
         Mech = mech;
-        model.text = $"{mech.mechName} {ColoredStats(mech)}";
+        if (model != null) model.text = $"{mech.mechName} {ColoredStats(mech)}";
         mechImage.sprite = sprite;
         mechImage.enabled = sprite != null;
         mechImage.material = mech.palette != null ? mech.palette.Material : null;
+
+        // Render at the sprite's true size; hug its width, fixed height for a consistent box.
+        Vector2 size = sprite != null ? sprite.rect.size * PixelScale : new Vector2(64f, 64f);
+        mechImage.rectTransform.sizeDelta = size;
+        Vector2 box = new Vector2(size.x + SelPad * 2f, SelBoxHeight);
+        if (selBack != null)  ((RectTransform)selBack.transform).sizeDelta = box;
+        if (selFront != null) ((RectTransform)selFront.transform).sizeDelta = box;
     }
 
     public void SetSelected(bool on)
     {
-        if (bg != null) bg.color = on ? new Color(0.18f, 0.42f, 0.30f, 1f) : normalColor;
+        if (selBack != null) selBack.SetActive(on);
+        if (selFront != null) selFront.SetActive(on);
     }
 
     public void OnPointerDown(PointerEventData e) => didDrag = false;
@@ -57,22 +67,18 @@ public class MechMiniCard : MonoBehaviour,
     {
         if (owner == null) return;
         didDrag = true;
-        owner.HideTooltip();
-        transform.SetAsLastSibling();
-        float leftX = owner.PointerToTrackX(e.position, e.pressEventCamera);
-        DragGrabOffsetX = leftX - ((RectTransform)transform).anchoredPosition.x;
+        owner.BeginDrag(this, owner.PointerToTrackLocal(e.position, e.pressEventCamera));
     }
 
     public void OnDrag(PointerEventData e)
     {
         if (owner == null) return;
-        owner.FollowDrag(this, owner.PointerToTrackX(e.position, e.pressEventCamera));
+        owner.Drag(this, owner.PointerToTrackLocal(e.position, e.pressEventCamera));
     }
 
     public void OnEndDrag(PointerEventData e)
     {
-        if (owner == null) return;
-        owner.TryDropCard(this, owner.PointerToTrackX(e.position, e.pressEventCamera));
+        if (owner != null) owner.EndDrag(this);
     }
 
     public void OnPointerClick(PointerEventData e)

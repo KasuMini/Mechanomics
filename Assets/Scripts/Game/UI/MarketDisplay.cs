@@ -1,30 +1,30 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MarketDisplay : MonoBehaviour
 {
-    #region Variables
     public MechMarket mechMarket;
     public int cardID;
     public MechData mechData;
+    public Image mechImage;
+    public MechSpriteLibrary sprites;
     public TextMeshProUGUI model;
     public TextMeshProUGUI pilot;
     public TextMeshProUGUI stats;
- 
-
-    #endregion
 
     void Start()
     {
         mechData = mechMarket.availableMechs[cardID];
-        model.text = mechData.mechName;
-        pilot.text = "Pilot: " + mechData.pilotName;
-        stats.text = "AGI: " + mechData.agilityStat + "<br>STR: " + mechData.strengthStat + "<br>SYS: " + mechData.systemsStat + "<br>Size: " + mechData.size + "<br>Cost: " + mechData.cost;
-
-    }
-
-    void Update()
-    {
-
+        if (model != null) model.text = mechData.mechName;
+        if (pilot != null) pilot.text = mechData.pilotName;
+        if (stats != null)
+            stats.text = $"{MechMiniCard.ColoredStats(mechData)}\n${mechData.cost}";
+        if (mechImage != null && sprites != null)
+        {
+            mechImage.sprite = sprites.Get(mechData.size, mechData.variant);
+            mechImage.material = mechData.palette != null ? mechData.palette.Material : null;
+            mechImage.preserveAspect = true;
+        }
     }
 }

@@ -17,7 +17,7 @@ public class MechInventoryTests
     public void TryAdd_TenSize1_FillsExactly_EleventhFails()
     {
         var inv = new MechInventory();
-        for (int i = 0; i < 10; i++) Assert.IsTrue(inv.TryAdd(Mech(1)));
+        for (int i = 0; i < 10; i++) Assert.IsTrue(inv.TryAdd(Mech(1)));   // 10 x span 2 = 20
         Assert.AreEqual(20, inv.UsedSpan);
         Assert.IsFalse(inv.TryAdd(Mech(1)));
     }
@@ -26,75 +26,25 @@ public class MechInventoryTests
     public void TryAdd_FiveSize3_FillsExactly_SixthFails()
     {
         var inv = new MechInventory();
-        for (int i = 0; i < 5; i++) Assert.IsTrue(inv.TryAdd(Mech(3)));
+        for (int i = 0; i < 5; i++) Assert.IsTrue(inv.TryAdd(Mech(3)));    // 5 x span 4 = 20
         Assert.AreEqual(20, inv.UsedSpan);
         Assert.IsFalse(inv.TryAdd(Mech(3)));
     }
 
     [Test]
-    public void FirstFit_PicksLowestGap()
+    public void CanAdd_RejectsNullDuplicateAndOverflow()
     {
         var inv = new MechInventory();
-        var a = Mech(1); var b = Mech(1);
-        inv.TryAdd(a);                 // notches 0-1
-        inv.TryAdd(b);                 // notches 2-3
-        Assert.AreEqual(0, inv.StartOf(a));
-        Assert.AreEqual(2, inv.StartOf(b));
-        inv.Remove(a);                 // free 0-1
-        var c = Mech(1);
-        inv.TryAdd(c);                 // lowest gap is 0-1
-        Assert.AreEqual(0, inv.StartOf(c));
-    }
-
-    [Test]
-    public void TryMove_OntoFreeSpan_Succeeds()
-    {
-        var inv = new MechInventory();
+        Assert.IsFalse(inv.CanAdd(null));
         var a = Mech(1);
-        inv.TryAdd(a);                 // 0-1
-        Assert.IsTrue(inv.TryMove(a, 10));
-        Assert.AreEqual(10, inv.StartOf(a));
+        inv.TryAdd(a);
+        Assert.IsFalse(inv.CanAdd(a));                  // already owned
+        for (int i = 0; i < 9; i++) inv.TryAdd(Mech(1)); // now 10 x span 2 = 20, full
+        Assert.IsFalse(inv.CanAdd(Mech(1)));            // no room left
     }
 
     [Test]
-    public void TryMove_NudgeWithinOwnFootprint_Succeeds()
-    {
-        var inv = new MechInventory();
-        var a = Mech(2);               // span 3
-        inv.TryAdd(a);                 // 0-2
-        Assert.IsTrue(inv.TryMove(a, 1));   // overlaps its own old cells
-        Assert.AreEqual(1, inv.StartOf(a));
-    }
-
-    [Test]
-    public void TryMove_OntoAnotherMech_FailsAndLeavesStateUnchanged()
-    {
-        var inv = new MechInventory();
-        var a = Mech(1); var b = Mech(1);
-        inv.TryAdd(a);                 // 0-1
-        inv.TryAdd(b);                 // 2-3
-        Assert.IsFalse(inv.TryMove(b, 0));  // would collide with a
-        Assert.AreEqual(0, inv.StartOf(a));
-        Assert.AreEqual(2, inv.StartOf(b));
-    }
-
-    [Test]
-    public void TryAdd_FragmentedArray_BlocksTooBigEvenWithEnoughFreeCells()
-    {
-        var inv = new MechInventory();
-        var fillers = new List<MechData>();
-        for (int i = 0; i < 10; i++) { var m = Mech(1); fillers.Add(m); inv.TryAdd(m); }
-        Assert.AreEqual(20, inv.UsedSpan);      // full
-        inv.Remove(fillers[0]);                 // free notches 0-1 only
-        inv.Remove(fillers[5]);                 // free notches 10-11 only
-        // 4 free cells total, but only 2-wide gaps -> no contiguous span of 3.
-        Assert.AreEqual(16, inv.UsedSpan);
-        Assert.IsFalse(inv.TryAdd(Mech(2)));    // needs 3 contiguous
-        Assert.IsTrue(inv.TryAdd(Mech(1)));     // needs 2 contiguous -> fits in 0-1
-    }
-
-    [Test]
-    public void Remove_FreesCells()
+    public void Remove_ShrinksUsedSpanAndDropsMech()
     {
         var inv = new MechInventory();
         var a = Mech(2);
@@ -106,14 +56,36 @@ public class MechInventoryTests
     }
 
     [Test]
-    public void Mechs_EnumeratesLeftToRight()
+    public void Mechs_PreservesInsertionOrder()
     {
         var inv = new MechInventory();
         var a = Mech(1); var b = Mech(2); var c = Mech(1);
-        inv.TryAdd(a);                 // 0-1
-        inv.TryAdd(b);                 // 2-4
-        inv.TryAdd(c);                 // 5-6
-        var order = new List<MechData>(inv.Mechs);
-        CollectionAssert.AreEqual(new[] { a, b, c }, order);
+        inv.TryAdd(a); inv.TryAdd(b); inv.TryAdd(c);
+        CollectionAssert.AreEqual(new[] { a, b, c }, new List<MechData>(inv.Mechs));
+    }
+
+    [Test]
+    public void CenterOf_CentresRow_Gapless()
+    {
+        var inv = new MechInventory();
+        var a = Mech(1); var b = Mech(1);    // span 2 each
+        inv.TryAdd(a);
+        Assert.AreEqual(10f, inv.CenterOf(a), 1e-4f);  // lone mech sits at the bar centre (Capacity/2)
+        inv.TryAdd(b);
+        // Two mechs straddle the centre, packed shoulder-to-shoulder (no gap between centres).
+        Assert.AreEqual(10f, (inv.CenterOf(a) + inv.CenterOf(b)) * 0.5f, 1e-4f);
+        Assert.AreEqual(2f, inv.CenterOf(b) - inv.CenterOf(a), 1e-4f);   // a.Span/2 + b.Span/2
+    }
+
+    [Test]
+    public void Reorder_MovesDraggedToNearestIndex_AndBack()
+    {
+        var inv = new MechInventory();
+        var a = Mech(1); var b = Mech(1); var c = Mech(1);
+        inv.TryAdd(a); inv.TryAdd(b); inv.TryAdd(c);    // order a, b, c
+        inv.Reorder(a, inv.CenterOf(c) + 1f);           // drag a past c
+        CollectionAssert.AreEqual(new[] { b, c, a }, new List<MechData>(inv.Mechs));
+        inv.Reorder(a, 0f);                             // drag a back to the front
+        CollectionAssert.AreEqual(new[] { a, b, c }, new List<MechData>(inv.Mechs));
     }
 }

@@ -1,43 +1,31 @@
 fileFormatVersion: 2
-guid: 88d54e0e7336cf4088fea54db09a6f94
+guid: 4cdb13933cf9c7dcb98ace9bc4b15c29
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6700441212385134646
-    second: Mechs_0
+      213: -5517118976268558899
+    second: mech_platforms_0
   - first:
-      213: -8596911110857791152
-    second: Mechs_1
+      213: 6906904866450617706
+    second: mech_platforms_1
   - first:
-      213: 8470694735151130230
-    second: Mechs_2
+      213: -2208357143210516331
+    second: mech_platforms_2
   - first:
-      213: -3491035122077281110
-    second: Mechs_3
+      213: -8998878072512862694
+    second: mech_platforms_3
   - first:
-      213: -703530206634363979
-    second: Mechs_4
+      213: 2993515193988441161
+    second: mech_platforms_4
   - first:
-      213: 1139681596193390949
-    second: Mechs_5
+      213: 2695397407002535339
+    second: Platform_0
   - first:
-      213: -2354210221327901633
-    second: Mech_0_0
+      213: -5862022666285825741
+    second: Platform_1
   - first:
-      213: 8866924638654676900
-    second: Mech_0_1
-  - first:
-      213: -5604853184585604747
-    second: Mech_0_2
-  - first:
-      213: -4802765454765733805
-    second: Mech_1_0
-  - first:
-      213: -4656928222996925467
-    second: Mech_1_1
-  - first:
-      213: 6930272282405390934
-    second: Mech_1_2
+      213: -6244361495144544390
+    second: Platform_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -81,7 +69,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
@@ -133,79 +121,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mech_0_0
+      name: Platform_0
       rect:
         serializedVersion: 2
-        x: 18
-        y: 64
-        width: 26
-        height: 33
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f3c182fd64a245fd0800000000000000
-      internalID: -2354210221327901633
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mech_0_1
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 64
-        width: 39
-        height: 42
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4afbb29daf4ad0b70800000000000000
-      internalID: 8866924638654676900
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mech_0_2
-      rect:
-        serializedVersion: 2
-        x: 137
-        y: 64
-        width: 46
-        height: 43
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 571ee8279bf8732b0800000000000000
-      internalID: -5604853184585604747
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mech_1_0
-      rect:
-        serializedVersion: 2
-        x: 18
+        x: 0
         y: 0
-        width: 26
-        height: 36
+        width: 64
+        height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +136,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 358cb29d346295db0800000000000000
-      internalID: -4802765454765733805
+      spriteID: ba525ec29a9f76520800000000000000
+      internalID: 2695397407002535339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mech_1_1
+      name: Platform_1
       rect:
         serializedVersion: 2
-        x: 77
+        x: 64
         y: 0
-        width: 37
-        height: 39
+        width: 64
+        height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5e3f6c364744f5fb0800000000000000
-      internalID: -4656928222996925467
+      spriteID: 331cebe7179e5aea0800000000000000
+      internalID: -5862022666285825741
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mech_1_2
+      name: Platform_2
       rect:
         serializedVersion: 2
-        x: 140
+        x: 128
         y: 0
-        width: 41
-        height: 39
+        width: 64
+        height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,8 +180,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 65a42853ce54d2060800000000000000
-      internalID: 6930272282405390934
+      spriteID: a7748c0ed429759a0800000000000000
+      internalID: -6244361495144544390
       vertices: []
       indices: 
       edges: []
@@ -268,7 +190,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 73310d9e935fbbcdb81ecc6099c5e210
     internalID: 0
     vertices: []
     indices: 
@@ -276,20 +198,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Mech_0_0: -2354210221327901633
-      Mech_0_1: 8866924638654676900
-      Mech_0_2: -5604853184585604747
-      Mech_1_0: -4802765454765733805
-      Mech_1_1: -4656928222996925467
-      Mech_1_2: 6930272282405390934
-      Mechs_0: -6700441212385134646
-      Mechs_1: -8596911110857791152
-      Mechs_2: 8470694735151130230
-      Mechs_3: -3491035122077281110
-      Mechs_4: -703530206634363979
-      Mechs_5: 1139681596193390949
+      Platform_0: 2695397407002535339
+      Platform_1: -5862022666285825741
+      Platform_2: -6244361495144544390
+      mech_platforms_0: -5517118976268558899
+      mech_platforms_1: 6906904866450617706
+      mech_platforms_2: -2208357143210516331
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

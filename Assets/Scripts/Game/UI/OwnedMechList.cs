@@ -4,40 +4,51 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Renders the owned mechs as a fixed 24-notch track and acts as a multi-select picker.
-// The track is a pure reflection of RunState's inventory: card width = span * notch,
-// card x = startNotch * notch. Cards drag-snap to free notches; positions live in the
-// inventory, not here.
+// The owned-mech bar. Each mech is a card (front layer) standing on a platform (back layer).
+// Positions live in RunState's inventory (discrete slots); cards/platforms just lerp toward
+// the screen position of their slot - they don't know why a slot changed. Dragging follows
+// the cursor and live-reflows the slots (push neighbours aside); the dragged card's lerp is
+// suspended until release, then it eases home onto its platform.
 public class OwnedMechList : MonoBehaviour
 {
     public MechMiniCard cardPrefab;
-    public MechSpriteLibrary sprites;  // (size, variant) -> mech sprite
-    public Transform content;          // existing wiring; its parent (Viewport) is the track
-    public float cardInset = 6f;       // px shrink so neighbouring cards show a gap
-    public Color notchColor = new Color(1f, 1f, 1f, 0.12f);
+    public MechSpriteLibrary sprites;     // (size, variant) -> mech sprite
+    public Sprite[] platformSprites;      // index size-1: small / medium / large
+    public Transform content;             // existing wiring; its parent (Viewport) is the track
+    public float mechBaseY = 16f;         // how high the mech stands above the bar bottom
+    public float lerpSpeed = 18f;         // snappy
 
     public HashSet<MechData> Selected { get; } = new HashSet<MechData>();
     public event Action SelectionChanged;
 
     RunState runState;
-    RectTransform track;
+    RectTransform track, platformsLayer, mechsLayer;
     readonly Dictionary<MechData, MechMiniCard> cardByMech = new Dictionary<MechData, MechMiniCard>();
-    readonly List<RectTransform> notches = new List<RectTransform>();
+    readonly Dictionary<MechData, LerpToTarget> platformByMech = new Dictionary<MechData, LerpToTarget>();
+
+    Vector2 dragGrab;
 
     public float NotchWidth => track != null ? track.rect.width / MechData.TrackNotches : 0f;
 
     void Awake()
     {
         track = content != null ? content.parent as RectTransform : (RectTransform)transform;
-
-        // The track is fixed-width and absolutely positioned - kill the old auto-layout/scroll.
-        var scroll = GetComponent<ScrollRect>();
-        if (scroll != null) scroll.enabled = false;
-        // The bar masked overflow for scrolling; we want sprites to pop out the top.
-        var mask = track != null ? track.GetComponent<RectMask2D>() : null;
-        if (mask != null) mask.enabled = false;
+        var scroll = GetComponent<ScrollRect>(); if (scroll != null) scroll.enabled = false;
+        var mask = track != null ? track.GetComponent<RectMask2D>() : null; if (mask != null) mask.enabled = false;
         DisableLayout(content);
-        EnsureNotches();
+        platformsLayer = MakeLayer("Platforms");   // first sibling -> behind
+        mechsLayer = MakeLayer("Mechs");           // second sibling -> in front
+    }
+
+    RectTransform MakeLayer(string layerName)
+    {
+        var go = new GameObject(layerName, typeof(RectTransform));
+        var rt = (RectTransform)go.transform;
+        rt.SetParent(track, false);
+        rt.anchorMin = Vector2.zero; rt.anchorMax = Vector2.one;
+        rt.offsetMin = rt.offsetMax = Vector2.zero;
+        rt.pivot = Vector2.zero;
+        return rt;
     }
 
     void Start()
@@ -52,45 +63,65 @@ public class OwnedMechList : MonoBehaviour
         if (runState != null) runState.OwnedMechsChanged -= Sync;
     }
 
-    // Reconcile cards with the inventory: add new, remove gone, re-place everything.
+    // Reconcile cards/platforms with the inventory contents (add/remove); positions are the
+    // animator's job each frame.
     public void Sync()
     {
         if (track == null || cardPrefab == null || runState == null) return;
-
         var owned = new HashSet<MechData>(runState.OwnedMechs);
 
-        // Remove cards whose mech left the inventory.
         var gone = new List<MechData>();
-        foreach (var kv in cardByMech)
-            if (!owned.Contains(kv.Key)) gone.Add(kv.Key);
-        foreach (var mech in gone) RemoveCard(mech);
+        foreach (var kv in cardByMech) if (!owned.Contains(kv.Key)) gone.Add(kv.Key);
+        foreach (var mech in gone) RemoveMech(mech);
 
-        // Add new cards; re-bind existing so live edits (palette, stats) show.
         foreach (var mech in owned)
         {
             if (cardByMech.TryGetValue(mech, out var card)) card.Bind(mech, SpriteFor(mech));
-            else AddCard(mech);
+            else AddMech(mech);
         }
-
-        RelayoutAll();
         SelectionChanged?.Invoke();
     }
 
     Sprite SpriteFor(MechData mech) => sprites != null ? sprites.Get(mech.size, mech.variant) : null;
 
-    void AddCard(MechData mech)
+    Sprite PlatformFor(MechData mech)
     {
-        var card = Instantiate(cardPrefab, track);
-        var rt = (RectTransform)card.transform;          // anchor/pivot are fixed for a card's life
-        rt.anchorMin = rt.anchorMax = new Vector2(0f, 0.5f);
-        rt.pivot = new Vector2(0f, 0.5f);
+        if (platformSprites == null || platformSprites.Length == 0) return null;
+        return platformSprites[Mathf.Clamp(mech.size - 1, 0, platformSprites.Length - 1)];
+    }
+
+    void AddMech(MechData mech)
+    {
+        // Platform (back layer).
+        var pgo = new GameObject("Platform", typeof(RectTransform), typeof(Image));
+        var prt = (RectTransform)pgo.transform;
+        prt.SetParent(platformsLayer, false);
+        prt.anchorMin = prt.anchorMax = Vector2.zero;
+        prt.pivot = new Vector2(0.5f, 0f);
+        prt.sizeDelta = new Vector2(128f, 128f);
+        var pimg = pgo.GetComponent<Image>();
+        pimg.sprite = PlatformFor(mech);
+        pimg.raycastTarget = false;
+        pimg.preserveAspect = true;
+        var plerp = pgo.AddComponent<LerpToTarget>();
+        plerp.speed = lerpSpeed;
+        platformByMech[mech] = plerp;
+
+        // Card (front layer).
+        var card = Instantiate(cardPrefab, mechsLayer);
+        var rt = (RectTransform)card.transform;
+        rt.anchorMin = rt.anchorMax = Vector2.zero;
+        rt.pivot = new Vector2(0.5f, 0f);
+        if (card.Lerp != null) card.Lerp.speed = lerpSpeed;
         card.AttachTrack(this);
         card.Bind(mech, SpriteFor(mech));
         card.Clicked += OnCardClicked;
         cardByMech[mech] = card;
+
+        ApplyTargets(mech, snap: true);   // snap into place so it doesn't fly in from the origin
     }
 
-    void RemoveCard(MechData mech)
+    void RemoveMech(MechData mech)
     {
         Selected.Remove(mech);
         if (cardByMech.TryGetValue(mech, out var card))
@@ -99,50 +130,69 @@ public class OwnedMechList : MonoBehaviour
             Destroy(card.gameObject);
         }
         cardByMech.Remove(mech);
+        if (platformByMech.TryGetValue(mech, out var plat) && plat != null) Destroy(plat.gameObject);
+        platformByMech.Remove(mech);
     }
 
-    void RelayoutAll()
+    // Animator: every frame, point each card/platform at the screen position of its slot.
+    void Update()
     {
-        LayoutNotches();
-        foreach (var kv in cardByMech)
-            Place(kv.Value, runState.StartOf(kv.Key), kv.Key.Span);
+        if (runState == null || track == null) return;
+        foreach (var kv in cardByMech) ApplyTargets(kv.Key, snap: false);
     }
 
-    void Place(MechMiniCard card, int start, int span)
+    void ApplyTargets(MechData mech, bool snap)
     {
-        if (start < 0) return;
-        var rt = (RectTransform)card.transform;
-        rt.sizeDelta = new Vector2(span * NotchWidth - cardInset, track.rect.height - cardInset);
-        rt.anchoredPosition = new Vector2(start * NotchWidth + cardInset * 0.5f, 0f);
+        float center = runState.CenterOf(mech);
+        if (center < 0f) return;
+        float centerX = center * NotchWidth;
+
+        if (platformByMech.TryGetValue(mech, out var plat) && plat != null)
+        {
+            plat.Target = new Vector2(centerX, 0f);          // flush with the bar bottom
+            if (snap) plat.SnapToTarget();
+        }
+        if (cardByMech.TryGetValue(mech, out var card) && card.Lerp != null)
+        {
+            card.Lerp.Target = new Vector2(centerX, mechBaseY);
+            if (snap) card.Lerp.SnapToTarget();              // suspended (dragged) cards ignore Target anyway
+        }
     }
 
-    // --- Drag API called by MechMiniCard ---
+    // --- Drag: cursor-driven, live reorder ---
 
-    // Local x measured from the track's LEFT edge (works regardless of track pivot).
-    public float PointerToTrackX(Vector2 screenPos, Camera cam)
+    // Pointer in track-local coords with a bottom-left origin (matches card/platform anchoredPosition).
+    public Vector2 PointerToTrackLocal(Vector2 screenPos, Camera cam)
     {
         RectTransformUtility.ScreenPointToLocalPointInRectangle(track, screenPos, cam, out var lp);
-        return lp.x + track.pivot.x * track.rect.width;
+        return new Vector2(lp.x + track.pivot.x * track.rect.width,
+                           lp.y + track.pivot.y * track.rect.height);
     }
 
-    public void FollowDrag(MechMiniCard card, float leftX)
+    public void BeginDrag(MechMiniCard card, Vector2 pointerLocal)
+    {
+        HideTooltip();
+        var rt = (RectTransform)card.transform;
+        dragGrab = pointerLocal - rt.anchoredPosition;
+        if (card.Lerp != null) card.Lerp.suspended = true;   // the cursor owns the card now
+        rt.SetAsLastSibling();                                // draw over its neighbours
+    }
+
+    public void Drag(MechMiniCard card, Vector2 pointerLocal)
     {
         var rt = (RectTransform)card.transform;
-        rt.anchoredPosition = new Vector2(leftX - card.DragGrabOffsetX, rt.anchoredPosition.y);
+        rt.anchoredPosition = pointerLocal - dragGrab;        // free x + y
+
+        float nw = NotchWidth;
+        if (nw <= 0f) return;
+        float centerNotches = rt.anchoredPosition.x / nw;        // dragged centre, in notch units
+        runState.ReorderMech(card.Mech, centerNotches);          // others repack and re-centre around it
     }
 
-    public bool TryDropCard(MechMiniCard card, float leftX)
+    public void EndDrag(MechMiniCard card)
     {
-        MechData mech = card.Mech;
-        int span = mech.Span;
-        int cur = runState.StartOf(mech);
-        float desiredLeft = leftX - card.DragGrabOffsetX;
-        int target = Mathf.Clamp(Mathf.RoundToInt(desiredLeft / NotchWidth), 0, MechData.TrackNotches - span);
-
-        bool moved = (target != cur) && runState.TryMoveMech(mech, target);
-        // Whether moved (Sync re-places it) or reverted, snap to the authoritative position.
-        Place(card, moved ? target : cur, span);
-        return moved;
+        // Future: if released over an event / other drop target, hand off here instead.
+        if (card.Lerp != null) card.Lerp.suspended = false;   // ease home onto its platform
     }
 
     public void ClearSelection()
@@ -202,7 +252,7 @@ public class OwnedMechList : MonoBehaviour
         tooltipRT = (RectTransform)tooltip.transform;
         tooltipRT.SetParent(canvasRT, false);
         tooltipRT.anchorMin = tooltipRT.anchorMax = new Vector2(0.5f, 0.5f);
-        tooltipRT.pivot = new Vector2(0.5f, 0f);               // grows upward from the anchor point
+        tooltipRT.pivot = new Vector2(0.5f, 0f);
 
         var bg = tooltip.GetComponent<Image>();
         bg.color = new Color(0.05f, 0.06f, 0.08f, 0.92f);
@@ -225,42 +275,6 @@ public class OwnedMechList : MonoBehaviour
         tooltipText.fontSize = 16f;
 
         tooltip.SetActive(false);
-    }
-
-    // --- Notch dividers (visual guide) ---
-
-    void EnsureNotches()
-    {
-        if (track == null || notches.Count > 0) return;
-        for (int i = 0; i <= MechData.TrackNotches; i++)
-        {
-            var go = new GameObject("Notch" + i, typeof(RectTransform), typeof(Image));
-            var rt = (RectTransform)go.transform;
-            rt.SetParent(track, false);
-            rt.anchorMin = rt.anchorMax = new Vector2(0f, 0.5f);
-            rt.pivot = new Vector2(0.5f, 0.5f);
-            var img = go.GetComponent<Image>();
-            img.color = notchColor;
-            img.raycastTarget = false;
-            notches.Add(rt);
-        }
-    }
-
-    void LayoutNotches()
-    {
-        float nw = NotchWidth, h = track.rect.height;
-        for (int i = 0; i < notches.Count; i++)
-        {
-            var rt = notches[i];
-            rt.sizeDelta = new Vector2(2f, h);
-            rt.anchoredPosition = new Vector2(i * nw, 0f);
-        }
-    }
-
-    void OnRectTransformDimensionsChange()
-    {
-        if (track == null || runState == null) return;
-        RelayoutAll();
     }
 
     static void DisableLayout(Transform t)

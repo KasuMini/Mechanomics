@@ -1,98 +1,66 @@
 using System.Collections.Generic;
 
-// The bottom bar's 20 notches ARE the inventory: a mech occupying [start, start+span)
-// is stored as its own reference repeated across those cells. Contents, position, and
-// capacity are all read off this one array - there is no separate position map.
+// The owned mechs are just an ordered list - no slot grid, no gaps. Each mech's on-screen
+// position is derived by packing the list shoulder-to-shoulder and centring it in the bar
+// (CenterOf); dragging is a plain reorder (Reorder). Widths are in notch units (MechData.Span);
+// the bar is Capacity notches wide.
 public class MechInventory
 {
     public const int Capacity = 20;
-    readonly MechData[] slots = new MechData[Capacity];
+    readonly List<MechData> order = new List<MechData>();
 
-    // First cell holding the mech, or -1 if absent.
-    public int StartOf(MechData m)
-    {
-        if (m == null) return -1;
-        for (int i = 0; i < Capacity; i++)
-            if (slots[i] == m) return i;
-        return -1;
-    }
+    public IReadOnlyList<MechData> Mechs => order;
 
-    public bool Contains(MechData m) => StartOf(m) >= 0;
+    public bool Contains(MechData m) => order.Contains(m);
 
     public int UsedSpan
     {
         get
         {
             int n = 0;
-            for (int i = 0; i < Capacity; i++)
-                if (slots[i] != null) n++;
+            foreach (var m in order) n += m.Span;
             return n;
         }
     }
 
-    // Distinct mechs, left to right.
-    public IEnumerable<MechData> Mechs
-    {
-        get
-        {
-            for (int i = 0; i < Capacity; i++)
-                if (slots[i] != null && (i == 0 || slots[i - 1] != slots[i]))
-                    yield return slots[i];
-        }
-    }
-
-    // Lowest start with `span` free cells, or -1.
-    public int FirstFit(int span)
-    {
-        for (int s = 0; s + span <= Capacity; s++)
-            if (IsFree(s, span)) return s;
-        return -1;
-    }
-
-    // Are cells [start, start+span) free, treating `ignore`'s own cells as free?
-    public bool IsFree(int start, int span, MechData ignore = null)
-    {
-        if (start < 0 || span <= 0 || start + span > Capacity) return false;
-        for (int i = start; i < start + span; i++)
-            if (slots[i] != null && slots[i] != ignore) return false;
-        return true;
-    }
+    public bool CanAdd(MechData m) => m != null && !Contains(m) && UsedSpan + m.Span <= Capacity;
 
     public bool TryAdd(MechData m)
     {
-        if (m == null || Contains(m)) return false;
-        int start = FirstFit(m.Span);
-        if (start < 0) return false;
-        Fill(start, m.Span, m);
+        if (!CanAdd(m)) return false;
+        order.Add(m);
         return true;
     }
 
-    public bool TryMove(MechData m, int newStart)
+    public bool Remove(MechData m) => order.Remove(m);
+
+    public void Clear() => order.Clear();
+
+    // The mech's centre in notch units within the centred, gapless row, or -1 if absent.
+    public float CenterOf(MechData m)
     {
-        if (m == null) return false;
-        int cur = StartOf(m);
-        if (cur < 0) return false;
-        if (!IsFree(newStart, m.Span, m)) return false;
-        Fill(cur, m.Span, null);
-        Fill(newStart, m.Span, m);
-        return true;
+        int idx = order.IndexOf(m);
+        if (idx < 0) return -1f;
+        float center = (Capacity - UsedSpan) * 0.5f;   // left pad that centres the whole row
+        for (int i = 0; i < idx; i++) center += order[i].Span;
+        return center + m.Span * 0.5f;
     }
 
-    public bool Remove(MechData m)
+    // Move `dragged` to the order position whose resulting centre sits nearest `desiredCenter`
+    // (notch units). The rest repack and re-centre around it - no gaps, no chasing.
+    public void Reorder(MechData dragged, float desiredCenter)
     {
-        int start = StartOf(m);
-        if (start < 0) return false;
-        Fill(start, m.Span, null);
-        return true;
-    }
-
-    public void Clear()
-    {
-        for (int i = 0; i < Capacity; i++) slots[i] = null;
-    }
-
-    void Fill(int start, int span, MechData value)
-    {
-        for (int i = start; i < start + span; i++) slots[i] = value;
+        if (dragged == null || !order.Remove(dragged)) return;
+        float left = (Capacity - (UsedSpan + dragged.Span)) * 0.5f;
+        int best = 0;
+        float bestDist = float.MaxValue;
+        float run = 0f;
+        for (int k = 0; k <= order.Count; k++)
+        {
+            float dist = System.Math.Abs(left + run + dragged.Span * 0.5f - desiredCenter);
+            if (dist < bestDist) { bestDist = dist; best = k; }
+            if (k < order.Count) run += order[k].Span;
+        }
+        order.Insert(best, dragged);
     }
 }
