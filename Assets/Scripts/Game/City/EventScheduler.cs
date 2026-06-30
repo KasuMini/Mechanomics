@@ -79,7 +79,7 @@ public class EventScheduler : MonoBehaviour
     // The city day is over when the clock runs out: advance the day and leave the scene.
     void OnDayEnded()
     {
-        GameManager.Instance?.stateManager?.EndDay();
+        StateManager.Instance?.EndDay();
     }
 
     void OnTick(float now)

@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-// The City day clock. Promotes the old cosmetic StateManager timer into the real
-// master clock that drives event spawning, expiry, and (later) mech travel time.
-// Runs from startHour to endHour at secondsPerHour real seconds per in-game hour.
+// The City day clock: the master clock for a city day, driving event spawning,
+// expiry, and mech travel time. Runs from startHour to endHour at secondsPerHour
+// real seconds per in-game hour.
 public class CityClock : MonoBehaviour
 {
     public float startHour = 7f;
