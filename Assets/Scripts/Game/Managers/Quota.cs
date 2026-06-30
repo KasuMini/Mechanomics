@@ -10,11 +10,6 @@ public class Quota : MonoBehaviour
         CheckDay();
     }
 
-    void Update()
-    {
-        
-    }
-
     private void CheckDay()
     {
         switch (GameManager.Instance.runState.Day)
