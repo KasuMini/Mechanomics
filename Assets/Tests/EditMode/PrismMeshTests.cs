@@ -126,26 +126,6 @@ public class PrismMeshTests
     }
 
     [Test]
-    public void Build_SmoothNormals_MatchVertexCountAndAreUnit()
-    {
-        PrismMesh.Data d = PrismMesh.Build(UnitSquare(), 0.5f);
-        Assert.AreEqual(d.vertices.Length, d.smoothNormals.Length);
-        foreach (var n in d.smoothNormals) Assert.AreEqual(1f, n.magnitude, 1e-3f);
-    }
-
-    [Test]
-    public void Build_SmoothNormals_SharedAtCoincidentVertices()
-    {
-        PrismMesh.Data d = PrismMesh.Build(UnitSquare(), 0.5f);
-        // every pair of vertices at the same position must carry the same smooth normal
-        for (int i = 0; i < d.vertices.Length; i++)
-            for (int j = i + 1; j < d.vertices.Length; j++)
-                if (Vector3.Distance(d.vertices[i], d.vertices[j]) < 1e-4f)
-                    Assert.Less(Vector3.Distance(d.smoothNormals[i], d.smoothNormals[j]), 1e-3f,
-                        $"coincident verts {i},{j} have different smooth normals");
-    }
-
-    [Test]
     public void Build_AllTriangleIndicesInRange()
     {
         PrismMesh.Data d = PrismMesh.Build(UnitSquare(), 1f);

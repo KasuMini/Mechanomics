@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PrismOutline
-  m_Shader: {fileID: 4800000, guid: 553efe33e4f1e664b977a566da1e0593, type: 3}
+  m_Name: SelectionOutlineComposite
+  m_Shader: {fileID: 4800000, guid: f84427eb87a13dfb58e4fe67ad8cfb1e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -25,10 +25,8 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _OutlineWidth: 0.08
-    - _RimPower: 2
-    - _RimStrength: 3
+    - _Thickness: 3
     m_Colors:
-    - _OutlineColor: {r: 1, g: 0.9, b: 0.3, a: 1}
+    - _OutlineColor: {r: 1, g: 0.9, b: 0.2, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

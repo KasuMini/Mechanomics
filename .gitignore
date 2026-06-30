@@ -120,3 +120,4 @@ desktop.ini
 
 # Debug screenshots captured during dev sessions
 /[Aa]ssets/[Ss]creenshots/
+/[Aa]ssets/[Ss]creenshots.meta

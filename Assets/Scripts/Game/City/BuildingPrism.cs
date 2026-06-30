@@ -18,7 +18,6 @@ public class BuildingPrism : MonoBehaviour
 
     Material baseMaterial;    // the original block material
     Material primary;         // current main material (base or active-event)
-    Material outlineMat;      // hover-outline overlay, or null
     MeshRenderer rendererCache;
 
     CityMapView View => GetComponentInParent<CityMapView>();
@@ -44,19 +43,9 @@ public class BuildingPrism : MonoBehaviour
         ApplyMaterials();
     }
 
-    // Add a hover-outline overlay material (null to remove it). Coexists with highlight.
-    public void SetOutlined(Material outline)
-    {
-        EnsurePrimary();
-        outlineMat = outline;
-        ApplyMaterials();
-    }
-
     void ApplyMaterials()
     {
-        Renderer.sharedMaterials = outlineMat != null
-            ? new[] { primary, outlineMat }
-            : new[] { primary };
+        Renderer.sharedMaterial = primary;
     }
 
     public Vector2 CentroidUv
@@ -102,7 +91,6 @@ public class BuildingPrism : MonoBehaviour
         mesh.vertices = d.vertices;
         mesh.normals = d.normals;
         mesh.triangles = d.triangles;
-        if (d.smoothNormals != null) mesh.SetUVs(1, d.smoothNormals);   // UV1 = smooth normals for the outline hull
         mesh.RecalculateBounds();
         transform.localPosition = Vector3.zero;   // mesh is authored in root-local space
 

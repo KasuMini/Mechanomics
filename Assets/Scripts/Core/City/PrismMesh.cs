@@ -11,7 +11,6 @@ public static class PrismMesh
     {
         public Vector3[] vertices;
         public Vector3[] normals;        // flat per-face, for the prism face shading
-        public Vector3[] smoothNormals;  // averaged at shared positions, for a gap-free outline hull
         public int[] triangles;
     }
 
@@ -82,39 +81,7 @@ public static class PrismMesh
         {
             vertices = verts.ToArray(),
             normals = norms.ToArray(),
-            smoothNormals = SmoothNormals(verts, norms),
             triangles = tris.ToArray()
         };
-    }
-
-    // Per-vertex normal averaged across every vertex sharing the same position, so the
-    // outline hull extrudes a shared direction at each corner (no splits at hard edges).
-    static Vector3[] SmoothNormals(List<Vector3> verts, List<Vector3> norms)
-    {
-        var sumByKey = new Dictionary<long, Vector3>();
-        var keys = new long[verts.Count];
-        for (int i = 0; i < verts.Count; i++)
-        {
-            long key = PositionKey(verts[i]);
-            keys[i] = key;
-            sumByKey.TryGetValue(key, out Vector3 acc);
-            sumByKey[key] = acc + norms[i];
-        }
-        var smooth = new Vector3[verts.Count];
-        for (int i = 0; i < verts.Count; i++)
-        {
-            Vector3 s = sumByKey[keys[i]];
-            smooth[i] = s.sqrMagnitude > 1e-12f ? s.normalized : norms[i];
-        }
-        return smooth;
-    }
-
-    static long PositionKey(Vector3 p)
-    {
-        // quantise to ~1e-4 and pack into one long so coincident verts share a bucket
-        long x = (long)Mathf.Round(p.x * 10000f) & 0x1FFFFF;
-        long y = (long)Mathf.Round(p.y * 10000f) & 0x1FFFFF;
-        long z = (long)Mathf.Round(p.z * 10000f) & 0x1FFFFF;
-        return (x << 42) ^ (y << 21) ^ z;
     }
 }

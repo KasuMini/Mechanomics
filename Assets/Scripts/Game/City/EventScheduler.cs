@@ -26,7 +26,6 @@ public class EventScheduler : MonoBehaviour
     public float convoyStagger = 0.5f;   // seconds between each mech departing on a multi-mech dispatch
 
     [Header("Hover")]
-    public Material outlineMaterial;     // outline overlay applied to the building under the cursor
     public bool enableHover = true;
 
     [Header("Tuning")]
@@ -139,9 +138,13 @@ public class EventScheduler : MonoBehaviour
     {
         BuildingPrism over = screenPos.HasValue ? BuildingAt(screenPos.Value) : null;
         if (over == hovered) return;
-        if (hovered != null) hovered.SetOutlined(null);
         hovered = over;
-        if (hovered != null) hovered.SetOutlined(outlineMaterial);
+        // Push the hovered building's renderer to the screen-space outline feature.
+        var outline = SelectionOutlineFeature.Active;
+        if (outline != null)
+            outline.SetRenderers(hovered != null
+                ? new[] { hovered.GetComponent<Renderer>() }
+                : System.Array.Empty<Renderer>());
     }
 
     void TryClick(Vector2 screenPos)
