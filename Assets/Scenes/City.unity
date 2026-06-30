@@ -2470,10 +2470,19 @@ MonoBehaviour:
   ownedList: {fileID: 9026698894141386736}
   activeBuildingMaterial: {fileID: 2100000, guid: dce65bb64010010ab909961dd5f3944f, type: 2}
   markerTemplate: {fileID: 348627155}
+  graph: {fileID: 5124187634014969946}
+  spriteLibrary: {fileID: 11400000, guid: baf68df14726019528ac95bc2122c6db, type: 2}
+  runnerParent: {fileID: 0}
+  travelSpeed: 0.8
+  runnerLift: 0
+  convoyStagger: 0.5
+  outlineMaterial: {fileID: 2100000, guid: 6286352a6773ce39e999856ff28326ce, type: 2}
+  enableHover: 1
   maxConcurrent: 4
   lifespanHours: 1.5
   spawnIntervalHours: 0.5
   avoidHQ: 1
+  debugClicks: 0
 --- !u!114 &112295313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23789,8 +23798,8 @@ Camera:
   m_GameObject: {fileID: 1351234371}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -38899,6 +38908,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 502769917}
+    - target: {fileID: 5836575733632737516, guid: 377279a282f21237d9b34b377ce92365, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5836575733632737516, guid: 377279a282f21237d9b34b377ce92365, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6286352a6773ce39e999856ff28326ce, type: 2}
     - target: {fileID: 5860560165439239744, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -39061,43 +39078,43 @@ PrefabInstance:
       objectReference: {fileID: 55882695}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.15
+      value: 1.18
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.15
+      value: 1.18
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.084
+      value: -0.08325799
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.742
+      value: 7.9915867
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8870109
+      value: 0.84301966
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.46174863
+      value: 0.53788286
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 65.079
       objectReference: {fileID: 0}
     - target: {fileID: 7527680531468290975, guid: 377279a282f21237d9b34b377ce92365, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -39275,6 +39292,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5656d982a231db3ac72c53fd0b4019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CityMapView
+--- !u!114 &5124187634014969946 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 555105317191925314, guid: 377279a282f21237d9b34b377ce92365, type: 3}
+  m_PrefabInstance: {fileID: 5124187634014969944}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41db2782c0131ed37bfc89abf845d657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CityGraphData
 --- !u!1001 &9026698894141386734
 PrefabInstance:
   m_ObjectHideFlags: 0

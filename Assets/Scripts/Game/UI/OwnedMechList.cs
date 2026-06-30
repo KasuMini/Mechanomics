@@ -54,13 +54,27 @@ public class OwnedMechList : MonoBehaviour
     void Start()
     {
         runState = GameManager.Instance != null ? GameManager.Instance.runState : null;
-        if (runState != null) runState.OwnedMechsChanged += Sync;
+        if (runState != null) { runState.OwnedMechsChanged += Sync; runState.BusyChanged += RefreshBusy; }
         Sync();
     }
 
     void OnDestroy()
     {
-        if (runState != null) runState.OwnedMechsChanged -= Sync;
+        if (runState != null) { runState.OwnedMechsChanged -= Sync; runState.BusyChanged -= RefreshBusy; }
+    }
+
+    // Grey out and deselect mechs that are away on a dispatch.
+    void RefreshBusy()
+    {
+        if (runState == null) return;
+        bool deselected = false;
+        foreach (var kv in cardByMech)
+        {
+            bool busy = runState.IsBusy(kv.Key);
+            kv.Value.SetAvailable(!busy);
+            if (busy && Selected.Remove(kv.Key)) { kv.Value.SetSelected(false); deselected = true; }
+        }
+        if (deselected) SelectionChanged?.Invoke();
     }
 
     // Reconcile cards/platforms with the inventory contents (add/remove); positions are the
@@ -79,6 +93,7 @@ public class OwnedMechList : MonoBehaviour
             if (cardByMech.TryGetValue(mech, out var card)) card.Bind(mech, SpriteFor(mech));
             else AddMech(mech);
         }
+        RefreshBusy();
         SelectionChanged?.Invoke();
     }
 
@@ -205,6 +220,7 @@ public class OwnedMechList : MonoBehaviour
     void OnCardClicked(MechMiniCard card)
     {
         MechData mech = card.Mech;
+        if (runState != null && runState.IsBusy(mech)) return;   // away on dispatch - not selectable
         if (Selected.Contains(mech)) { Selected.Remove(mech); card.SetSelected(false); }
         else { Selected.Add(mech); card.SetSelected(true); }
         SelectionChanged?.Invoke();

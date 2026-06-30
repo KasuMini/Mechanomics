@@ -61,6 +61,13 @@ public class MechMiniCard : MonoBehaviour,
         if (selFront != null) selFront.SetActive(on);
     }
 
+    // Dim the card while the mech is away on a dispatch (can't be picked).
+    public void SetAvailable(bool available)
+    {
+        if (mechImage != null)
+            mechImage.color = available ? Color.white : new Color(0.42f, 0.44f, 0.5f, 0.55f);
+    }
+
     public void OnPointerDown(PointerEventData e) => didDrag = false;
 
     public void OnBeginDrag(PointerEventData e)

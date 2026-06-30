@@ -20,9 +20,21 @@ public class RunState
     readonly MechInventory inventory = new MechInventory();
     public IEnumerable<MechData> OwnedMechs => inventory.Mechs;
 
+    // Mechs currently away on a dispatch - can't be re-selected until they return.
+    readonly HashSet<MechData> busy = new HashSet<MechData>();
+    public bool IsBusy(MechData mech) => mech != null && busy.Contains(mech);
+
     public event Action<int> CashChanged;
     public event Action<int> DayChanged;
     public event Action OwnedMechsChanged;
+    public event Action BusyChanged;
+
+    public void SetBusy(MechData mech, bool away)
+    {
+        if (mech == null) return;
+        bool changed = away ? busy.Add(mech) : busy.Remove(mech);
+        if (changed) BusyChanged?.Invoke();
+    }
 
     public RunState(RunConfig config)
     {

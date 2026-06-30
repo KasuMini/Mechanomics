@@ -10,4 +10,14 @@ public static class MapUi
         Vector2 screen = RectTransformUtility.WorldToScreenPoint(cam, world);
         return RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screen, cam, out local);
     }
+
+    // Ray from a full-screen pixel position, correct under a letterboxed camera.rect.
+    // (Camera.ScreenPointToRay ignores the viewport offset, so go via the viewport.)
+    public static Ray ScreenRay(Camera cam, Vector2 screenPos)
+    {
+        Rect vp = cam.pixelRect;
+        Vector2 v = new Vector2((screenPos.x - vp.x) / Mathf.Max(1f, vp.width),
+                                (screenPos.y - vp.y) / Mathf.Max(1f, vp.height));
+        return cam.ViewportPointToRay(v);
+    }
 }

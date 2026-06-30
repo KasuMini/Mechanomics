@@ -117,3 +117,6 @@ InitTestScene*.unity*
 Thumbs.db
 ehthumbs.db
 desktop.ini
+
+# Debug screenshots captured during dev sessions
+/[Aa]ssets/[Ss]creenshots/
