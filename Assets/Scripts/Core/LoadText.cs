@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LoadText : MonoBehaviour
 {
-    [Header("Keywords")]
+    [Header("Text Assets")]
     [SerializeField] TextAsset list1;
     [SerializeField] TextAsset list2;
     [SerializeField] TextAsset mechNameList;

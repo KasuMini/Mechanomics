@@ -23,7 +23,7 @@ public class MechGenerator : MonoBehaviour
         int agility     = ScaleStat(Random.Range(1, 11), size, MechData.StatCapPrimary);
         int strength    = ScaleStat(Random.Range(1, 11), size, MechData.StatCapPrimary);
         int reliability = ScaleStat(Random.Range(1, 11), size, MechData.StatCapPrimary);
-        int systems     = ScaleStat(Random.Range(1, 5),  size, MechData.StatCapSystems);
+        int systems     = ScaleStat(Random.Range(1, 11),  size, MechData.StatCapSystems);
         var data = MechData.Create(name, pilot, agility, strength, systems, reliability, size, variant);
         if (paletteSet != null) data.palette = paletteSet.Random();
         return data;

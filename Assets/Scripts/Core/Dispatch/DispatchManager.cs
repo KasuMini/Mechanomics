@@ -33,7 +33,7 @@ public class DispatchManager : MonoBehaviour
         EventOutcome outcome = job.Resolve(mechs, rng);
 
         RunState.Active?.AddCash(outcome.CashDelta);
-
+        RunState.Active?.eventOutcomes.Enqueue(outcome.ResultText);
         EventResolved?.Invoke(job, mechs, outcome);
         return outcome;
     }

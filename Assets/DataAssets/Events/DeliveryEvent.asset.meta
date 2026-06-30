@@ -1,12 +1,6 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Materials.meta
-guid: a89ee918d8984cfb69f25b5809faae58
-folderAsset: yes
-DefaultImporter:
-========
 guid: 4ba91d6b053571648999edc44dc28e60
 NativeFormatImporter:
->>>>>>>> origin/main:Assets/DataAssets/Events/DeliveryEvent.asset.meta
   externalObjects: {}
   mainObjectFileID: 11400000
   userData: 

@@ -34,5 +34,5 @@ MonoBehaviour:
         quotaReward: 1
         cashPenalty: 2500
         successText: Wow! Its totally spotless! You guys rule!
-        failureText: Our Landlord saw the mess you left and now we're being evicted.
+        failureText: Our landlord saw the mess you left and now we're being evicted.
           Thanks, dude.

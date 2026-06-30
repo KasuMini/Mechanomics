@@ -33,7 +33,6 @@ MonoBehaviour:
         cashReward: 1750
         quotaReward: 1
         cashPenalty: 1750
-        successText: Thank you so much! I'm certain Larry is looking at us from wherever
-          he may be smiling!
-        failureText: '*sob* You''ve ruined everything! Larry''s funeral is ruined
-          thanks to you! *sob*'
+        successText: Today, Larry's funeral
+        failureText: A lonely computer's funeral was crashed by MetaMech today. Bystanders
+          report "it was a complete disaster."
