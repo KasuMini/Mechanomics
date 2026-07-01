@@ -9,7 +9,7 @@ public class CityClock : MonoBehaviour
     public float startHour = 7f;
     public float endHour = 12f;
     [Tooltip("Real seconds per in-game hour.")]
-    public float secondsPerHour = 24f;
+    public float secondsPerHour = 32f;
     public bool autoRun = true;
 
     public float Now { get; private set; }       // continuous hours, [startHour, endHour]

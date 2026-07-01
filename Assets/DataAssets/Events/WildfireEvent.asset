@@ -34,6 +34,9 @@ MonoBehaviour:
         cashReward: 1500
         quotaReward: 1
         cashPenalty: 2000
-        successText: SuccessTest
-        failureText: Not only did you fail to extinguish the fire, you made it even
-          worse! It was a mistake calling you!
+        successText: A recent wildfire was quickly extinquished after assistance
+          from MetaMech pilots, saving the city nearly two-hundred thousand dollars
+          in damages.
+        failureText: A recent wildfire is still keeping city officials on their toes
+          as recent efforts by MetaMech pilots exasurbated the blaze. Local firefighters
+          worry that it may be too much to contain without outside help.

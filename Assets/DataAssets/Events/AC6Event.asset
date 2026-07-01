@@ -24,9 +24,15 @@ MonoBehaviour:
     - rid: 3076055974353305676
       type: {class: SkillEvent, ns: , asm: Mechanomics.Core}
       data:
-        requirements: []
-        cashReward: 500
+        requirements:
+        - stat: 2
+          amount: 20
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 100
-        successText: SuccessTest
-        failureText: FailTest
+        cashPenalty: 1500
+        successText: A child's birthday party recently lit up the streets of a small
+          neighborhood after a MetaMech pilot gave a pyrotechnics display, giving
+          nearly the whole town a beautiful fireworks display.
+        failureText: A child's birthday party turned disaterous after an unlicensed
+          pyrotechnics display by MetaMech caused a fire spanning three homes. MetaMech
+          has refused comment.

@@ -26,11 +26,17 @@ MonoBehaviour:
       data:
         requirements:
         - stat: 0
-          amount: 8
+          amount: 15
         - stat: 2
-          amount: 12
-        cashReward: 0
+          amount: 15
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 100
-        successText: SuccessTest
-        failureText: FailTest
+        cashPenalty: 1500
+        successText: A recently released arsonist has found his way back into police
+          custody after lighting multiple fires near his home, the fires were quickly
+          extinquished by MetaMech pilots leaving little structural damage to the
+          neighborhood.
+        failureText: A released arsonist is still on the run after destroying mutliple
+          neighborhood homes. MetaMech pilots were unable to contain the fire, allowing
+          the suspect time to escape. A description of the suspect will be released
+          sometime tonight according to local police.

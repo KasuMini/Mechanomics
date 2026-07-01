@@ -30,9 +30,13 @@ MonoBehaviour:
         requirements:
         - stat: 3
           amount: 3
-        cashReward: 1000
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 1000
-        successText: The mech you sent has already converted plenty of non-believers!
-          Great work!
-        failureText: FailTest
+        cashPenalty: 1500
+        successText: We have an update to the raid on a Siblings of Steel facility
+          in which high-ranking religious leader Nazca Orion was captured, police
+          say that a MetaMech mech was recovered from the repurposed factory building.
+          MetaMech claims no involvement with the religious organization.
+        failureText: The Brothers of Steel have made another move after commandeering
+          a MetaMech mech to flee a police raid. Local law enforcement is looking
+          into the role MetaMech may have played in this case.

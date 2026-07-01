@@ -26,9 +26,14 @@ MonoBehaviour:
       data:
         requirements:
         - stat: 2
-          amount: 30
-        cashReward: 2500
+          amount: 20
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 2000
-        successText: SuccessTest
-        failureText: FailTest
+        cashPenalty: 1500
+        successText: After announcing a surprise partnership with MetaMech, Cerulean
+          Robotics reveals their new Fully Integrated Security Technetronic Officer,
+          coming to a store near you.
+        failureText: Cerulean Robotics has pushed back the release of their new Fully
+          Integrated Security Technetronic Officer, citing potential safety concerns
+          during testing with MetaMech resources. They will be holding a press conference
+          this October."
