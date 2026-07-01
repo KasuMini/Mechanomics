@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TestRunConfig
   m_EditorClassIdentifier: Mechanomics.Core::RunConfig
   startingCash: 10000
-  startingDay: 1
-  totalDays: 10
+  startingDay: 5
+  totalDays: 5
   startingMechs:
   - {fileID: 11400000, guid: 347c7f3d3f89cc7e3bd732148ed781cf, type: 2}
   - {fileID: 11400000, guid: b85fc9fe9f8cb5f3ebc43604928677fd, type: 2}
