@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 public class TutorialScript : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
-    public GameObject eventPanel;
-    public GameObject dispatchButton;
     public string[] lines;
     public float textSpeed;
 
@@ -18,8 +16,6 @@ public class TutorialScript : MonoBehaviour
         if (StateManager.Instance.currentState != StateManager.GameplayState.Tutorial)
         {
             gameObject.SetActive(false);
-            dispatchButton.SetActive(true);
-            eventPanel.SetActive(true);
         }
         else
         {
@@ -73,8 +69,6 @@ public class TutorialScript : MonoBehaviour
         {
             if (StateManager.Instance != null) StateManager.Instance.EndTutorial();
             gameObject.SetActive(false);
-            eventPanel.SetActive(true);
-            dispatchButton.SetActive(true);
         }
     }
 }
