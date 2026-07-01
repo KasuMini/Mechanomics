@@ -30,9 +30,12 @@ MonoBehaviour:
         requirements:
         - stat: 2
           amount: 20
-        cashReward: 1750
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 1750
-        successText: Today, Larry's funeral
-        failureText: A lonely computer's funeral was crashed by MetaMech today. Bystanders
-          report "it was a complete disaster."
+        cashPenalty: 1500
+        successText: A recent unlicensed funeral procession took place in the city
+          park after a grieving man laid his computer, Larry, to rest. Onlookers
+          say that MetaMech mechs were in attendance. May it rest in peace.
+        failureText: An unlicensed funeral held in the city park caused major damages
+          when MetaMech mechs began sobbing at deafening volumes, shattering glass
+          and damaging the hearing of multiple bystanders.

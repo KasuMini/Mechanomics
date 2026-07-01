@@ -33,5 +33,8 @@ MonoBehaviour:
         cashReward: 1500
         quotaReward: 1
         cashPenalty: 1500
-        successText: SuccessTest
-        failureText: 
+        successText: A local foreman for Nile had some surprise assistance from MetaMech
+          pilots today, who showed up to aid the company amidst a hectic workday.
+        failureText: 'Local company Nile announced cessation of all deliveries after
+          a disastrous collaboration with MetaMech ended in the destruction of their
+          warehouse. '

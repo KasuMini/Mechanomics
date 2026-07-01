@@ -27,9 +27,9 @@ MonoBehaviour:
         requirements:
         - stat: 0
           amount: 12
-        cashReward: 500
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 500
+        cashPenalty: 1500
         successText: Wow! I don't know how its still warm but its delicious! Thank
           you!!
         failureText: You totally squished all the food! And its cold! No tip and

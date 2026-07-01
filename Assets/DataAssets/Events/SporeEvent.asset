@@ -30,9 +30,15 @@ MonoBehaviour:
           amount: 15
         - stat: 2
           amount: 15
-        cashReward: 2500
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 2500
-        successText: Wow! Its totally spotless! You guys rule!
-        failureText: Our landlord saw the mess you left and now we're being evicted.
-          Thanks, dude.
+        cashPenalty: 1500
+        successText: Since last week's quarantining of mutated mold spores on the
+          east side, citizens have reported sightings of mutant mold within their
+          own homes. Luckily for them, MetaMech has announced a coordinated effort
+          to clean up these mold patches and keep our cities' housing safe.
+        failureText: Last week's mutated mold spores are taking over city apartments
+          after a breach in local quarantine procedures. MetaMech pilots are allegedly
+          involved in the spread, with MetaMech refusing comment on the situation.
+          CityNews12 reccommends that all citizens follow CDC guidelines during these
+          times.

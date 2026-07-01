@@ -31,8 +31,13 @@ MonoBehaviour:
           amount: 20
         - stat: 2
           amount: 12
-        cashReward: 3000
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 3500
-        successText: Angels successfully repelled
-        failureText: FailTest
+        cashPenalty: 1500
+        successText: The recent influx of geometric space angels has been driven
+          off thanks to the brave pilots of MetaMech, hopefully they won't be making
+          an impact on our town for some time.
+        failureText: Pilots of MetaMech attempted to intervene with large angelic
+          geometry that had recently invaded the town, but were unsuccessful in driving
+          them off. The world government is considering allowing hormonal teenagers
+          to pilot highly experimental mechs as a countermeasure.

@@ -29,9 +29,13 @@ MonoBehaviour:
           amount: 15
         - stat: 1
           amount: 18
-        cashReward: 500
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 100
-        successText: Thank goodness you stopped him in time! Now we just need to
-          destroy the remains....
-        failureText: Whoever he was hunting is dead now, nice job.
+        cashPenalty: 1500
+        successText: A former governor of California has been apprehended by MetaMech
+          pilots after inciting mass damages to city infastructure. More news on
+          this arrest to come.
+        failureText: 'A former governor of California has fled after his spree of
+          destruction across town went unchecked despite the efforts of MetaMech
+          pilots. Before vanishing from the scene, he left us with a chilling message:
+          "I''ll be back."'

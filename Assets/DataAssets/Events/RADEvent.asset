@@ -31,9 +31,10 @@ MonoBehaviour:
           amount: 15
         - stat: 2
           amount: 10
-        cashReward: 2500
+        cashReward: 1500
         quotaReward: 1
-        cashPenalty: 2000
-        successText: Despite everything, the bakery survived! Now Nanao won't need
-          to find a new job!
+        cashPenalty: 1500
+        successText: This just in, main street bakery is in the process of being
+          rebuilt after assistance from MetaMech pilots. Reports say that vegetable
+          prices may plummet in the area following the reconstruction.
         failureText: Oh no! The bakery! Thats where Nanao worked!

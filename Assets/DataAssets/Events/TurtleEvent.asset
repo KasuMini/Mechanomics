@@ -34,7 +34,9 @@ MonoBehaviour:
         cashReward: 1500
         quotaReward: 1
         cashPenalty: 1500
-        successText: Mission successful. The turtles have made it off the beach and
-          are headed off to hopefully glorious lives in the ocean.
-        failureText: Congratulations! You are now responsible for the inevitable
-          extinction of a species! Hope you're happy.
+        successText: An endangered species of sea turtle has begun returning to city
+          beaches after MetaMech pilots have been spotted assisting in their hatching.
+          We hope to see the species make a full recovery in coming years.
+        failureText: A coordinated effort to protect endangered sea turtles went
+          awry after MetaMech pilots unintentionalled destroyed the beach environment,
+          vastly halting the repopulation effort from wildlife conservationalists.
