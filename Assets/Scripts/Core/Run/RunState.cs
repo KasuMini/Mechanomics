@@ -89,6 +89,7 @@ public class RunState
     public void AdvanceDay()
     {
         Day++;
+        if (busy.Count > 0) { busy.Clear(); BusyChanged?.Invoke(); }
         DayChanged?.Invoke(Day);
     }
 }

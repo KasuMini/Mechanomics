@@ -32,6 +32,10 @@ public class CityClock : MonoBehaviour
     void Update()
     {
         if (!autoRun || DayOver) return;
+
+        //return if tutorial
+        if (StateManager.Instance?.currentState == StateManager.GameplayState.Tutorial ) return;   
+        
         Now += Time.deltaTime / Mathf.Max(0.01f, secondsPerHour);
         if (Now >= endHour)
         {

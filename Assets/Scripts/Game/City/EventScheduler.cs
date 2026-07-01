@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,7 +16,9 @@ public class EventScheduler : MonoBehaviour
     public EventPopup popup;
     public OwnedMechList ownedList;
     public Material activeBuildingMaterial;
+    public Material workingBuildingMaterial;
     public EventMarker markerTemplate;   // cloned per active event for the always-on countdown ring
+    public Color workingRingColour = Color.green;
 
     [Header("Dispatch travel")]
     public CityGraphData graph;          // road network for routing
@@ -24,6 +27,7 @@ public class EventScheduler : MonoBehaviour
     public float travelSpeed = 1.4f;     // world units / second along the road
     public float runnerLift = 0f;        // optional camera-ward nudge; 0 = full depth (buildings occlude)
     public float convoyStagger = 0.5f;   // seconds between each mech departing on a multi-mech dispatch
+    public float completionSeconds = 10f;// delay between last arrival and event completion.
 
     [Header("Hover")]
     public bool enableHover = true;
@@ -168,7 +172,7 @@ public class EventScheduler : MonoBehaviour
     }
 
     // Dispatch: send each selected mech driving from HQ along the roads to the event
-    // as a staggered convoy. The event resolves only when the LAST mech arrives; each
+    // as a staggered convoy. The event resolves after completionSeconds when the LAST mech arrives; each
     // mech then drives home and is freed on its own return.
     void OnDispatch(EventData ev, BuildingPrism target)
     {
@@ -194,23 +198,50 @@ public class EventScheduler : MonoBehaviour
 
         int total = mechs.Count;
         int[] arrived = { 0 };   // boxed counter shared by the convoy closures
+        List<MechRunner> runners = new List<MechRunner>();
         for (int i = 0; i < total; i++)
         {
             MechData mech = mechs[i];
             MechRunner runner = SpawnRunner(mech, start);
+            runners.Add(runner);
             runner.Run(outPath, travelSpeed, i * convoyStagger, () =>
             {
+                if (runner.sr != null) runner.sr.enabled = false;
                 if (++arrived[0] == total)   // last mech on site -> resolve the event once
                 {
-                    if (dispatch != null) dispatch.Dispatch(ev, mechs);
-                    target.ClearHighlight();
-                    freeBuildings.Add(target);
+                    StartCoroutine(CompleteAndReturn(ev, target, mechs, runners, backPath));
                 }
-                runner.Run(backPath, travelSpeed, 0f, () =>
-                {
-                    RunState.Active?.SetBusy(mech, false);   // this mech is home - free it
-                    if (runner != null) Destroy(runner.gameObject);
-                });
+            });
+        }
+    }
+
+    IEnumerator CompleteAndReturn(EventData ev, BuildingPrism target, List<MechData> mechs, List<MechRunner> runners, Vector3[] backPath)
+    {
+        target.SetActiveHighlight(workingBuildingMaterial);
+        EventMarker workMarker = null;
+        if (markerTemplate != null) {
+            workMarker = Instantiate(markerTemplate, markerTemplate.transform.parent);
+            if (workMarker.ring != null) workMarker.ring.color = workingRingColour;
+            float now = clock != null ? clock.Now : 0f;
+            float perHour = clock != null ? Mathf.Max(0.01f, clock.secondsPerHour) : 1f;
+            workMarker.Bind(target, clock, now, now + completionSeconds / perHour);
+        }
+
+        yield return new WaitForSeconds(completionSeconds);
+
+        if (workMarker != null) Destroy(workMarker.gameObject);
+        dispatch?.Dispatch(ev, mechs); //resolve
+        target.ClearHighlight();
+        freeBuildings.Add(target); 
+
+        for (int i = 0; i < runners.Count; i++)
+        {
+            MechRunner runner = runners[i];
+            MechData mech = mechs[i];
+            if (runner != null && runner.sr != null) runner.sr.enabled = true;
+            runner.Run(backPath, travelSpeed, 0f, () => {
+                RunState.Active?.SetBusy(mech, false);
+                if (runner != null) Destroy(runner.gameObject);
             });
         }
     }
