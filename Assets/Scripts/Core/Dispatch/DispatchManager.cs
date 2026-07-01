@@ -38,6 +38,7 @@ public class DispatchManager : MonoBehaviour
         if (!string.IsNullOrEmpty(outcome.ResultText))
             RunState.Active?.eventOutcomes.Enqueue(outcome.ResultText);
         EventResolved?.Invoke(job, mechs, outcome);
+        DispatchEvents.Raise(job, outcome);
         return outcome;
     }
 }
