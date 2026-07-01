@@ -6,13 +6,14 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource sfx;      // PlayOneShot for one-shots
     public AudioSource music;    // looping bed (optional)
-    public AudioClip successClip, failClip;
+    public AudioClip successClip, failClip, bgm;
 
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        if (bgm != null) PlayMusic(bgm);
         DispatchEvents.Succeeded += OnWin;
         DispatchEvents.Failed    += OnLose;
     }
