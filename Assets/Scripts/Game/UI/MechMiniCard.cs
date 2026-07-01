@@ -37,7 +37,7 @@ public class MechMiniCard : MonoBehaviour,
     // Stats as coloured "agi/str/sys/rel" - shared by the card label and the hover tooltip.
     public static string ColoredStats(MechData m) =>
         $"<color={ColAgi}>{m.agilityStat}</color>/<color={ColStr}>{m.strengthStat}</color>/" +
-        $"<color={ColSys}>{m.systemsStat}</color>/<color={ColRel}>{m.reliabilityStat}</color>";
+        $"<color={ColSys}>{m.systemsStat}</color>"; //<color={ColRel}>{m.reliabilityStat}</color>";
 
     public void Bind(MechData mech, Sprite sprite)
     {
